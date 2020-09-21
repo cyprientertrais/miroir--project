@@ -26,7 +26,7 @@ export default {
 },
 mounted: function(){   
     setInterval(() => {
-      this.date = moment(this.date.add(1, 'seconds'))
+      this.date = moment()
     }, 1000);
   }
 
