@@ -1,6 +1,6 @@
 <template>
     
-    <div>Your location data is {{ location }}
+    <div class="weather">Your location data is {{ location }}
     {{meteo}}
     </div>
 </template>
@@ -17,27 +17,20 @@ export default {
     }
   },
   created(){
-    var options = {
-  enableHighAccuracy: true,
-  timeout: 5000,
-  maximumAge: 0
-};
+  if(!("geolocation" in navigator)) {
+      this.errorStr = 'Geolocation is not available.';
+      return;
+    }
 
-function success(pos) {
-  var crd = pos.coords;
-
-  console.log('Your current position is:');
-  console.log(`Latitude : ${crd.latitude}`);
-  console.log(`Longitude: ${crd.longitude}`);
-  console.log(`More or less ${crd.accuracy} meters.`);
-}
-
-function error(err) {
-  console.warn(`ERROR(${err.code}): ${err.message}`);
-}
-navigator.geolocation.getCurrentPosition(success, error, options);
-
-    console.log(this.location);
+    this.gettingLocation = true;
+    // get position
+    navigator.geolocation.getCurrentPosition(pos => {
+      this.gettingLocation = false;
+      this.location = pos;
+    }, err => {
+      this.gettingLocation = false;
+      this.errorStr = err.message;
+    })
     /*fetch("https://freegeoip.app/json/").then(async res=>{
       this.location= await  res.json();
       if(this.location.city!=null){
@@ -62,9 +55,8 @@ navigator.geolocation.getCurrentPosition(success, error, options);
 </script>
 <style scoped>
 .weather{
-    width: 20%;
+  margin: 0;
     border-radius: 50px;
-    height:500px;
     background-color: grey;
 }
 </style>

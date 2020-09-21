@@ -1,8 +1,8 @@
 <template>
-  <div class="time">
+  <v-row align="center" justify="center" class="time">
     <span class="horloge">{{ time }}</span>
 
-  </div>
+  </v-row>
 </template>
 
 <script>
@@ -35,6 +35,7 @@ mounted: function(){
 <style scoped>
 .horloge{
     font-size:10vw;
+    color:white;
 }
 </style>
 

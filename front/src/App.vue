@@ -1,16 +1,16 @@
 <template>
-  <v-app>
-    
-
-    <v-main>
+  <div class="main">
+    <v-app>
+      <v-main>
       <Time/>
-      <v-layout row>
+      <v-layout row class="apps_show">
         <v-flex md3 v-for="(componentName, index) in widgets" :key="index">
             <component :is="componentName"></component>
     </v-flex>
       </v-layout>
     </v-main>
   </v-app>
+  </div>
 </template>
 
 <script>
@@ -31,8 +31,16 @@ export default {
         },
 
   data: () => ({
-    widgets:["Weather","Weather"]
+    widgets:["Weather"]
     //
   }),
 };
 </script>
+<style>
+#app{
+  background-color: #1c1e21;
+}
+.apps_show{
+  margin-left: 0;
+}
+</style>
