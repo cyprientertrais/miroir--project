@@ -1,11 +1,9 @@
-FROM node:carbon
+FROM node:10-alpine
 
+WORKDIR /data/front
 
-
-# Copy or mount node app here
-WORKDIR /data/
-COPY . .
-
+COPY package*.json ./
 RUN npm install
-EXPOSE 8080
-CMD ["npm", "run","serve"]
+
+COPY . .
+CMD [ "npm", "run","serve" ]

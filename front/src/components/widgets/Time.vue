@@ -1,6 +1,6 @@
 <template>
   <v-row align="center" justify="center" class="time">
-    <span class="horloge">{{ time }}</span>
+    <span class="horloge">{{ time }} rrr</span>
 
   </v-row>
 </template>

@@ -6,16 +6,19 @@ services:
     ports:
       - 8080:8080
     volumes:
-      - ./front:/data
+      - ./front:/data/front
+      - /data/front/node_modules
     environment:
       - API_URL=http://localhost:3000/
 
   server:
     build: ./back
+    command: npm start
     ports:
       - 3000:3000
     volumes:
-      - ./back:/data
+      - ./back:/data/back
+      - /data/back/node_modules
     depends_on: 
       - server-database
     environment:

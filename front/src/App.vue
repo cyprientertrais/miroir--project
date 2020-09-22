@@ -23,7 +23,7 @@ export default {
   },
 
   mounted() {
-    this.setWidgets(["Time"]);
+    this.setWidgets(["Time","Weather"]);
   }
 };
 </script>
