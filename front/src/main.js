@@ -1,14 +1,14 @@
-import Vue from 'vue'
-import App from './App.vue'
-import vuetify from './plugins/vuetify';
-import Vuex from 'vuex';
-import VueRouter from 'vue-router';
-require('dotenv').config({ path: require('find-config')('.env') })
-Vue.config.productionTip = false
+import Vue from "vue";
+import App from "./App.vue";
+import router from "./router";
+import store from "./store";
+import vuetify from "./plugins/vuetify";
+
+Vue.config.productionTip = false;
 
 new Vue({
+  router,
+  store,
   vuetify,
-  Vuex,
-  VueRouter,
   render: h => h(App)
-}).$mount('#app')
+}).$mount("#app");
