@@ -1,4 +1,3 @@
-
 FROM node:carbon
 
 COPY ./docker/entrypoint.sh /entrypoint/
@@ -10,6 +9,6 @@ WORKDIR /data/
 
 EXPOSE 3000
 
-ENTRYPOINT ["/entrypoint/entrypoint.sh"]
+RUN ["npm","install"]
 
 CMD ["npm", "start"]
