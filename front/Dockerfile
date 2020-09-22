@@ -6,9 +6,8 @@ RUN ["chmod", "+x", "entrypoint/entrypoint.sh"]
 
 # Copy or mount node app here
 WORKDIR /data/
-
+RUN npm install
 EXPOSE 8080
 
-RUN ["npm","install"]
 
 CMD ["npm", "run","serve"]
