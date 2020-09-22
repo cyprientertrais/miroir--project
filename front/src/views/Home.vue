@@ -18,26 +18,25 @@
 export default {
   name: "Home",
   components: {},
-  created() {
-    if (this.widgets) {
-      console.log(this.widgets)
-      for (let c = 0; c < this.widgets.length; c++) {
-        let componentName = this.widgets[c];
-        console.log(componentName);
-        this.$options.components[componentName] = () =>
-          import("../components/widgets/" + componentName + ".vue");
+  created() {},
+  watch: {
+    widgets: function() {
+      console.log("widget:" + this.widgets);
+      if (this.widgets) {
+        console.log(this.widgets);
+        for (let c = 0; c < this.widgets.length; c++) {
+          let componentName = this.widgets[c];
+          console.log(componentName);
+          this.$options.components[componentName] = () =>
+            import("../components/widgets/" + componentName + ".vue");
+        }
       }
-    }
-  },
-  methods: {
-    widgetIsContained(widget) {
-      return this.widgets.includes(widget);
     }
   },
 
   computed: {
     widgets() {
-      return this.$store.state.widgets;
+      return this.$store.getters.widgets;
     }
   }
 };

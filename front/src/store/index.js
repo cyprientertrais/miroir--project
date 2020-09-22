@@ -17,5 +17,10 @@ export default new Vuex.Store({
       context.commit('setWidgets', newWidgets);
     }
   },
+  getters: {
+    widgets: state => {
+      return state.widgets
+    }
+  },
   modules: {},
 });
