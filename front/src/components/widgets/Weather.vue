@@ -1,64 +1,83 @@
 <template>
-    
-    <div class="weather">Your location data is {{ location }}
-    {{meteo}}
-    </div>
+  <v-card dark class="pa-3">
+    <v-row class="text-center">
+      <v-col>
+      <strong >{{city}}</strong>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col v-for="meteo in meteos" :key="meteo.timestamp" class="ma-3">
+        <v-row>
+          
+        </v-row>
+        <v-row>
+          <strong>{{meteo.dt}}</strong>
+        </v-row>
+        <v-row>
+          min: {{meteo.temp.min.toFixed(0)}}°C
+        </v-row>
+        <v-row>
+          max: {{meteo.temp.max.toFixed(0)}}°C
+        </v-row>
+      </v-col>
+    </v-row>
+  </v-card>
 </template>
 
 <script>
-export default {
-  name: 'Weather',
-  data(){
-    return{
-    location:null,
-    ville:null,
-    meteo: null,
-    errorStr:null
-    }
-  },
-  created(){
-  if(!("geolocation" in navigator)) {
-      this.errorStr = 'Geolocation is not available.';
-      return;
-    }
+// import Day from "./Day";
+import Resources from "@/service/resources/resources";
+import { mapGetters } from "vuex";
 
-    this.gettingLocation = true;
-    // get position
-    navigator.geolocation.getCurrentPosition(pos => {
-      this.gettingLocation = false;
-      this.location = pos;
-    }, err => {
-      this.gettingLocation = false;
-      this.errorStr = err.message;
-    })
-    /*fetch("https://freegeoip.app/json/").then(async res=>{
-      this.location= await  res.json();
-      if(this.location.city!=null){
-        this.ville=this.location.city;
-      }
-      fetch("https://api.openweathermap.org/data/2.5/forecast?q=Lille&APPID=ee95de4f37a7e21b3714e529ea39a2fb&units=metric").then(async res=>{
-        let meteo = await res.json();
-        this.meteo=meteo.list[0].weather[0].main;
-        
-      })
-    }) */
+var moment = require("moment");
+const ResourcesService = new Resources();
+
+export default {
+  name: "Weather",
+  created() {
+    this.getData();
+    this.getCity();
   },
   computed: {
-    
+    ...mapGetters(['location'])
+  },
+  data() {
+    return {
+      meteos: [],
+      city: ""
+    };
   },
   methods: {
-
-},
-
-
-}
+    getCity() {
+      const params = {lat:this.location.coords.latitude,long:this.location.coords.longitude}
+      ResourcesService.getCity(params).then(res => {
+        this.city=res.body.city
+      });
+    },
+    getData() {
+      ResourcesService.getMeteo().then(res => {
+        res.body.daily.forEach(element => {
+          element.dt = moment(element.dt * 1000)
+            .calendar()
+            .split("à")[0];
+        });
+        this.meteos = res.body.daily;
+      });
+    },
+    getIconUrl(meteo) {
+      return (
+        "http://openweathermap.org/img/wn/" + meteo.weather[0].icon + ".png"
+      );
+    },
+    moment: function() {
+      return moment();
+    }
+  }
+};
 </script>
-<style scoped>
-.weather{
-  margin: 0;
-    border-radius: 50px;
-    background-color: grey;
+
+<style>
+span {
+  color: white;
 }
 </style>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->

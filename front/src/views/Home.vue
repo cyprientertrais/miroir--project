@@ -1,12 +1,6 @@
 <template>
   <div class="home">
-    <!-- <v-layout row class="apps_show">
-      <v-flex md3 v-for="(componentName, index) in widgets" :key="index">
-        <component :is="componentName"></component>
-      </v-flex>
-    </v-layout>-->
-
-    <v-row>
+    <v-row class="ma-2">
       <v-col cols="12" md="6" v-for="(componentName, index) in widgets" :key="index">
         <component :is="componentName"></component>
       </v-col>
@@ -15,18 +9,18 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+import moment from 'moment';
+
 export default {
   name: "Home",
   components: {},
-  created() {},
+  created() {    moment.locale('fr');},
   watch: {
     widgets: function() {
-      console.log("widget:" + this.widgets);
       if (this.widgets) {
-        console.log(this.widgets);
         for (let c = 0; c < this.widgets.length; c++) {
           let componentName = this.widgets[c];
-          console.log(componentName);
           this.$options.components[componentName] = () =>
             import("../components/widgets/" + componentName + ".vue");
         }
@@ -35,9 +29,9 @@ export default {
   },
 
   computed: {
-    widgets() {
-      return this.$store.getters.widgets;
-    }
-  }
+    ...mapGetters(["widgets"])
+  },
+
+  methods: {}
 };
 </script>

@@ -1,41 +1,38 @@
 <template>
-  <v-row align="center" justify="center" class="time">
-    <span class="horloge">{{ time }} rrr</span>
-
-  </v-row>
+  <div align="center" justify="center" class="time">
+    <div class="horloge">{{ moment().format('HH:mm:ss') }}</div>
+    <div class="date">{{moment().format('Do MMMM YYYY')}}</div>
+  </div>
 </template>
 
 <script>
-var moment = require('moment');
+var moment = require("moment");
 export default {
-  name: 'Time',
-  data(){
-      return{
-  date: moment()
-  }
+  name: "Time",
+  data() {
+    return {};
   },
-  computed: {
-    time: function(){
-      return this.date.format('HH:mm:ss');
+  computed: {},
+  methods: {
+    moment: function() {
+      return moment();
     }
   },
-  methods: {
-  moment: function () {
-    return moment();
-  }
-},
-mounted: function(){   
+  mounted: function() {
     setInterval(() => {
-      this.date = moment()
+      this.date = moment();
     }, 1000);
   }
-
-}
+};
 </script>
 <style scoped>
-.horloge{
-    font-size:10vw;
-    color:white;
+.horloge {
+  font-size: 5vw;
+  color: white;
+}
+.date {
+  color: white;
+  font-size: 2vw;
 }
 </style>
 
