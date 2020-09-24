@@ -20,11 +20,10 @@ services:
       - ./back:/data/back
       - /data/back/node_modules
     depends_on: 
-      - server-database
+      - db
     environment:
       - DATABASE_URL=server-database:27017
-    
-  server-database:
-    image: mongo
+  db:
+    build: ./db
     ports:
       - 27017:27017
