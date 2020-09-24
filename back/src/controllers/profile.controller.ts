@@ -1,5 +1,5 @@
 import { Controller, Get,Post,Param, Res,Req} from '@nestjs/common';
-import { Profile } from 'src/interfaces/Profile.interface';
+import { Profile } from 'src/models/profile.models';
 import { ProfileService } from '../services/profile.service';
 
 @Controller('/profile')

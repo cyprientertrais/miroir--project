@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Profile } from 'src/interfaces/Profile.interface';
+import { Profile } from 'src/models/profile.models';
 
 @Injectable()
 export class ProfileService {
@@ -7,7 +7,8 @@ export class ProfileService {
     return [];
   }
   getOne(name: string) : Profile{
-    return new Profile(name,12);
+    let profile= new Profile(name,12);
+    return profile;
   }
   
 }
