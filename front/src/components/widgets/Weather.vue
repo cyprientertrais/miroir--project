@@ -8,7 +8,7 @@
     <v-row>
       <v-col v-for="meteo in meteos" :key="meteo.timestamp" class="ma-3">
         <v-row>
-          
+          <img :src="getIconUrl(meteo)"/>
         </v-row>
         <v-row>
           <strong>{{meteo.dt}}</strong>
