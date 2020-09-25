@@ -1,4 +1,6 @@
-import { Controller, Get,Post,Param, Res,Req} from '@nestjs/common';
+import { Controller, Get,Post,Param, Res,Req, Body, BadRequestException} from '@nestjs/common';
+import { profileEnd } from 'console';
+import { Dashboard } from 'src/entities/dashboard.entity';
 import { Profile } from 'src/entities/profile.entity';
 import { ProfileService } from '../services/profile.service';
 
@@ -11,8 +13,13 @@ export class ProfileController {
     return res.json(this.profileService.getAll());
   }
   @Post()
-  postProfile(@Param('name') name: string,@Res() res,@Req() req): Profile {
-    return res.sendStatus(204);
+  async postProfile(@Body() profile: Partial<Profile>): Promise<any>{
+   
+   
+    if(!profile || !profile.age || !profile.dashboards || !profile.pseudo  ){
+      throw new BadRequestException("Profile have been wrong disable");
+    }
+    return await this.profileService.createOne(profile);
   }
   @Get(':name')
   getProfile(@Param('name') name: string,@Res() res): Profile {
