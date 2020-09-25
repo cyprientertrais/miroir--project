@@ -1,6 +1,6 @@
 <template>
   <div align="center" justify="center" class="time">
-    <div class="horloge">{{ moment().format('HH:mm:ss') }}</div>
+    <div class="horloge">{{ this.date }}</div>
     <div class="date">{{moment().format('Do MMMM YYYY')}}</div>
   </div>
 </template>
@@ -10,7 +10,9 @@ var moment = require("moment");
 export default {
   name: "Time",
   data() {
-    return {};
+    return {
+      date:null,
+    };
   },
   computed: {},
   methods: {
@@ -20,7 +22,7 @@ export default {
   },
   mounted: function() {
     setInterval(() => {
-      this.date = moment();
+      this.date = moment().format('HH:mm:ss');
     }, 1000);
   }
 };
