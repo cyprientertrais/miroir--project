@@ -1,7 +1,12 @@
 <template>
   <div class="home">
     <v-row class="ma-2">
-      <v-col cols="12" md="6" v-for="(componentName, index) in widgets" :key="index">
+      <v-col cols="12" md="4">
+        <v-card dark class="pa-3" style="text-align: center">
+          <strong>{{username}}</strong>
+        </v-card>
+      </v-col>
+      <v-col cols="12" md="4" v-for="(componentName, index) in widgets" :key="index">
         <component :is="componentName"></component>
       </v-col>
     </v-row>
@@ -29,9 +34,9 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["widgets"])
+    ...mapGetters(["widgets","username"])
   },
-
+  
   methods: {}
 };
 </script>
