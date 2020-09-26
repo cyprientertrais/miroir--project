@@ -1,5 +1,14 @@
+import { IsInt, IsNotEmpty, IsNumber, IsString } from "class-validator";
+import { Entity, PrimaryColumn } from "typeorm";
+
+@Entity('widget')
 export class Widget{
-    name: string;
+    @PrimaryColumn()
+    @IsNotEmpty()
+    @IsString()
+     name: string;
+    @IsNotEmpty()
+    @IsNumber()
     position: number;
 
 }

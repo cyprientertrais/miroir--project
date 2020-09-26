@@ -6,10 +6,12 @@ import { ProfileService } from './services/profile.service';
 import { ConfigModule } from '@nestjs/config';
 import {TypeOrmModule} from '@nestjs/typeorm'
 import { Profile } from './entities/profile.entity';
+import { Dashboard } from './entities/dashboard.entity';
+import { Widget } from './entities/widget.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Profile]),
+    TypeOrmModule.forFeature([Profile,Dashboard,Widget]),
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
       type: 'mongodb',
@@ -20,7 +22,8 @@ import { Profile } from './entities/profile.entity';
       ],
       ssl: false,
       useUnifiedTopology: true,
-      useNewUrlParser: true
+      useNewUrlParser: true,
+      synchronize: true,
     })
   ],
   controllers: [AppController,ProfileController],

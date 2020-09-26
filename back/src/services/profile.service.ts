@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Profile } from 'src/entities/profile.entity';
 import { MongoRepository } from 'typeorm';
@@ -9,18 +9,24 @@ export class ProfileService {
   @InjectRepository(Profile) 
   private readonly profileRepository: MongoRepository<Profile>)
   {}
-  async getAll(): Promise<Profile[]> {
-    return await this.profileRepository.find();
-  }
-  getOne(name: string) : Profile{
-    //et profile= new Profile(name,12);
-    return null;
-  }
-  async createOne(profile : Partial<Profile>){
-    let e=  this.profileRepository.save(new Profile(profile)).catch(err=>{
-      console.log(err)
-    });
+
+  async getAll() {
+    let e = await this.profileRepository.find();
     return e;
+  }
+
+  async getOne(name: string) : Promise<Profile> {
+     let e = await this.profileRepository.findOne({pseudo:name});
+     if(e==null){
+       throw new NotFoundException();
+     }
+    return e;
+  }
+  
+  async createOne(profile : Profile){
+    return this.profileRepository.save(new Profile(profile)).catch(err=>{
+      throw new BadRequestException(err);
+    });
   }
   
 }

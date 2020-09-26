@@ -9,21 +9,20 @@ export class ProfileController {
   constructor(private readonly profileService: ProfileService) {}
 
   @Get()
-  getProfiles(@Res() res): Profile[] {
-    return res.json(this.profileService.getAll());
+  async getProfiles() {
+    return await this.profileService.getAll();
   }
   @Post()
-  async postProfile(@Body() profile: Partial<Profile>): Promise<any>{
-   
-   
-    if(!profile || !profile.age || !profile.dashboards || !profile.pseudo  ){
+  
+  async postProfile(@Body() profile: Profile): Promise<any>{   
+    if(!profile){
       throw new BadRequestException("Profile have been wrong disable");
     }
     return await this.profileService.createOne(profile);
   }
   @Get(':name')
-  getProfile(@Param('name') name: string,@Res() res): Profile {
-    return res.json(this.profileService.getOne(name));
+  async getProfile(@Param('name') name: string) {
+    return await this.profileService.getOne(name)
   }
   
 }
