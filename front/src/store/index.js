@@ -7,6 +7,7 @@ export default new Vuex.Store({
   state: {
     widgets: undefined,
     location: undefined,
+    username: 'Adam le plus beau'
   },
   mutations: {
     setWidgets(state, newWidgets) {
@@ -31,6 +32,9 @@ export default new Vuex.Store({
     },
     location: state => {
       return state.location
+    },
+    username: state => {
+      return state.username
     }
   },
   modules: {},

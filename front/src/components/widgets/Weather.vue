@@ -51,17 +51,17 @@ export default {
     getCity() {
       const params = {lat:this.location.coords.latitude,long:this.location.coords.longitude}
       ResourcesService.getCity(params).then(res => {
-        this.city=res.body.city
+        this.city=res.data.city
       });
     },
     getData() {
       ResourcesService.getMeteo().then(res => {
-        res.body.daily.forEach(element => {
+        res.data.daily.forEach(element => {
           element.dt = moment(element.dt * 1000)
             .calendar()
             .split("à")[0];
         });
-        this.meteos = res.body.daily;
+        this.meteos = res.data.daily;
       });
     },
     getIconUrl(meteo) {
@@ -69,9 +69,6 @@ export default {
         "http://openweathermap.org/img/wn/" + meteo.weather[0].icon + ".png"
       );
     },
-    moment: function() {
-      return moment();
-    }
   }
 };
 </script>

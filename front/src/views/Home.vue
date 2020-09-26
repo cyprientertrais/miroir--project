@@ -1,7 +1,15 @@
 <template>
   <div class="home">
+    <v-row>
+      <v-card dark class="pa-3" style="text-align: center" shaped width="10%">
+        <strong>{{ username }}</strong>
+      </v-card>
+    </v-row>
     <v-row class="ma-2">
-      <v-col cols="12" md="6" v-for="(componentName, index) in widgets" :key="index">
+      <v-col
+        v-for="(componentName, index) in widgets"
+        :key="index"
+      >
         <component :is="componentName"></component>
       </v-col>
     </v-row>
@@ -10,12 +18,14 @@
 
 <script>
 import { mapGetters } from "vuex";
-import moment from 'moment';
+import moment from "moment";
 
 export default {
   name: "Home",
   components: {},
-  created() {    moment.locale('fr');},
+  created() {
+    moment.locale("fr");
+  },
   watch: {
     widgets: function() {
       if (this.widgets) {
@@ -25,13 +35,19 @@ export default {
             import("../components/widgets/" + componentName + ".vue");
         }
       }
-    }
+    },
   },
 
   computed: {
-    ...mapGetters(["widgets"])
+    ...mapGetters(["widgets", "username"]),
   },
 
-  methods: {}
+  methods: {},
 };
 </script>
+
+<style scoped>
+.v-card{
+  left:-10px !important;
+}
+</style>
