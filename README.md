@@ -1,6 +1,6 @@
 # Welcome to our mirror projet!
 
-LAP5US teams are pleased to welcome you :blush:
+LAP5US team members are pleased to welcome you :blush:
 
 
 # Run the project
