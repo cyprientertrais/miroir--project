@@ -1,3 +1,19 @@
+# Welcome to our mirror projet!
+
+LAP5US teams are pleased to welcome you :blush:
+
+
+# Run the project
+
+ - First install docker on your computer
+ - In the project root run two commands
+
+     - `docker-compose build`
+     - `docker-compose up`
+
+
+**Back :** port 3000
+**Front :** port 8080 
 
 ## Database
 
@@ -15,3 +31,4 @@ in db directory
 
  - `docker build -t mongo_db`
  - `docker run -d -p 27017:27017 mongo_db`
+
