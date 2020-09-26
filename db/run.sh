@@ -9,4 +9,4 @@
 cmd=exec; for i; do cmd="$cmd '$i'"; done
 echo "COUCOU"
 exec su -s /bin/sh -c "$cmd" mongodb
-exec su -s /bin/sh -c "$cmd" mongorestore --archive="/db/db.dump"
+exec su -s /bin/sh -c "$cmd" mongorestore /var/dump

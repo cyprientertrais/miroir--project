@@ -8,14 +8,13 @@ import {TypeOrmModule} from '@nestjs/typeorm'
 import { Profile } from './entities/profile.entity';
 import { Dashboard } from './entities/dashboard.entity';
 import { Widget } from './entities/widget.entity';
-
 @Module({
   imports: [
     TypeOrmModule.forFeature([Profile,Dashboard,Widget]),
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
       type: 'mongodb',
-      url: "mongodb://localhost:27017",
+      url: (process.env.HOST) ? "mongodb://db:27017" : "mongodb://localhost:27017",
       database: "mirror",
       entities: [
         __dirname + '/entities/*.entity{.ts,.js}',

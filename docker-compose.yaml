@@ -1,4 +1,4 @@
-version: "3"
+version: "3.5"
 
 services:
   client:
@@ -8,12 +8,13 @@ services:
     volumes:
       - ./front:/data/front
       - /data/front/node_modules
+    depends_on: 
+      - db
     environment:
       - API_URL=http://localhost:3000/
 
   server:
     build: ./back
-    command: npm start
     ports:
       - 3000:3000
     volumes:
@@ -22,8 +23,17 @@ services:
     depends_on: 
       - db
     environment:
-      - DATABASE_URL=server-database:27017
+      - HOST=db
+    networks:
+      - core_service_network
   db:
     build: ./db
+    volumes:
+      - ./db:/var/dump
     ports:
       - 27017:27017
+    networks:
+      - core_service_network
+networks:
+  core_service_network:
+    driver: bridge

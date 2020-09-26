@@ -1,9 +1,13 @@
-FROM node:10-alpine
+FROM node
 
 WORKDIR /data/back
 
-COPY package*.json ./
-RUN npm install
+ADD package*.json /data/back/
+RUN npm config set registry http://registry.npmjs.org
+RUN npm install && npm install --save @nestjs/config @nestjs/typeorm
 
-COPY . .
-CMD [ "npm", "start" ]
+ADD ./src /data/back
+
+EXPOSE 3000
+
+CMD ["npm", "run", "start"]
