@@ -50,4 +50,8 @@ export default {
 .v-card{
   left:-10px !important;
 }
+
+.home{
+  background-color: black;
+}
 </style>
