@@ -16,4 +16,9 @@ export default class Resources {
         const url = `https://geocode.xyz/${params.lat},${params.long}?geoit=json`;
         return axios.get(url);
     }
+
+    getUserProfile(profileName) {
+        const url = `http://localhost:3000/profile/${profileName}`;
+        return axios.get(url);
+    }
 }

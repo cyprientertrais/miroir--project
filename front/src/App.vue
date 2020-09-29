@@ -41,11 +41,12 @@ export default {
   },
 
   methods: {
-    ...mapActions(["setWidgets", "setLocation"])
+    ...mapActions(["setWidgets", "setLocation", "setUserProfile"])
   },
 
   mounted() {
     this.setWidgets(["Time", "Weather"]);
+    this.setUserProfile("Aymeric");
   }
 };
 </script>

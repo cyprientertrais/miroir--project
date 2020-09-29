@@ -1,13 +1,16 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import Resources from "@/service/resources/resources";
 
 Vue.use(Vuex);
+
+const ResourcesService = new Resources();
 
 export default new Vuex.Store({
   state: {
     widgets: undefined,
     location: undefined,
-    username: 'Adam le plus beau'
+    userProfile: undefined,
   },
   mutations: {
     setWidgets(state, newWidgets) {
@@ -15,6 +18,9 @@ export default new Vuex.Store({
     },
     setLocation(state, location){
       state.location = location;
+    },
+    setUserProfile(state, userProfile) {
+      state.userProfile = userProfile;
     }
   },
   actions: {
@@ -22,8 +28,12 @@ export default new Vuex.Store({
       context.commit('setWidgets', newWidgets);
     },
     setLocation(context,location) {
-      console.log("set location ="+location.coords.latitude)
       context.commit('setLocation', location);
+    },
+    setUserProfile(context, pseudo) {
+      ResourcesService.getUserProfile(pseudo).then(res => {
+        context.commit('setUserProfile', res.body);
+      })
     }
   },
   getters: {
@@ -33,8 +43,8 @@ export default new Vuex.Store({
     location: state => {
       return state.location
     },
-    username: state => {
-      return state.username
+    userProfile: state => {
+      return state.userProfile
     }
   },
   modules: {},
