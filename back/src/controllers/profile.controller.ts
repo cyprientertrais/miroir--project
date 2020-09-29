@@ -1,4 +1,4 @@
-import { Controller, Get,Post,Param, Res,Req, Body, BadRequestException} from '@nestjs/common';
+import { Controller, Get,Post, Patch, Param, Res,Req, Body, BadRequestException} from '@nestjs/common';
 import { profileEnd } from 'console';
 import { Dashboard } from 'src/entities/dashboard.entity';
 import { Profile } from 'src/entities/profile.entity';
@@ -24,5 +24,26 @@ export class ProfileController {
   async getProfile(@Param('name') name: string) {
     return await this.profileService.getOne(name)
   }
+
+  @Get(':name/dashboards')
+  async getAllDashboards(@Param('name') name : string){
+    return await this.profileService.getAllDashboardsFromProfileService(name)
+  }
+
+  
+
+  /* @Post(':user/dashboard')
+  async postDashboard(@Body() dashboard : Dashboard) : Promise<any>{
+
+  } */
+
+ /*  @Patch(':user/dashboard/:name/:element')
+  async patchDashboard(@Body() dashboard: Dashboard) : Promise<any>{
+    let dash : Dashboard
+    dash = dashboard
+    let newUser : Profile
+    newUser.pseudo = name
+    return await this.profileService.createOne(newUser)
+  } */
   
 }

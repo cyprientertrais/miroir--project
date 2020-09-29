@@ -28,5 +28,11 @@ export class ProfileService {
       throw new BadRequestException(err);
     });
   }
+
+  async getAllDashboardsFromProfileService(name : string){
+    let e = await this.getOne(name)
+    return e.dashboards
+  }
+
   
 }
