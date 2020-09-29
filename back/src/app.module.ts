@@ -5,7 +5,7 @@ import { ProfileController } from './controllers/profile.controller';
 import { ProfileService } from './services/profile.service';
 import { ConfigModule } from '@nestjs/config';
 import {TypeOrmModule} from '@nestjs/typeorm'
-import { Profile } from '../src/entities/profile.entity';
+import { Profile } from './entities/profile.entity';
 import { Dashboard } from './entities/dashboard.entity';
 import { Widget } from './entities/widget.entity';
 @Module({
