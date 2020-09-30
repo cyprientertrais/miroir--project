@@ -2,16 +2,15 @@ version: "3.5"
 
 services:
   client:
-    image: cypnose/front:arm7
+    image: cypnose/front:latest-arm7
     ports:
-      - 80:80
-    volumes:
-      - ./front:/data/front
-      - /data/front/node_modules
+      - 8080:8080
     depends_on: 
       - db
     environment:
       - API_URL=http://localhost:3000/
+    networks:
+      - core_service_network
 
   server:
     image: cypnose/back:arm7
@@ -24,7 +23,7 @@ services:
     networks:
       - core_service_network
   db:
-    image: cypnose/mongodb:arm7
+    image: cypnose/mongodb:arm7 
     ports:
       - 27017:27017
     networks:
