@@ -12,6 +12,8 @@ services:
       - db
     environment:
       - API_URL=http://localhost:3000/
+    networks:
+      - core_service_network
 
   server:
     build: ./back
