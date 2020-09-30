@@ -1,0 +1,43 @@
+version: "3.5"
+
+services:
+  client:
+    build:
+      context: ./front
+      dockerfile: Dockerfile_prod
+    ports:
+      - 80:80
+    volumes:
+      - ./front:/data/front
+      - /data/front/node_modules
+    depends_on: 
+      - db
+    environment:
+      - API_URL=http://localhost:3000/
+
+  server:
+    build:
+      context: ./back
+      dockerfile: Dockerfile_prod
+    ports:
+      - 3000:3000
+    volumes:
+      - ./back:/app
+      - /data/back/node_modules
+    depends_on: 
+      - db
+    environment:
+      - HOST=db
+    networks:
+      - core_service_network
+  db:
+    build: ./db
+    volumes:
+      - ./db:/var/dump
+    ports:
+      - 27017:27017
+    networks:
+      - core_service_network
+networks:
+  core_service_network:
+    driver: bridge
