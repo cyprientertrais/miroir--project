@@ -2,10 +2,11 @@ FROM node:latest as ui-builder
 RUN mkdir /usr/src/app
 WORKDIR /usr/src/app
 ENV PATH /usr/src/app/node_modules/.bin:$PATH
+ENV NODE_ENV production
 COPY package.json /usr/src/app/package.json
 
 COPY . /usr/src/app
-RUN npm install
+RUN npm  install
 RUN npm install -g @vue/cli
 ARG VUE_APP_API_URL
 ENV VUE_APP_API_URL $VUE_APP_API_URL

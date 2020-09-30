@@ -1,0 +1,34 @@
+version: "3.5"
+
+services:
+  client:
+    image: cypnose/front:arm7
+    ports:
+      - 80:80
+    volumes:
+      - ./front:/data/front
+      - /data/front/node_modules
+    depends_on: 
+      - db
+    environment:
+      - API_URL=http://localhost:3000/
+
+  server:
+    image: cypnose/back:arm7
+    ports:
+      - 3000:3000
+    depends_on: 
+      - db
+    environment:
+      - HOST=db
+    networks:
+      - core_service_network
+  db:
+    image: cypnose/mongodb:arm7
+    ports:
+      - 27017:27017
+    networks:
+      - core_service_network
+networks:
+  core_service_network:
+    driver: bridge
