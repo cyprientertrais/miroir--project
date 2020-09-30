@@ -2,7 +2,7 @@ version: "3.5"
 
 services:
   client:
-    image: cypnose/front:latest-arm7
+    image: cypnose/front:beta-arm7
     ports:
       - 8080:8080
     depends_on: 
