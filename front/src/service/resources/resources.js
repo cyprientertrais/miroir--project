@@ -21,4 +21,9 @@ export default class Resources {
         const url = `http://localhost:3000/profile/${profileName}`;
         return axios.get(url);
     }
+
+    getAllUserProfile() {
+        const url = `http://localhost:3000/profile/`;
+        return axios.get(url);
+    }
 }
