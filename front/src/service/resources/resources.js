@@ -17,9 +17,9 @@ export default class Resources {
         return axios.get(url);
     }
 
-    getUserProfile(profileName) {
+    async getUserProfile(profileName) {
         const url = `http://localhost:3000/profile/${profileName}`;
-        return axios.get(url);
+        return await axios.get(url);
     }
 
     getAllUserProfile() {

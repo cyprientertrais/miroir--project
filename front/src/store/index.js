@@ -32,7 +32,8 @@ export default new Vuex.Store({
     },
     setUserProfile(context, pseudo) {
       ResourcesService.getUserProfile(pseudo).then(res => {
-        context.commit('setUserProfile', res.body);
+        console.log(res,"TOTOOTO");
+        context.commit('setUserProfile', res.data);
       })
     }
   },
