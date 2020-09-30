@@ -1,21 +1,10 @@
-FROM  debian:buster-slim
-
-RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
-
-# Install necessary libs
-RUN apt-get update && apt-get install -y apt-utils wget gnupg gnupg2 curl
-
-# Install mongodb
-RUN wget -qO - https://www.mongodb.org/static/pgp/server-4.2.asc | apt-key add -
-RUN echo "deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.2 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-4.2.list
-RUN apt-get update
-RUN apt-get install -y mongodb-org
-
-# BIND TO ALL ADAPTERS IN CONTAINER
-RUN sed -i "s,\\(^[[:blank:]]*bindIp:\\) .*,\\1 0.0.0.0," /etc/mongod.conf
-
-# Install jre 11                                                                                                                                                                                          
-# RUN "apt-get install -y openjdk-11-jre"
-
+FROM alpine
+RUN echo 'http://dl-cdn.alpinelinux.org/alpine/v3.6/main' >> /etc/apk/repositories
+RUN echo 'http://dl-cdn.alpinelinux.org/alpine/v3.6/community' >> /etc/apk/repositories
+RUN apk update && apk upgrade && apk add --no-cache mongodb mongodb-tools
+VOLUME /data/db
 EXPOSE 27017
-ENTRYPOINT ["/usr/bin/mongod", "-f", "/etc/mongod.conf"]
+
+COPY run.sh /root
+CMD [ "mongod", "--bind_ip", "0.0.0.0" ]
+ENTRYPOINT [ "/root/run.sh" ]
