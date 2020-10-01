@@ -2,7 +2,7 @@
   <div class="home">
     <v-row>
       <v-card dark class="pa-3" style="text-align: center" shaped width="10%">
-        <strong>{{ userProfile.pseudo }}</strong>
+        <strong v-if="userProfile">{{ userProfile.pseudo }}</strong>
       </v-card>
     </v-row>
     <v-row class="ma-2">
