@@ -1,5 +1,5 @@
-FROM arm7/mongo
+FROM mongo
 RUN mkdir -p /data/db
 COPY basic-dataset.zip .
-RUN apt-get install unzip && unzip basic-dataset.zip -d /var/dump
+RUN apt-get update && apt-get install unzip && unzip basic-dataset.zip -d /var/dump/db
 CMD ["mongod"]
