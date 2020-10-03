@@ -2,6 +2,7 @@
 import axios from 'axios'; 
 export default class Resources {
     axios = require('axios');
+    hostname= window.location.hostname;
     getPrintedWidgets(params) {
         const url = `${process.env.VUE_APP_BACK_URL}`
         return axios.get(url, {params:params});
@@ -18,12 +19,13 @@ export default class Resources {
     }
 
     getUserProfile(profileName) {
-        const url = `http://localhost:3000/profile/${profileName}`;
+       
+        const url = `http://${this.hostname}:3000/profile/${profileName}`;
         return axios.get(url);
     }
 
     getAllUserProfile() {
-        const url = `http://localhost:3000/profile/`;
+        const url = `http://${this.hostname}:3000/profile/`;
         return axios.get(url);
     }
 }
