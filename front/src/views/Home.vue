@@ -5,12 +5,14 @@
         <strong v-if="userProfile">{{ userProfile.pseudo }}</strong>
       </v-card>
     </v-row>
-    <v-row class="ma-2">
+    <v-row class="ma-2" v-if="userProfile">
       <v-col
-        v-for="(componentName, index) in widgets"
+        v-for="(componentName, index) in this.userProfile.dashboards[0].widgets"
+        cols="3"
         :key="index"
       >
         <component :is="componentName"></component>
+        <v-spacer></v-spacer>
       </v-col>
     </v-row>
   </div>
@@ -19,18 +21,24 @@
 <script>
 import { mapGetters } from "vuex";
 import moment from "moment";
+import Time from "@/components/widgets/Time";
+import Weather from "@/components/widgets/Weather";
 
 export default {
   name: "Home",
-  components: {},
+  components: {
+    Time,
+    Weather
+  },
   created() {
     moment.locale("fr");
   },
   watch: {
-    widgets: function() {
-      if (this.widgets) {
-        for (let c = 0; c < this.widgets.length; c++) {
-          let componentName = this.widgets[c];
+    userProfile: function() {
+      console.log("setUserProfile")
+      if (this.userProfile.dashboards[0].widgets) {
+        for (let c = 0; c < this.userProfile.dashboards[0].widgets.length; c++) {
+          let componentName = this.userProfile.dashboards[0].widgets[c].name;
           this.$options.components[componentName] = () =>
             import("../components/widgets/" + componentName + ".vue");
         }
@@ -39,7 +47,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["widgets", "userProfile"]),
+    ...mapGetters(["userProfile"]),
   },
 
   methods: {},

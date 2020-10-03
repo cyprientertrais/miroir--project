@@ -1,5 +1,5 @@
 FROM mongo
 RUN mkdir -p /data/db
 COPY basic-dataset.zip .
-RUN apt-get update && apt-get install unzip && unzip basic-dataset.zip -d /var/dump/db
+RUN apt-get update && apt-get install unzip && unzip basic-dataset.zip -d /var/dump
 CMD ["mongod"]

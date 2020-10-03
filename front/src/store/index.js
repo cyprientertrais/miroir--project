@@ -8,14 +8,10 @@ const ResourcesService = new Resources();
 
 export default new Vuex.Store({
   state: {
-    widgets: undefined,
     location: undefined,
     userProfile: undefined,
   },
   mutations: {
-    setWidgets(state, newWidgets) {
-      state.widgets = newWidgets;
-    },
     setLocation(state, location){
       state.location = location;
     },
@@ -24,9 +20,6 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    setWidgets(context, newWidgets) {
-      context.commit('setWidgets', newWidgets);
-    },
     setLocation(context,location) {
       context.commit('setLocation', location);
     },
@@ -37,9 +30,6 @@ export default new Vuex.Store({
     }
   },
   getters: {
-    widgets: state => {
-      return state.widgets
-    },
     location: state => {
       return state.location
     },
