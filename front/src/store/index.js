@@ -23,8 +23,8 @@ export default new Vuex.Store({
     setLocation(context,location) {
       context.commit('setLocation', location);
     },
-    setUserProfile(context, pseudo) {
-      ResourcesService.getUserProfile(pseudo).then(res => {
+    async setUserProfile(context, pseudo) {
+      await ResourcesService.getUserProfile(pseudo).then(res => {
         context.commit('setUserProfile', res.data);
       })
     }
