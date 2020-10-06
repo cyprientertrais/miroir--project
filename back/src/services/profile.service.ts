@@ -47,14 +47,14 @@ export class ProfileService {
     /* console.log(`Test = ${test}
     Test[name] = ${test["name"]}
     `) */
-    if(test[0]["name"].includes(dashboardName)){
+    /* if(test[0][name].includes(dashboardName)){
       throw new BadRequestException("Dashboard already exists");
-    }else{
+    }else{ */
       let dashboard = new Dashboard()
       dashboard.name = dashboardName
       e.dashboards.push(dashboard)
       this.profileRepository.save(e)
-    }
+    
   }
 
   
