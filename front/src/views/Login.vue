@@ -1,12 +1,11 @@
 <template>
-  <div align="center" justify="center" class="connection">
+  <div align="center" justify="center" class="login">
     <div class="titre">IMirror</div>
     <div class="password">
-      <span class="textPassword">Admin password</span>
       <v-text-field
         v-model="password"
         v-on:keyup="inputKeyPressed"
-        label="Password"
+        label="Admin password"
         type="password"
         class="inputPassword"
         dark
@@ -25,6 +24,7 @@ export default {
   name: "Connection",
   data() {
     return {
+      password: "",
       isPasswordWrong: false,
       wrongPasswordMessage: ""
     };
@@ -34,7 +34,8 @@ export default {
     connectionTentative: function() {
       let test = "nonon";
       if (this.password === test) {
-        alert("Bonjour " + this.password + " !");
+        sessionStorage.setItem("isAuthenticated", true);
+        this.$router.push(this.$route.query.from || "/");
       } else {
         this.isPasswordWrong = true;
         this.wrongPasswordMessage = "Wrong password";
@@ -56,6 +57,7 @@ export default {
 .titre {
   font-weight: bold;
   font-size: 50px;
+  color: #ffffff;
   padding-top: 10%;
 }
 
@@ -70,5 +72,11 @@ export default {
 
 .butonPassword {
   margin-top: 8%;
+  color: #ffffff;
+}
+
+.login{
+    background-color: #3c3e41;
+    height: 100%;
 }
 </style>

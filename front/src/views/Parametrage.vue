@@ -1,17 +1,10 @@
 <template>
   <div class="parametrage">
-    <connection></connection>
+    is working
   </div>
 </template>
 
 <script>
-import Connection from '../components/widgets/Connection.vue'
-export default {
-  name: "parametrage",
-  components: {
-      Connection
-  },
-}
 </script>
 
 <style scoped>

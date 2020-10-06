@@ -53,5 +53,6 @@ export default {
 
 .home{
   background-color: black;
+  height: 100%;
 }
 </style>
