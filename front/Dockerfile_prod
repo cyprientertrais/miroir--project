@@ -16,7 +16,7 @@ COPY package-lock.json ./
 
 
 # installe les dépendances du projet
-RUN npm install && npm install -g @vue/cli-service @vue/cli-plugin-babel @vue/cli-plugin-eslint @vue/cli-plugin-unit-jest vue-cli-plugin-vuetify 
+RUN npm install && npm install -g @vue/cli-service @vue/cli-plugin-babel @vue/cli-plugin-eslint @vue/cli-plugin-unit-jest vue-cli-plugin-vuetify @vue/babel-preset-app 
 
 # copie les fichiers et dossiers du projet dans le dossier de travail (par exemple : le dossier 'app')
 COPY . .
