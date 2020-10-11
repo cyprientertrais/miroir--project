@@ -16,14 +16,13 @@ jobs:
       - run:
           name: Listing built images
           command: docker images
-      - run:
-          name: Running arm based image.
-          command: docker run --rm arm-test
       - deploy:
           name: Push application Docker image
           command: |
-            docker login -e $DOCKER_HUB_EMAIL -u $DOCKER_HUB_USER_ID -p $DOCKER_HUB_PWD
-            docker tag dockerapp_dockerapp $DOCKER_HUB_USER_ID/dockerapp1:$CIRCLE_SHA1
-            docker tag dockerapp_dockerapp $DOCKER_HUB_USER_ID/dockerapp1:latest
-            docker push $DOCKER_HUB_USER_ID/dockerapp1:$CIRCLE_SHA1
-            docker push $DOCKER_HUB_USER_ID/dockerapp1:latest
+            docker login  -u $DOCKER_HUB_USER_ID -p $DOCKER_HUB_PWD
+            docker tag project_db $DOCKER_HUB_USER_ID/mongodb:latest
+            docker tag project_server $DOCKER_HUB_USER_ID/back:latest
+            docker tag project_front $DOCKER_HUB_USER_ID/front:latest
+            docker push $DOCKER_HUB_USER_ID/back:latest
+            docker push $DOCKER_HUB_USER_ID/front:latest
+            docker push $DOCKER_HUB_USER_ID/db:latest
