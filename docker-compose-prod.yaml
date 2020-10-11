@@ -9,7 +9,6 @@ services:
       - 80:80
     volumes:
       - ./front:/data/front
-      - /data/front/node_modules
     depends_on: 
       - db
     environment:
@@ -23,7 +22,6 @@ services:
       - 3000:3000
     volumes:
       - ./back:/app
-      - /data/back/node_modules
     depends_on: 
       - db
     environment:
