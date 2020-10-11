@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: /d
     docker:
-      - image: docker:latestce-git
+      - image: docker:latest-ce-git
     steps:
       - checkout
       - setup_remote_docker
