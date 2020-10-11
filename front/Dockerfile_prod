@@ -1,4 +1,4 @@
-FROM node:lts-alpine
+FROM node:10-alpine
 ENV PYTHONUNBUFFERED=1
 ENV NODE_ENV production
 RUN apk add --update --no-cache python3 make g++ && ln -sf python3 /usr/bin/python
@@ -14,7 +14,7 @@ WORKDIR /app
 COPY package.json ./
 
 # installe les dépendances du projet
-RUN npm install && npm install @vue/cli-service @vue/cli-plugin-babel @vue/cli-plugin-eslint @vue/cli-plugin-unit-jest vue-cli-plugin-vuetify 
+RUN npm install 
 
 # copie les fichiers et dossiers du projet dans le dossier de travail (par exemple : le dossier 'app')
 COPY . .
