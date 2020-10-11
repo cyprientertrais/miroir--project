@@ -12,7 +12,7 @@ jobs:
           command: docker run --rm --privileged multiarch/qemu-user-static:register --reset
       - run:
           name: Building arm based image.
-          command: docker-compose build
+          command: docker-compose -f docker-compose-rasp.yaml build
       - run:
           name: Listing built images
           command: docker images
