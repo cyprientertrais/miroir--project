@@ -22,7 +22,7 @@ jobs:
             docker login  -u $DOCKER_HUB_USER_ID -p $DOCKER_HUB_PWD
             docker tag project_db $DOCKER_HUB_USER_ID/mongodb:latest
             docker tag project_server $DOCKER_HUB_USER_ID/back:latest
-            docker tag project_front $DOCKER_HUB_USER_ID/front:latest
+            docker tag project_client $DOCKER_HUB_USER_ID/front:latest
             docker push $DOCKER_HUB_USER_ID/back:latest
             docker push $DOCKER_HUB_USER_ID/front:latest
             docker push $DOCKER_HUB_USER_ID/db:latest
