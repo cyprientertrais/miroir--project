@@ -4,7 +4,7 @@ services:
   client:
     build:
       context: ./front
-      dockerfile: Dockerfile_prod
+      dockerfile: Dockerfile
     ports:
       - 80:80
     volumes:
