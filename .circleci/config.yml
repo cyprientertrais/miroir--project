@@ -1,22 +1,24 @@
 version: 2
 jobs:
   build:
-    working_directory: /d
-    docker:
-      - image: docker
+    machine: true
     steps:
       - checkout
-      - setup_remote_docker
+      #- run:
+      #    name : Getting docker
+      #    command: curl https://get.docker.com | sh
       - run:
-          name: Install dependencies
-          command: |
-            apk add --no-cache python3 py-pip
-            pip install --upgrade pip
-            pip install docker-compose
+          name: Enabling qemu
+          command: docker run --rm --privileged multiarch/qemu-user-static:register --reset
       - run:
-          name: Run tests
-          command: |
-            docker-compose up -d
+          name: Building arm based image.
+          command: docker build -t arm-test .
+      - run:
+          name: Listing built images
+          command: docker images
+      - run:
+          name: Running arm based image.
+          command: docker run --rm arm-test
       - deploy:
           name: Push application Docker image
           command: |
