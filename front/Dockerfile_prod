@@ -14,7 +14,7 @@ WORKDIR /app
 COPY package.json ./
 
 # installe les dépendances du projet
-RUN npm install 
+RUN npm install && npm install @vue/cli-service @vue/cli-plugin-babel @vue/cli-plugin-eslint @vue/cli-plugin-unit-jest vue-cli-plugin-vuetify 
 
 # copie les fichiers et dossiers du projet dans le dossier de travail (par exemple : le dossier 'app')
 COPY . .
