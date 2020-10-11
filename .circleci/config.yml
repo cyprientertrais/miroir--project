@@ -1,0 +1,26 @@
+version: 2
+jobs:
+  build:
+    working_directory: /
+    docker:
+      - image: docker:17.05.0-ce-git
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Install dependencies
+          command: |
+            apk add --no-cache py-pip=
+            pip install docker-compose=
+      - run:
+          name: Run tests
+          command: |
+            docker-compose up -d
+      - deploy:
+          name: Push application Docker image
+          command: |
+            docker login -e $DOCKER_HUB_EMAIL -u $DOCKER_HUB_USER_ID -p $DOCKER_HUB_PWD
+            docker tag dockerapp_dockerapp $DOCKER_HUB_USER_ID/dockerapp1:$CIRCLE_SHA1
+            docker tag dockerapp_dockerapp $DOCKER_HUB_USER_ID/dockerapp1:latest
+            docker push $DOCKER_HUB_USER_ID/dockerapp1:$CIRCLE_SHA1
+            docker push $DOCKER_HUB_USER_ID/dockerapp1:latest
