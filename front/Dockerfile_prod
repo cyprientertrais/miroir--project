@@ -14,7 +14,7 @@ WORKDIR /app
 COPY package.json ./
 
 # installe les dépendances du projet
-RUN npm install && npm install -g @vue/cli-service
+RUN npm install && npm install -g @vue/cli-service @vue/cli-plugin-babel
 
 # copie les fichiers et dossiers du projet dans le dossier de travail (par exemple : le dossier 'app')
 COPY . .
