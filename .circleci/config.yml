@@ -19,7 +19,6 @@ jobs:
             docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
             docker buildx create --name docker-multiarch && docker buildx inspect --builder docker-multiarch --bootstrap
             docker login  -u $DOCKER_HUB_USER_ID -p $DOCKER_HUB_PWD
-            ls
-            docker buildx build -f front/Dockerfile_prod --platform linux/arm/v7,linux/amd64 --tag $DOCKER_HUB_USER_ID/front:latest --push .
-            docker buildx build -f db/Dockerfile --platform linux/arm/v7,linux/amd64 --tag $DOCKER_HUB_USER_ID/mongodb:latest --push .
-            docker buildx build -f back/Dockerfile_prod --platform linux/arm/v7,linux/amd64 --tag $DOCKER_HUB_USER_ID/front:latest --push .
+            cd front && docker buildx build -f Dockerfile_prod --platform linux/arm/v7,linux/amd64 --tag $DOCKER_HUB_USER_ID/front:latest --push . && cd ..
+            cd db && docker buildx build -f Dockerfile --platform linux/arm/v7,linux/amd64 --tag $DOCKER_HUB_USER_ID/mongodb:latest --push . && cd ..
+            cd back && docker buildx build -f Dockerfile_prod --platform linux/arm/v7,linux/amd64 --tag $DOCKER_HUB_USER_ID/front:latest --push . cd ..
