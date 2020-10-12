@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     machine: true
-    image: jonoh/docker-buildx-qemu
+    image: alemairebe/buildx
     steps:
       - checkout
       #- run:
