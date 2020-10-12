@@ -2,8 +2,13 @@ version: 2
 jobs:
   build:
     machine: true
+    docker:
+        - image: circleci/buildpack-deps:stretch
     steps:
       - checkout
+      #- run:
+      #    name : Getting docker
+      #    command: curl https://get.docker.com | sh
       - run:
           name: Listing built images
           command: docker images
@@ -13,6 +18,6 @@ jobs:
           command: |
 
             docker login  -u $DOCKER_HUB_USER_ID -p $DOCKER_HUB_PWD
-            docker buildx build  --platform linux/arm/v7,linux/amd64 -f front/Dockerfile_prod --tag $DOCKER_HUB_USER_ID/front:latest --push .
-            docker buildx build  --platform linux/arm/v7,linux/amd64 -f db/Dockerfile --tag $DOCKER_HUB_USER_ID/mongodb:latest --push .
-            docker buildx build --platform linux/arm/v7,linux/amd64  -f back/Dockerfile_prod --tag $DOCKER_HUB_USER_ID/front:latest --push .
+            docker buildx build -f front/Dockerfile_prod --platform linux/arm/v7,linux/amd64 --tag $DOCKER_HUB_USER_ID/front:latest --push .
+            docker buildx build -f db/Dockerfile --platform linux/arm/v7,linux/amd64 --tag $DOCKER_HUB_USER_ID/mongodb:latest --push .
+            docker buildx build -f back/Dockerfile_prod --platform linux/arm/v7,linux/amd64 --tag $DOCKER_HUB_USER_ID/front:latest --push .
