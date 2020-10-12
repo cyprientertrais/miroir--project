@@ -7,16 +7,11 @@ jobs:
         - image: alemairebe/buildx
     steps:
       - checkout
-      #- run:
-      #    name : Getting docker
-      #    command: curl https://get.docker.com | sh
       - run:
           name: Listing built images
           command: docker images
     
       - deploy:
-          steps:
-            - checkout
           name: Push application Docker image
           command: |
 
