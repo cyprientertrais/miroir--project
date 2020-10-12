@@ -16,11 +16,8 @@ jobs:
           command: |
 
             env DOCKER_CLI_EXPERIMENTAL=enabled docker buildx ls
-            export DOCKER_HOST=tcp://docker:2375
-            docker context create --name main
-            docker buildx create --name nubuilder
-            docker buildx use nubuilder
-            docker buildx inspect --bootstrap
+            docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+            docker buildx create --name docker-multiarch && docker buildx inspect --builder docker-multiarch --bootstrap
             docker login  -u $DOCKER_HUB_USER_ID -p $DOCKER_HUB_PWD
             docker buildx build -f front/Dockerfile_prod --platform linux/arm/v7,linux/amd64 --tag $DOCKER_HUB_USER_ID/front:latest --push .
             docker buildx build -f db/Dockerfile --platform linux/arm/v7,linux/amd64 --tag $DOCKER_HUB_USER_ID/mongodb:latest --push .
