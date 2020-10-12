@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     machine: true
-    image: jdrouet/docker-with-buildx:stable
+    image: jonoh/docker-buildx-qemu
     steps:
       - checkout
       #- run:
