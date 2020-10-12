@@ -17,6 +17,7 @@ jobs:
 
             env DOCKER_CLI_EXPERIMENTAL=enabled docker buildx ls
             export DOCKER_HOST=tcp://docker:2375
+            docker context create --name main
             docker buildx create --name nubuilder
             docker buildx use nubuilder
             docker buildx inspect --bootstrap
