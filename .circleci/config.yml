@@ -1,5 +1,6 @@
 version: 2
 jobs:
+    
   build:
     machine: true
     steps:
@@ -12,6 +13,8 @@ jobs:
           command: docker images
     
       - deploy:
+          docker:
+            - image: alemairebe/buildx
           name: Push application Docker image
           command: |
 
