@@ -6,6 +6,5 @@ RUN pip3 install --no-cache --upgrade pip setuptools
 WORKDIR /data/front
 
 COPY package*.json ./
-RUN npm install && npm install -g @vue/cli-service
-COPY . .
+RUN npm install
 CMD [ "npm", "run","serve" ]
