@@ -2,27 +2,25 @@ version: 2
 jobs:
   build:
     machine: true
+    image: jdrouet/docker-with-buildx:stable
     steps:
       - checkout
       #- run:
       #    name : Getting docker
       #    command: curl https://get.docker.com | sh
       - run:
-          name: Enabling qemu
-          command: docker run --rm --privileged multiarch/qemu-user-static:register --reset
-      - run:
           name: Building arm based image.
           command: docker-compose -f docker-compose-prod.yaml  build
       - run:
           name: Listing built images
           command: docker images
+    
       - deploy:
           name: Push application Docker image
           command: |
+
             docker login  -u $DOCKER_HUB_USER_ID -p $DOCKER_HUB_PWD
-            docker tag project_db $DOCKER_HUB_USER_ID/mongodb:latest
-            docker tag project_server $DOCKER_HUB_USER_ID/back:latest
-            docker tag project_client $DOCKER_HUB_USER_ID/front:latest
-            docker push $DOCKER_HUB_USER_ID/back:latest
-            docker push $DOCKER_HUB_USER_ID/front:latest
-            docker push $DOCKER_HUB_USER_ID/mongodb:latest
+            docker buildx create --use
+            docker buildx build -f front/Dockerfile_prod --platform linux/arm/v7,linux/amd64 --tag $DOCKER_HUB_USER_ID/front:latest --push .
+            docker buildx build -f db/Dockerfile --platform linux/arm/v7,linux/amd64 --tag $DOCKER_HUB_USER_ID/mongodb:latest --push .
+            docker buildx build -f back/Dockerfile_prod --platform linux/arm/v7,linux/amd64 --tag $DOCKER_HUB_USER_ID/front:latest --push .
