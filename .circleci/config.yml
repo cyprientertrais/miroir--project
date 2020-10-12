@@ -1,8 +1,8 @@
 version: 2
 jobs:
-  build:
-    docker:
-      - image: cimg/ruby:2.7.1-node
+build:
+  docker:
+    - image: jdrouet/docker-with-buildx:stable
     steps:
       - checkout
       #- run:
