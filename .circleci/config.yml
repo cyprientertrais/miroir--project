@@ -9,9 +9,6 @@ jobs:
       #    name : Getting docker
       #    command: curl https://get.docker.com | sh
       - run:
-          name: Building arm based image.
-          command: docker-compose -f docker-compose-prod.yaml  build
-      - run:
           name: Listing built images
           command: docker images
     
