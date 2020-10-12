@@ -7,4 +7,5 @@ WORKDIR /data/front
 
 COPY package*.json ./
 RUN npm install && npm install -g @vue/cli-service
+COPY . .
 CMD [ "npm", "run","serve" ]
