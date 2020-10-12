@@ -1,8 +1,9 @@
 version: 2
 jobs:
   build:
+    docker:
+        - image: alemairebe/buildx
     machine: true
-    image: alemairebe/buildx
     steps:
       - checkout
       #- run:
