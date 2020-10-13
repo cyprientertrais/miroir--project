@@ -36,26 +36,37 @@ export class ProfileService {
     return e.dashboards
   }
 
-  async createDashboardFromProfileService(name : string, dashboardName : string){
+  async createDashboardFromProfileService(newDashboard : Dashboard,name :string){
 
-    let e = await this.getOne(name)
-    console.log(await this.getAllDashboardsFromProfileService(name))
-    //this.profileRepository.find({pseudo:e.pseudo, dashboards:Dashboard[dashboardName]})
-    //fruits.indexOf("Mango") !== -1
-    let test : Dashboard[]
-    test = await this.getAllDashboardsFromProfileService(name)
-    /* console.log(`Test = ${test}
-    Test[name] = ${test["name"]}
-    `) */
-    /* if(test[0][name].includes(dashboardName)){
-      throw new BadRequestException("Dashboard already exists");
-    }else{ */
-      let dashboard = new Dashboard()
-      dashboard.name = dashboardName
-      e.dashboards.push(dashboard)
-      this.profileRepository.save(e)
-    
-  }
-
+    let profile = await this.getOne(name)
+    console.log(profile.dashboards)
+    const dashboardAlreadyExists = this.doesDashboardNameAlreadyExists(profile.dashboards, newDashboard.name)
+    if(dashboardAlreadyExists == true){
+      console.log("Dashboard name already exists")
+    }else{
+      console.log("Dashboard created")
+      let dash = new Dashboard()
+      dash.name = newDashboard.name
+      profile.dashboards.push(newDashboard)
+      this.profileRepository.save(profile)
+    }
+    };
   
+
+ doesDashboardNameAlreadyExists(dashboards : Dashboard[], newDashboardName : string) : boolean{
+  console.log(`New dashboard name : ${newDashboardName}`)
+  let alreadyExists : boolean;
+  dashboards.forEach(element => {
+    console.log(`Dashboard name : ${element.name}`)
+    if(newDashboardName === element.name){
+      console.log("is true")
+      alreadyExists = true;
+    }
+  });
+  if(alreadyExists == true){
+    return true;
+  }else{
+    return false;
+  }
+}
 }

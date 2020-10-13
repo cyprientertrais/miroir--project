@@ -30,9 +30,9 @@ export class ProfileController {
     return await this.profileService.getAllDashboardsFromProfileService(name)
   }
 
-  @Post(':name/:dashboardName')
-  async postDashboardToProfile(@Param('name') name : string, @Param('dashboardName') dashboardName: string) {
-    return await this.profileService.createDashboardFromProfileService(name,dashboardName)
+  @Post(':name/dashboard')
+  async postDashboardToProfile(@Body() dashboard : Dashboard,@Param('name') name : string) {
+    return await this.profileService.createDashboardFromProfileService(dashboard,name)
   }
 
 
