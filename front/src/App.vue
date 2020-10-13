@@ -13,12 +13,10 @@ import moment from "moment";
 export default {
   name: "App",
 
-  components: {
-  },
+  components: {},
 
   data() {
-    return {
-    };
+    return {};
   },
 
   created() {
@@ -31,24 +29,22 @@ export default {
 
     // get position
     navigator.geolocation.getCurrentPosition(
-      pos => {
-        console.log(JSON.stringify(pos))
+      (pos) => {
         this.setLocation(pos);
       },
-      err => {
+      (err) => {
         console.log("error getting the location:\n" + err.message);
       }
     );
   },
 
   methods: {
-    ...mapActions(["setWidgets", "setLocation", "setUserProfile"])
+    ...mapActions(["setLocation", "setUserProfile"]),
   },
 
   mounted() {
-    this.setWidgets(["Time", "Weather"]);
     this.setUserProfile("Invité");
-  }
+  },
 };
 </script>
 
