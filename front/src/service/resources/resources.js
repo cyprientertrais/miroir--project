@@ -31,4 +31,9 @@ export default class Resources {
         const url = `http://${this.hostname}:3000/profile/`;
         return axios.get(url);
     }
+
+    checkAdminPassword(hashedPassword) {
+        const url = `http://${this.hostname}:3000/admin/checkAdminPassword`;
+        return axios.post(url, {hashedPassword: hashedPassword});
+    }
 }

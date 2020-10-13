@@ -20,6 +20,11 @@
 </template>
 
 <script>
+import { sha256 } from 'js-sha256';
+import Resources from "@/service/resources/resources";
+
+const ResourcesService = new Resources();
+
 export default {
   name: "Connection",
   data() {
@@ -32,7 +37,13 @@ export default {
   computed: {},
   methods: {
     connectionTentative: function() {
-      let test = "nonon";
+      let test = "nononon";
+      const hashedPassword = sha256(this.password);
+
+      const responseCheckPassword = ResourcesService.checkAdminPassword(hashedPassword);
+      console.log(responseCheckPassword);
+
+      //check if call responds 200 or 403
       if (this.password === test) {
         sessionStorage.setItem("isAuthenticated", true);
         this.$router.push(this.$route.query.from || "/");

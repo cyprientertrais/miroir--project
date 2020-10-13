@@ -36,6 +36,17 @@ export class AdminController {
     return this.adminService.getAll();
   }
 
+  @Post("/checkAdminPassword")
+  async checkAdminPassword(@Body() body, @Res() res) {
+    console.log(body);
+    const infos = await this.adminService.getAll();
+    if(infos[0].adminPassword === body.hashedPassword){
+      return res.send(200);
+    }else{
+      return res.send(403);
+    }
+  }
+
 
   
 }
