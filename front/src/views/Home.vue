@@ -1,15 +1,15 @@
 <template>
   <div class="home">
     <v-row>
-      <v-card dark class="pa-3" style="text-align: center" shaped width="10%">
+      <v-card dark class="username" style="text-align: center" width="250px" shaped>
         <strong v-if="userProfile">{{ userProfile.pseudo }}</strong>
       </v-card>
     </v-row>
-    <v-row class="ma-2">
-      <v-col
-        v-for="(componentName, index) in widgets"
-        :key="index"
-      >
+
+
+
+    <v-row class="ma-2" v-if="widgets" >
+      <v-col v-for="(componentName, index) in widgets" :key="index" cols="12" sm="12" md="3" lg="3" xl="3">
         <component :is="componentName"></component>
       </v-col>
     </v-row>
@@ -19,35 +19,43 @@
 <script>
 import { mapGetters } from "vuex";
 import moment from "moment";
-
 export default {
   name: "Home",
   components: {},
   created() {
     moment.locale("fr");
+    this.setWidgets();
+  },
+  data() {
+    return {
+      widgets: [],
+    };
   },
   watch: {
-    widgets: function() {
-      if (this.widgets) {
-        for (let c = 0; c < this.widgets.length; c++) {
-          let componentName = this.widgets[c];
-          this.$options.components[componentName] = () =>
-            import("../components/widgets/" + componentName + ".vue");
-        }
+    userProfile: function() {
+      this.setWidgets();
+    },
+  },
+  computed: {
+    ...mapGetters(["userProfile"]),
+  },
+  methods: {
+    setWidgets() {
+      if (this.userProfile) {
+          for (let c = 0; c < this.userProfile.dashboards[0].widgets.length; c++) {
+            let componentName = this.userProfile.dashboards[0].widgets[c].name;
+            this.widgets.push(componentName);
+            this.$options.components[componentName] = () =>
+              import("../components/widgets/" + componentName + ".vue");
+          }
       }
     },
   },
-
-  computed: {
-    ...mapGetters(["widgets", "userProfile"]),
-  },
-
-  methods: {},
 };
 </script>
 
 <style scoped>
-.v-card{
-  left:-10px !important;
+.username {
+ margin-left:-10px !important
 }
 </style>
