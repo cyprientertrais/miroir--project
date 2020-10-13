@@ -3,6 +3,7 @@ import { profileEnd } from 'console';
 import { Dashboard } from 'src/entities/dashboard.entity';
 import { Profile } from 'src/entities/profile.entity';
 import { ProfileService } from '../services/profile.service';
+import { Widget } from 'src/entities/widget.entity';
 
 @Controller('/profile')
 export class ProfileController {
@@ -35,6 +36,10 @@ export class ProfileController {
     return await this.profileService.createDashboardFromProfileService(dashboard,name)
   }
 
+  /*@Post(':name/:dashboard/:widget')
+  async postWidgetToDashboard(@Body() widget : Widget, @Param('name') name : string, @Param('dashboard') dashboard : Dashboard){
+    return await this.profileService.addWidgetToDashboard(name,dashboard,widget)
+  }*/
 
   /* @Post(':user/dashboard')
   async postDashboard(@Body() dashboard : Dashboard) : Promise<any>{
