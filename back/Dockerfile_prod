@@ -1,5 +1,5 @@
 FROM node:12-alpine
-
+apk  update && apk add python3
 WORKDIR /app
 
 COPY ./ /app
