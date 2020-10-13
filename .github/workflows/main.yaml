@@ -28,7 +28,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: ./front
-          file: Dockerfile_prod
+          file: ./front/Dockerfile_prod
           platforms: linux/arm/v7
           push: true
           tags: |
