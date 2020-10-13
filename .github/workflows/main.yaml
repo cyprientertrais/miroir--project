@@ -1,4 +1,4 @@
-name: build_push
+name: ci
 
 on:
   push:
@@ -11,7 +11,6 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '12'
-          check-latest: true
       -
         name: Checkout
         uses: actions/checkout@v2
@@ -31,7 +30,7 @@ jobs:
         name: npm install in Front and Back
         run: cd ./front && npm install && cd .. 
       -
-        name: Build and push
+        name: Build and push FRONT ....
         uses: docker/build-push-action@v2
         with:
           context: ./front
@@ -40,4 +39,26 @@ jobs:
           push: true
           tags: |
             cypnose/front:latest
-            cypnose/front:1.0.0
+            cypnose/front:1.0.1
+      -
+        name: Build and push BACK .....
+        uses: docker/build-push-action@v2
+        with:
+          context: ./back
+          file: ./back/Dockerfile_prod
+          platforms: linux/arm/v7
+          push: true
+          tags: |
+            cypnose/back:latest
+            cypnose/back:1.0.1
+      -
+        name: Build and push DB ....
+        uses: docker/build-push-action@v2
+        with:
+          context: ./db
+          file: ./db/Dockerfile_prod
+          platforms: linux/arm/v7
+          push: true
+          tags: |
+            cypnose/mongodb:latest
+            cypnose/mongodb:1.0.1
