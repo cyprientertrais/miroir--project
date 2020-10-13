@@ -28,4 +28,5 @@ export class ProfileService {
       throw new BadRequestException(err);
     });
   }
+  
 }
