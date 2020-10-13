@@ -40,7 +40,7 @@ jobs:
           push: true
           tags: |
             cypnose/front:latest
-            cypnose/front:1.0.&
+            cypnose/front:1.0.1
       -
         name: Build and push BACK .....
         uses: docker/build-push-action@v2
