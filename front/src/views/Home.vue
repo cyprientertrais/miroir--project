@@ -5,12 +5,14 @@
         <strong v-if="userProfile">{{ userProfile.pseudo }}</strong>
       </v-card>
     </v-row>
-    <v-row class="ma-2" v-if="widgets">
-      <v-col v-for="(componentName, index) in widgets" :key="index" cols="3">
+
+
+
+    <v-row class="ma-2" v-if="widgets" >
+      <v-col v-for="(componentName, index) in widgets" :key="index" cols="12" sm="12" md="3" lg="3" xl="3">
         <component :is="componentName"></component>
       </v-col>
     </v-row>
-    <v-spacer></v-spacer>
   </div>
 </template>
 
