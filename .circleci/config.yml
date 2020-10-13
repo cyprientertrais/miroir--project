@@ -15,7 +15,7 @@ jobs:
           command: |
 
             export VERSION=1.0.0
-            apt-get update &&  apt-get upgrade &&  apt-get install nodejs &&  apt-get install npm
+            apk add --update nodejs npm
             env DOCKER_CLI_EXPERIMENTAL=enabled docker buildx ls
             docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
             docker buildx create --name docker-multiarch && docker buildx inspect --builder docker-multiarch --bootstrap
