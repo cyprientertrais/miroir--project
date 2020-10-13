@@ -1,7 +1,6 @@
 import { Controller, Get,Post,Param, Res,Req, Body, BadRequestException} from '@nestjs/common';
+import { AdminService } from 'src/services/admin.service';
 
-import { Profile } from '../entities/profile.entity';
-import { ProfileService } from '../services/profile.service';
 let SSH = require('simple-ssh');
 
 var ssh = new SSH({
@@ -14,7 +13,7 @@ var ssh = new SSH({
 @Controller('/admin')
 export class AdminController {
   wifi=""
-  constructor() {}
+  constructor(private readonly adminService: AdminService) {}
 
   @Get("/wifiscan")
   async getProfiles() {
@@ -30,6 +29,11 @@ export class AdminController {
     }   
   }).start();
     return this.wifi;
+  }
+
+  @Get("/info")
+  async getProps() {
+    return this.adminService.getAll();
   }
 
 
