@@ -10,13 +10,15 @@ jobs:
       #- run:
       #    name : Getting docker
       #    command: curl https://get.docker.com | sh
-     
+      -install:
+        name: linux
+        command: |  
+        sudo apt-get update && sudo apt-get upgrade && sudo apt-get install nodejs && sudo apt-get install npm
       - deploy:
           name: Push application Docker image
           command: |
 
             export VERSION=1.0.0
-            sudo apt update && sudo apt upgrade && sudo apt install nodejs && sudo apt install npm
             env DOCKER_CLI_EXPERIMENTAL=enabled docker buildx ls
             docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
             docker buildx create --name docker-multiarch && docker buildx inspect --builder docker-multiarch --bootstrap
