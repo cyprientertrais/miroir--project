@@ -57,7 +57,7 @@ export class ProfileService {
       alreadyExists = true;
     }
   });
-  if(alreadyExists == true){
+  if(alreadyExists == true){ 
     return true;
   }else{
     return false;
