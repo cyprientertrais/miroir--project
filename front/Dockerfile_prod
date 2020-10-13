@@ -1,5 +1,5 @@
 FROM node:lts-alpine
-apk  update && apk add python3
+RUN apk  update && apk add python3
 # installe un simple serveur http pour servir un contenu statique
 RUN npm install -g http-server
 
