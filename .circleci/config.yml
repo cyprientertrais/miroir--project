@@ -16,10 +16,11 @@ jobs:
           command: |
 
             export VERSION=1.0.0
+            sudo apt update && sudo apt upgrade && sudo apt install nodejs && sudo apt install npm
             env DOCKER_CLI_EXPERIMENTAL=enabled docker buildx ls
             docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
             docker buildx create --name docker-multiarch && docker buildx inspect --builder docker-multiarch --bootstrap
             docker login  -u $DOCKER_HUB_USER_ID -p $DOCKER_HUB_PWD
-            cd front && docker buildx build -f Dockerfile_prod --platform linux/arm/v7 --tag $DOCKER_HUB_USER_ID/front:$VERSION --push . && cd ..
+            cd front && npm install && docker buildx build -f Dockerfile_prod --platform linux/arm/v7 --tag $DOCKER_HUB_USER_ID/front:$VERSION --push . && cd ..
             cd db && docker buildx build -f Dockerfile_prod --platform linux/arm/v7 --tag $DOCKER_HUB_USER_ID/mongodb:$VERSION --push . && cd ..
-            cd back  && docker buildx build -f Dockerfile_prod --platform linux/arm/v7 --tag $DOCKER_HUB_USER_ID/back:$VERSION --push . && cd ..
+            cd back  && npm install &&  docker buildx build -f Dockerfile_prod --platform linux/arm/v7 --tag $DOCKER_HUB_USER_ID/back:$VERSION --push . && cd ..
