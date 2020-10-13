@@ -1,15 +1,14 @@
-version: "3.5"
+version: "3.2"
 
 services:
   client:
     build:
       context: ./front
-      dockerfile: Dockerfile_prod
+      dockerfile: Dockerfile
     ports:
       - 80:80
     volumes:
       - ./front:/data/front
-      - /data/front/node_modules
     depends_on: 
       - db
     environment:
@@ -23,7 +22,6 @@ services:
       - 3000:3000
     volumes:
       - ./back:/app
-      - /data/back/node_modules
     depends_on: 
       - db
     environment:
