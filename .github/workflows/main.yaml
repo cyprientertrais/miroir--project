@@ -9,6 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       -
+        name: install npm
+        run: apt update && apt install nodejs && apt install npm
+      -
         name: Checkout
         uses: actions/checkout@v2
       -
