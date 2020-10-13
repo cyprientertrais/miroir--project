@@ -8,6 +8,7 @@ import {TypeOrmModule} from '@nestjs/typeorm'
 import { Profile } from './entities/profile.entity';
 import { Dashboard } from './entities/dashboard.entity';
 import { Widget } from './entities/widget.entity';
+import { AdminController } from './controllers/admin.controller';
 @Module({
   imports: [
     TypeOrmModule.forFeature([Profile,Dashboard,Widget]),
@@ -25,7 +26,7 @@ import { Widget } from './entities/widget.entity';
       synchronize: true,
     })
   ],
-  controllers: [AppController,ProfileController],
+  controllers: [AppController,ProfileController,AdminController],
   providers: [AppService,ProfileService],
 })
 export class AppModule {}
