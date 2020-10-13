@@ -1,4 +1,4 @@
-name: ci
+name: build_push
 
 on:
   push:
@@ -40,5 +40,4 @@ jobs:
           push: true
           tags: |
             cypnose/front:latest
-            cypnose/front:1.0.1
-            
+            cypnose/front:1.0.0
