@@ -32,6 +32,7 @@ export default {
     // get position
     navigator.geolocation.getCurrentPosition(
       pos => {
+        console.log(JSON.stringify(pos))
         this.setLocation(pos);
       },
       err => {
@@ -41,11 +42,12 @@ export default {
   },
 
   methods: {
-    ...mapActions(["setWidgets", "setLocation"])
+    ...mapActions(["setWidgets", "setLocation", "setUserProfile"])
   },
 
   mounted() {
     this.setWidgets(["Time", "Weather"]);
+    this.setUserProfile("Invité");
   }
 };
 </script>

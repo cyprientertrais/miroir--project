@@ -2,6 +2,7 @@
 import axios from 'axios'; 
 export default class Resources {
     axios = require('axios');
+    hostname= window.location.hostname;
     getPrintedWidgets(params) {
         const url = `${process.env.VUE_APP_BACK_URL}`
         return axios.get(url, {params:params});
@@ -14,6 +15,17 @@ export default class Resources {
 
     getCity(params) {
         const url = `https://geocode.xyz/${params.lat},${params.long}?geoit=json`;
+        return axios.get(url);
+    }
+
+    getUserProfile(profileName) {
+       
+        const url = `http://${this.hostname}:3000/profile/${profileName}`;
+        return axios.get(url);
+    }
+
+    getAllUserProfile() {
+        const url = `http://${this.hostname}:3000/profile/`;
         return axios.get(url);
     }
 }

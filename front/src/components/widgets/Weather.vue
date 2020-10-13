@@ -36,7 +36,6 @@ export default {
   name: "Weather",
   created() {
     this.getData();
-    this.getCity();
   },
   computed: {
     ...mapGetters(['location'])
@@ -48,12 +47,6 @@ export default {
     };
   },
   methods: {
-    getCity() {
-      const params = {lat:this.location.coords.latitude,long:this.location.coords.longitude}
-      ResourcesService.getCity(params).then(res => {
-        this.city=res.data.city
-      });
-    },
     getData() {
       ResourcesService.getMeteo().then(res => {
         res.data.daily.forEach(element => {
@@ -69,6 +62,14 @@ export default {
         "http://openweathermap.org/img/wn/" + meteo.weather[0].icon + ".png"
       );
     },
+  },
+  watch: {
+    location() {
+        const params = {lat:this.location.coords.latitude,long:this.location.coords.longitude}
+        ResourcesService.getCity(params).then(res => {
+          this.city=res.data.city
+      });
+    }
   }
 };
 </script>
