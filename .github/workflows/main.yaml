@@ -8,9 +8,10 @@ jobs:
   multi:
     runs-on: ubuntu-latest
     steps:
-      -
-        name: install npm
-        run: sudo apt update && sudo apt install nodejs && sudo apt install npm
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '12'
+          check-latest: true
       -
         name: Checkout
         uses: actions/checkout@v2
@@ -26,6 +27,9 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+      -
+        name: npm install in Front and Back
+        run: cd ./front && npm install && cd .. 
       -
         name: Build and push
         uses: docker/build-push-action@v2
