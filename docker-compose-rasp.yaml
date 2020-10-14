@@ -31,3 +31,4 @@ services:
 networks:
   core_service_network:
     driver: bridge
+    
