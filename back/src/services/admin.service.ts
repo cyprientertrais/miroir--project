@@ -2,7 +2,7 @@ import { BadRequestException, Injectable, NotFoundException } from '@nestjs/comm
 import { InjectRepository } from '@nestjs/typeorm';
 import { Profile } from '../entities/profile.entity';
 import { MongoRepository } from 'typeorm';
-import { Admin } from 'src/entities/admin.entity';
+import { Admin } from '../entities/admin.entity';
 
 @Injectable()
 export class AdminService {

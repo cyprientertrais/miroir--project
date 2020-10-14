@@ -1,5 +1,5 @@
 import { Controller, Get,Post,Param, Res,Req, Body, BadRequestException} from '@nestjs/common';
-import { AdminService } from 'src/services/admin.service';
+import { AdminService } from '../services/admin.service';
 
 let SSH = require('simple-ssh');
 
