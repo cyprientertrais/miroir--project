@@ -1,5 +1,10 @@
-FROM unguiculus/mongodb-install
+FROM alpine:3.6
+
+# Install mongodb 3.4.4
+RUN apk --update add mongodb mongodb-tools
 RUN mkdir -p /data/db /var/dump/db
 COPY basic-dataset.zip .
-RUN apt-get update && apt-get install unzip && unzip basic-dataset.zip -d /var/dump/
+RUN apk update && apk add  unzip && unzip basic-dataset.zip -d /var/dump/
+
+EXPOSE 27017
 CMD ["mongod"]
