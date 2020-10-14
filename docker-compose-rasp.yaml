@@ -2,7 +2,7 @@ version: "3.2"
 
 services:
   client:
-    image: cypnose/front:1.0.0
+    image: cypnose/front:latest
     ports:
       - 8080:8080
     depends_on: 
@@ -13,7 +13,7 @@ services:
       - core_service_network
 
   server:
-    image: cypnose/back:1.0.0
+    image: cypnose/back:latest
     ports:
       - 3000:3000
     depends_on: 
@@ -23,7 +23,7 @@ services:
     networks:
       - core_service_network
   db:
-    image: cypnose/mongodb:1.0.0
+    image: cypnose/mongodb:latest
     ports:
       - 27017:27017
     networks:
