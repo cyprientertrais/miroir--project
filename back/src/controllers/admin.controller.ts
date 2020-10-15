@@ -1,39 +1,34 @@
 import { Controller, Get,Post,Param, Res,Req, Body, BadRequestException} from '@nestjs/common';
 import { AdminService } from '../services/admin.service';
 
-let SSH = require('simple-ssh');
+import SSH2Promise = require('ssh2-promise');
 
-var ssh = new SSH({
-    host: '10.3.141.1',
-    user: 'ssh_miroir',
-    pass: 'ssh_miroir'
-});
+var sshconfig2 = {
+  host: '10.3.141.1',
+  username: 'ssh_miroir',
+  password: 'ssh_miroir'
+}
+
 
 
 @Controller('/admin')
 export class AdminController {
-  wifi=""
-  constructor(private readonly adminService: AdminService) {}
+  constructor() {}
 
   @Get("/wifiscan")
   async getProfiles() {
+    var ssh = new SSH2Promise([sshconfig2]);
     let wifi="";
-    ssh.exec('parse.sh', {
-      out: (stdout,wifi) => {
-        console.log(stdout);
-         this.wifi=stdout;
-      },
-      err: (stderr)=> {
-        console.log(stderr);
-        this.wifi=stderr; 
-    }   
-  }).start();
-    return this.wifi;
-  }
-
-  @Get("/info")
-  async getProps() {
-    return this.adminService.getAll();
+    var data = await ssh.exec("parse.sh");
+    let tab = data.split("\n");
+    let res = {"wifi":[]}
+    for(let i=0;i<tab.length;i++){
+      if(tab[i].length!=0){
+        res.wifi.push(tab[i]);
+      }
+    }
+    return res;
+    
   }
 
 

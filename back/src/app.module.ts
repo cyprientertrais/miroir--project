@@ -9,11 +9,9 @@ import { Profile } from './entities/profile.entity';
 import { Dashboard } from './entities/dashboard.entity';
 import { Widget } from './entities/widget.entity';
 import { AdminController } from './controllers/admin.controller';
-import { AdminService } from './services/admin.service';
-import { Admin } from './entities/admin.entity';
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Profile,Dashboard,Widget,Admin]),
+    TypeOrmModule.forFeature([Profile,Dashboard,Widget]),
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
       type: 'mongodb',
@@ -29,6 +27,6 @@ import { Admin } from './entities/admin.entity';
     })
   ],
   controllers: [AppController,ProfileController,AdminController],
-  providers: [AppService,ProfileService,AdminService],
+  providers: [AppService,ProfileService],
 })
 export class AppModule {}
