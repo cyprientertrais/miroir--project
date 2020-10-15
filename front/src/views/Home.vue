@@ -58,4 +58,9 @@ export default {
 .username {
  margin-left:-10px !important
 }
+
+.home{
+  background-color: black;
+  height: 100%;
+}
 </style>
