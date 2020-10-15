@@ -36,15 +36,11 @@ export default {
   },
   computed: {},
   methods: {
-    connectionTentative: function() {
-      let test = "nononon";
+    connectionTentative: async function() {
       const hashedPassword = sha256(this.password);
-
-      const responseCheckPassword = ResourcesService.checkAdminPassword(hashedPassword);
-      console.log(responseCheckPassword);
-
+      const responseCheckPassword = await ResourcesService.checkAdminPassword(hashedPassword);
       //check if call responds 200 or 403
-      if (this.password === test) {
+      if (responseCheckPassword.status===200) {
         sessionStorage.setItem("isAuthenticated", true);
         this.$router.push(this.$route.query.from || "/");
       } else {
@@ -52,9 +48,9 @@ export default {
         this.wrongPasswordMessage = "Wrong password";
       }
     },
-    inputKeyPressed: function(e) {
+    inputKeyPressed: async function(e) {
       if (e.keyCode === 13) {
-        this.connectionTentative();
+        await this.connectionTentative();
       } else {
         this.isPasswordWrong = false;
         this.wrongPasswordMessage = "";
