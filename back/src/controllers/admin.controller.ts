@@ -13,7 +13,7 @@ var sshconfig2 = {
 
 @Controller('/admin')
 export class AdminController {
-  constructor() {}
+  constructor(private readonly adminService: AdminService) {}
 
   @Get("/wifiscan")
   async getProfiles() {
