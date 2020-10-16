@@ -23,12 +23,12 @@ export default class Resources {
 
     getUserProfile(profileName) {
        
-        const url = `http://${this.hostname}:3000/profile/${profileName}`;
+        const url = `http://${this.hostname}:3000/profiles/${profileName}`;
         return axios.get(url);
     }
 
     getAllUserProfile() {
-        const url = `http://${this.hostname}:3000/profile/`;
+        const url = `http://${this.hostname}:3000/profiles/`;
         return axios.get(url);
     }
 

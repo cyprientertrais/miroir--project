@@ -7,7 +7,7 @@ info:
 servers:
   - url: http://localhost:3000/
 paths:
-  /profile:
+  /profiles:
     get:
       summary: List all profiles
       operationId: listProfiles
@@ -45,7 +45,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-  /profile/{profileName}:
+  /profiles/{profileName}:
     get:
       summary: Info for a specific profile
       operationId: showProfileByName

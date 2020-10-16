@@ -2,7 +2,7 @@ import { Controller, Get,Post,Param, Res,Req, Body, BadRequestException} from '@
 import { Profile } from '../entities/profile.entity';
 import { ProfileService } from '../services/profile.service';
 
-@Controller('/profile')
+@Controller('/profiles')
 export class ProfileController {
   constructor(private readonly profileService: ProfileService) {}
 
