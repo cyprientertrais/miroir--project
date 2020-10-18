@@ -17,7 +17,9 @@ import { Admin } from './entities/admin.entity';
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
       type: 'mongodb',
-      url: (process.env.HOST) ? "mongodb://db:27017" : "mongodb://192.168.99.100:27017",
+      //TODO: a mettre si docker toolbox est installé
+      // url: (process.env.HOST) ? "mongodb://db:27017" : "mongodb://192.168.99.100:27017",
+      url: (process.env.HOST) ? "mongodb://db:27017" : "mongodb://localhost:27017",
       database: "mirror",
       entities: [
         __dirname + '/entities/*.entity{.ts,.js}',
