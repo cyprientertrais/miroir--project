@@ -1,20 +1,16 @@
 <template>
-  <div class="home">
-
-  </div>
+  <div class="home"></div>
 </template>
 
 <script>
 export default {
   name: "parametrage",
-  components: {
-      
-  },
-}
+  components: {},
+};
 </script>
 
 <style scoped>
-div{
-    color:white
+div {
+  color: white;
 }
 </style>
