@@ -28,4 +28,11 @@ export default class Resources {
         const url = `http://${this.hostname}:3000/profile/`;
         return axios.get(url);
     }
+
+    addProfile(data) {
+        const url = `http://${this.hostname}:3000/profile/`;
+        return axios.post(url,data)
+            .then(response => response.data)
+            .catch(error => error);
+    }
 }
