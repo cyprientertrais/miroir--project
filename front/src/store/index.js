@@ -10,6 +10,7 @@ export default new Vuex.Store({
   state: {
     location: undefined,
     userProfile: undefined,
+    orientation: undefined
   },
   mutations: {
     setLocation(state, location){
@@ -17,11 +18,17 @@ export default new Vuex.Store({
     },
     setUserProfile(state, userProfile) {
       state.userProfile = userProfile;
-    }
+    },
+    setOrientation(state, orientation){
+      state.orientation = orientation
+    },
   },
   actions: {
     setLocation(context,location) {
       context.commit('setLocation', location);
+    },
+    setOrientation(context, orientation){
+      context.commit('setOrientation',orientation);
     },
     async setUserProfile(context, pseudo) {
       await ResourcesService.getUserProfile(pseudo).then(res => {
@@ -35,6 +42,9 @@ export default new Vuex.Store({
     },
     userProfile: state => {
       return state.userProfile
+    },
+    orientation: state => {
+      return state.orientation
     }
   },
   modules: {},

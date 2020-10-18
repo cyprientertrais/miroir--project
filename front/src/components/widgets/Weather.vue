@@ -86,12 +86,10 @@ export default {
           units: "metric"
         }).then(res => {
           this.city = res.data.city;
-          console.log(res.data)
         })
       }
     },
     getWeekInfo() {
-      console.log("getWeekInfo")
       if (this.location) {
         ResourcesService.getMeteo({
           lon: this.location.coords.longitude,
