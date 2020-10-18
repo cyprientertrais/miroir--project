@@ -16,7 +16,6 @@ export default class Resources {
     }
 
     getTodayMeteo(params){
-        console.log('today')
         const url = `https://api.openweathermap.org/data/2.5/forecast?appid=${this.API_KEY}`;
         return axios.get(url, {params:params});
     }
@@ -29,6 +28,11 @@ export default class Resources {
 
     getAllUserProfile() {
         const url = `http://${this.hostname}:3000/profile/`;
+        return axios.get(url);
+    }
+
+    getOrientation(){
+        const url = `http://${this.hostname}:3000/admin/orientation`;
         return axios.get(url);
     }
 }

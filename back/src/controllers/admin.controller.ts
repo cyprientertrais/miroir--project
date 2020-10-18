@@ -31,9 +31,9 @@ export class AdminController {
     return this.wifi;
   }
 
-  @Get("/info")
+  @Get("/orientation")
   async getProps() {
-    return this.adminService.getAll();
+    return this.adminService.getOrientation();
   }
 
 

@@ -1,6 +1,5 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Profile } from '../entities/profile.entity';
 import { MongoRepository } from 'typeorm';
 import { Admin } from 'src/entities/admin.entity';
 
@@ -11,8 +10,10 @@ export class AdminService {
   private readonly adminRepository: MongoRepository<Admin>)
   {}
 
-  async getAll() {
+  async getOrientation() {
     let e = await this.adminRepository.find();
-    return e;
+    return e.map(element => {
+      return {'orientation':element.orientation}
+    })
   }  
 }
