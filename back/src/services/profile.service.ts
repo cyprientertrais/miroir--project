@@ -28,5 +28,14 @@ export class ProfileService {
       throw new BadRequestException(err);
     });
   }
+  async delete(name : string ){
+    let res = await this.profileRepository.deleteOne({pseudo:name});
+    let obj={};
+    console.log(res.result);
+    if(res.result.ok ==1 && res.result.n==1){
+      return {"status":204,"message":"Successfully deleted"};
+    }
+    return {"status":404,"message":"Error"};
+  }
   
 }
