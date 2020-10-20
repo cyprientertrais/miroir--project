@@ -27,6 +27,7 @@ export class ProfileController {
     let action= await this.profileService.delete(name);
     return res.status(action.status).json(action);
   }
+  
 
   
 }
