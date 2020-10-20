@@ -49,7 +49,5 @@ export default {
 </script>
 
 <style scoped>
-#app {
-  background-color: black;
-}
+
 </style>

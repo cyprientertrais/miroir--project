@@ -40,11 +40,14 @@
 <script>
 export default {
   methods :{
-
+    
   }
 }
 </script>
 
 <style scoped>
-
+#wifi {
+  background-color: #3c3e41;
+  height: 100%;
+}
 </style>

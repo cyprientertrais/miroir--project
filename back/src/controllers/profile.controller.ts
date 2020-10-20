@@ -1,10 +1,8 @@
 import { Controller, Get,Post,Param, Res,Req, Body, BadRequestException} from '@nestjs/common';
-import { profileEnd } from 'console';
-import { Dashboard } from 'src/entities/dashboard.entity';
 import { Profile } from '../entities/profile.entity';
 import { ProfileService } from '../services/profile.service';
 
-@Controller('/profile')
+@Controller('/profiles')
 export class ProfileController {
   constructor(private readonly profileService: ProfileService) {}
 

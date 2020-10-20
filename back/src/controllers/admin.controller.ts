@@ -1,41 +1,55 @@
-import { Controller, Get,Post,Param, Res,Req, Body, BadRequestException} from '@nestjs/common';
-import { AdminService } from 'src/services/admin.service';
+import {
+  Controller,
+  Get,
+  Post,
+  Param,
+  Res,
+  Req,
+  Body,
+  BadRequestException,
+} from '@nestjs/common';
+import { AdminService } from '../services/admin.service';
 
-let SSH = require('simple-ssh');
+import SSH2Promise = require('ssh2-promise');
 
-var ssh = new SSH({
-    host: '10.3.141.1',
-    user: 'ssh_miroir',
-    pass: 'ssh_miroir'
-});
-
+var sshconfig2 = {
+  host: '10.3.141.1',
+  username: 'ssh_miroir',
+  password: 'ssh_miroir',
+};
 
 @Controller('/admin')
 export class AdminController {
-  wifi=""
   constructor(private readonly adminService: AdminService) {}
 
-  @Get("/wifiscan")
+  @Get('/wifiscan')
   async getProfiles() {
-    let wifi="";
-    ssh.exec('parse.sh', {
-      out: (stdout,wifi) => {
-        console.log(stdout);
-         this.wifi=stdout;
-      },
-      err: (stderr)=> {
-        console.log(stderr);
-        this.wifi=stderr; 
-    }   
-  }).start();
-    return this.wifi;
+    var ssh = new SSH2Promise([sshconfig2]);
+    let wifi = '';
+    var data = await ssh.exec('parse.sh');
+    let tab = data.split('\n');
+    let res = { wifi: [] };
+    for (let i = 0; i < tab.length; i++) {
+      if (tab[i].length != 0) {
+        res.wifi.push(tab[i]);
+      }
+    }
+    return res;
   }
 
-  @Get("/info")
-  async getProps() {
-    return this.adminService.getAll();
+  @Post('/checkAdminPassword')
+  async checkAdminPassword(@Body() body, @Res() res) {
+    console.log(body);
+    const infos = await this.adminService.getAll();
+    if (infos[0].adminPassword === body.hashedPassword) {
+      return res.send(200);
+    } else {
+      return res.send(403);
+    }
   }
 
-
-  
+  @Get('/orientation')
+  async getOrientation() {
+    return this.adminService.getOrientation();
+  }
 }
