@@ -2,9 +2,11 @@ import { shallowMount, createLocalVue } from "@vue/test-utils";
 import Home from "@/views/Home.vue";
 import Vuex from 'vuex'
 import Vuetify from 'vuetify'
+import Vue from "vue";
 
 const localVue = createLocalVue()
-localVue.use(Vuex)
+Vue.use(Vuetify)
+Vue.use(Vuex)
 
 describe("Home.vue", () => {
   let getters
@@ -22,22 +24,12 @@ describe("Home.vue", () => {
       getters
     })
   })
-
-  describe("watcher - userProfile value", () => {
-    let spy
-
-    beforeAll(() => {
-      spy = jest.spyOn(console, 'log')
-    })
-
-    afterEach(() => {
-      spy.mockClear()
-    })
-
-    it("shallowMount component home", () => {
-      const wrapper = shallowMount(Home,{store, localVue, vuetify});
-      console.log(wrapper)
-    });
-  })
+  
+  it("shallowMount component home", () => {
+    const wrapper = shallowMount(Home,{store, localVue});
+    console.log(wrapper)
+    console.log(wrapper.text())
+    expect(wrapper.text()).toMatch('Time')
+  });
 
 });

@@ -23,8 +23,8 @@
             :key="yWidgets"
             cols="12"
             sm="12"
-            md="2"
-            lg="2"
+            md="3"
+            lg="3"
             xl="3"
           >
             <component :is="yWidgets"></component>
