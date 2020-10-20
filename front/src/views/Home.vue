@@ -23,8 +23,8 @@
             :key="yWidgets"
             cols="12"
             sm="12"
-            md="2"
-            lg="2"
+            md="3"
+            lg="3"
             xl="3"
           >
             <component :is="yWidgets"></component>
@@ -88,7 +88,7 @@ export default {
     setWidgets() {
       if (this.userProfile) {
         if (this.orientation === "landscape") {
-          this.userProfile.dashboards[0].widgets.forEach((widget) => {
+          this.userProfile.dashboards.filter(element => element.name === "default")[0].widgets.forEach((widget) => {
             let quotient = Math.floor(widget.position / 2);
             let reste = widget.position % 2;
             if (this.widgets && !this.widgets[quotient]) {
@@ -99,7 +99,7 @@ export default {
               import("../components/widgets/" + widget.name + ".vue");
           });
         } else {
-          this.userProfile.dashboards[0].widgets.forEach((widget) => {
+          this.userProfile.dashboards(element => element.name === "default")[0].widgets.forEach((widget) => {
             let quotient = Math.floor(widget.position / 4);
             let reste = widget.position % 4;
             if (this.widgets && !this.widgets[quotient]) {

@@ -81,8 +81,8 @@ export default {
     getTodayInfos() {
       if (this.location) {
         ResourcesService.getTodayMeteo({
-          lon: this.location.coords.longitude,
-          lat: this.location.coords.latitude,
+          lon: this.location.long,
+          lat: this.location.lat,
           units: "metric"
         }).then(res => {
           this.city = res.data.city;
@@ -92,8 +92,8 @@ export default {
     getWeekInfo() {
       if (this.location) {
         ResourcesService.getMeteo({
-          lon: this.location.coords.longitude,
-          lat: this.location.coords.latitude,
+          lon: this.location.long,
+          lat: this.location.lat,
           exclude: "current,minutely,alerts",
           units: "metric"
         }).then(res => {
