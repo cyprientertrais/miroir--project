@@ -1,40 +1,50 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import Resources from "@/service/resources/resources";
 
 Vue.use(Vuex);
 
+const ResourcesService = new Resources();
+
 export default new Vuex.Store({
   state: {
-    widgets: undefined,
     location: undefined,
-    username: 'Adam le plus beau'
+    userProfile: undefined,
+    orientation: undefined
   },
   mutations: {
-    setWidgets(state, newWidgets) {
-      state.widgets = newWidgets;
-    },
     setLocation(state, location){
       state.location = location;
-    }
+    },
+    setUserProfile(state, userProfile) {
+      state.userProfile = userProfile;
+    },
+    setOrientation(state, orientation){
+      state.orientation = orientation
+    },
   },
   actions: {
-    setWidgets(context, newWidgets) {
-      context.commit('setWidgets', newWidgets);
-    },
     setLocation(context,location) {
-      console.log("set location ="+location.coords.latitude)
       context.commit('setLocation', location);
+    },
+    setOrientation(context, orientation){
+      context.commit('setOrientation',orientation);
+    },
+    async setUserProfile(context, pseudo) {
+      await ResourcesService.getUserProfile(pseudo).then(res => {
+        context.commit('setUserProfile', res.data);
+      })
     }
   },
   getters: {
-    widgets: state => {
-      return state.widgets
-    },
     location: state => {
       return state.location
     },
-    username: state => {
-      return state.username
+    userProfile: state => {
+      return state.userProfile
+    },
+    orientation: state => {
+      return state.orientation
     }
   },
   modules: {},

@@ -2,26 +2,26 @@ version: "3.2"
 
 services:
   client:
-    build: ./front
+    build:
+      context: ./front
+      dockerfile: Dockerfile
     ports:
-      - 8080:8080
+      - 80:80
     volumes:
       - ./front:/data/front
-      - /data/front/node_modules
     depends_on: 
       - db
     environment:
       - API_URL=http://localhost:3000/
-    networks:
-      - core_service_network
 
   server:
-    build: ./back
+    build:
+      context: ./back
+      dockerfile: Dockerfile_prod
     ports:
       - 3000:3000
     volumes:
-      - ./back:/data/back
-      - /data/back/node_modules
+      - ./back:/app
     depends_on: 
       - db
     environment:

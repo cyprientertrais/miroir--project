@@ -26,6 +26,11 @@ if you want you also can import it manually using
 
 `docker-compose exec -T db sh -c 'mongorestore /var/dump'`
 
+If you want to import into the alone running mongodb, do the following:
+- get the container id with `docker ps`
+- `docker exec -it <id> bash`
+- `mongorestore /var/dump` inside your container's shell
+
 ### :exclamation:The database can be run without the docker-compose
 in db directory
 

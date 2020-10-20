@@ -1,20 +1,18 @@
 <template>
-  <div class="home">
-
+  <div class="parametrage">
+    is working
   </div>
 </template>
 
-<script>
-export default {
-  name: "parametrage",
-  components: {
-      
-  },
-}
-</script>
+<script></script>
 
 <style scoped>
-div{
-    color:white
+div {
+  color: white;
+}
+
+.parametrage {
+  background-color: #3c3e41;
+  height: 100%;
 }
 </style>

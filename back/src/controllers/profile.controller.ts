@@ -1,10 +1,10 @@
-import { Controller, Get,Post, Patch, Param, Res,Req, Body, BadRequestException} from '@nestjs/common';
 import { profileEnd } from 'console';
-import { Dashboard } from 'src/entities/dashboard.entity';
-import { Profile } from 'src/entities/profile.entity';
+import { Dashboard } from '../entities/dashboard.entity';
+import { Controller, Get,Post,Param, Res,Req, Body, BadRequestException, Delete} from '@nestjs/common';
+import { Profile } from '../entities/profile.entity';
 import { ProfileService } from '../services/profile.service';
 
-@Controller('/profile')
+@Controller('/profiles')
 export class ProfileController {
   constructor(private readonly profileService: ProfileService) {}
 
@@ -49,5 +49,11 @@ export class ProfileController {
     newUser.pseudo = name
     return await this.profileService.createOne(newUser)
   } */
+  @Delete(':name')
+  async deleteProfile(@Param('name') name: string,@Res() res) {
+    let action= await this.profileService.delete(name);
+    return res.status(action.status).json(action);
+  }
+
   
 }

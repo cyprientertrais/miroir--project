@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Profile } from 'src/entities/profile.entity';
+import { Profile } from '../entities/profile.entity';
 import { MongoRepository } from 'typeorm';
 import { Widget } from 'src/entities/widget.entity';
 import { Dashboard } from 'src/entities/dashboard.entity';
@@ -31,6 +31,7 @@ export class ProfileService {
     });
   }
 
+
   async getAllDashboardsFromProfileService(name : string){
     let e = await this.getOne(name)
     return e.dashboards
@@ -51,6 +52,15 @@ export class ProfileService {
       this.profileRepository.save(profile)
     }
     };
+  async delete(name : string ){
+    let res = await this.profileRepository.deleteOne({pseudo:name});
+    let obj={};
+    console.log(res.result);
+    if(res.result.ok ==1 && res.result.n==1){
+      return {"status":204,"message":"Successfully deleted"};
+    }
+    return {"status":404,"message":"Error"};
+  }
   
 
  doesDashboardNameAlreadyExists(dashboards : Dashboard[], newDashboardName : string) : boolean{
