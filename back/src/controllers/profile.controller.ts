@@ -1,4 +1,4 @@
-import { Controller, Get,Post,Param, Res,Req, Body, BadRequestException} from '@nestjs/common';
+import { Controller, Get,Post,Param, Res,Req, Body, BadRequestException, Delete} from '@nestjs/common';
 import { Profile } from '../entities/profile.entity';
 import { ProfileService } from '../services/profile.service';
 
@@ -22,5 +22,11 @@ export class ProfileController {
   async getProfile(@Param('name') name: string) {
     return await this.profileService.getOne(name)
   }
+  @Delete(':name')
+  async deleteProfile(@Param('name') name: string,@Res() res) {
+    let action= await this.profileService.delete(name);
+    return res.status(action).json(action);
+  }
+
   
 }
