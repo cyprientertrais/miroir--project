@@ -25,7 +25,7 @@ export class ProfileController {
   @Delete(':name')
   async deleteProfile(@Param('name') name: string,@Res() res) {
     let action= await this.profileService.delete(name);
-    return res.status(action).json(action);
+    return res.status(action.status).json(action);
   }
 
   
