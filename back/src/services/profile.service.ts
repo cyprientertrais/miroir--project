@@ -2,8 +2,8 @@ import { BadRequestException, Injectable, NotFoundException } from '@nestjs/comm
 import { InjectRepository } from '@nestjs/typeorm';
 import { Profile } from '../entities/profile.entity';
 import { MongoRepository } from 'typeorm';
-import { Widget } from 'src/entities/widget.entity';
-import { Dashboard } from 'src/entities/dashboard.entity';
+import { Widget } from '../entities/widget.entity';
+import { Dashboard } from '../entities/dashboard.entity';
 
 @Injectable()
 export class ProfileService {
