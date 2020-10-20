@@ -61,6 +61,14 @@ export class ProfileService {
     }
     return {"status":404,"message":"Error"};
   }
+  async update(name : string,newName : string ){
+    var newvalues = { $set: {pseudo: newName} };
+    let res = await this.profileRepository.updateOne({"pseudo":name},newvalues);
+    if(res.result.ok ==1 && res.result.n==1){
+      return {"status":204,"message":"Successfully deleted"};
+    }
+    return {"status":404,"message":"Error"};
+  }
   
 
  doesDashboardNameAlreadyExists(dashboards : Dashboard[], newDashboardName : string) : boolean{
