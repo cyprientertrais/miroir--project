@@ -43,4 +43,9 @@ export default class Resources {
     const url = `http://${this.hostname}:3000/admin/orientation`;
     return axios.get(url);
   }
+
+  getWifiList() {
+    const wifiList = `http://${this.hostname}:3000/admin/wifiscan`;
+    return axios.get(wifiList);
+  }
 }

@@ -46,7 +46,7 @@ export default {
 </script>
 
 <style scoped>
-#wifi {
+#Wifi {
   background-color: #3c3e41;
   height: 100%;
 }
