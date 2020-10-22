@@ -60,6 +60,8 @@ export default {
                 this.isProfileNameInvalid = true;
                 if (this.profileName.length == 0) {
                     this.errorMessage = "Veuillez entrer un nom de profil valide.";
+                } else if(this.profileName.length > 15) {
+                    this.errorMessage = "La taille du nom ne doit pas dépassé 15 caractères. Veuillez entrer un nom de profil valide.";
                 } else {
                     this.errorMessage = "Ce nom de profil est déjà utilisé. Veuillez entrer un autre nom.";
                 }
@@ -81,7 +83,6 @@ export default {
     color: white;
     
 }
-
 
 h1 {
     color: white;
