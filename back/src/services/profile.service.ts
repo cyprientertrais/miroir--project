@@ -26,6 +26,7 @@ export class ProfileService {
   }
   
   async createOne(profile : Profile){
+    profile.pseudo = profile.pseudo.charAt(0).toUpperCase() + profile.pseudo.slice(1);
     return this.profileRepository.save(new Profile(profile)).catch(err=>{
       throw new BadRequestException(err);
     });
@@ -62,6 +63,7 @@ export class ProfileService {
     return {"status":404,"message":"Error"};
   }
   async update(name : string,newName : string ){
+    newName= newName.charAt(0).toUpperCase() + newName.slice(1);
     var newvalues = { $set: {pseudo: newName} };
     let res = await this.profileRepository.updateOne({"pseudo":name},newvalues);
     if(res.result.ok ==1 && res.result.n==1){
