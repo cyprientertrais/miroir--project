@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-
   </div>
 </template>
 
@@ -8,7 +7,6 @@
 export default {
   name: "parametrage",
   components: {
-      
   },
 }
 </script>
