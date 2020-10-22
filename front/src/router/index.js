@@ -31,6 +31,12 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/Login.vue"),
   },
+  {
+    path: "/reglage",
+    name: "Reglage",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/ReglagePopUp.vue"),
+  },
 ];
 
 const router = new VueRouter({
