@@ -55,7 +55,7 @@ export default class Resources {
   }
 
   addProfile(data) {
-      const url = `http://${this.hostname}:3000/profile/`;
+      const url = `http://${this.hostname}:3000/profiles/`;
       return axios.post(url,data)
           .then(response => response.data)
           .catch(error => error);
