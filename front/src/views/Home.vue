@@ -23,8 +23,8 @@
             :key="yWidgets"
             cols="12"
             sm="12"
-            md="2"
-            lg="2"
+            md="3"
+            lg="3"
             xl="3"
           >
             <component :is="yWidgets"></component>
@@ -32,23 +32,26 @@
         </v-row>
       </div>
       <div v-if="orientation === 'portrait'">
-        <v-row
+        <v-card
           v-for="(xWidgets, index) in widgets"
           :key="index"
           :class="index === 0 ? '' : 'd-flex align-end'"
+          color="black"
         >
-          <v-col
-            v-for="(yWidgets, index2) in xWidgets"
-            :key="index2"
-            cols="12"
-            sm="12"
-            md="2"
-            lg="2"
-            xl="3"
-          >
-            <component :is="yWidgets"></component>
-          </v-col>
-        </v-row>
+          <v-row>
+            <v-col
+              v-for="(yWidgets, index2) in xWidgets"
+              :key="index2"
+              cols="12"
+              sm="12"
+              md="2"
+              lg="2"
+              xl="3"
+            >
+              <component :is="yWidgets"></component>
+            </v-col>
+          </v-row>
+        </v-card>
       </div>
     </div>
   </div>
@@ -88,27 +91,31 @@ export default {
     setWidgets() {
       if (this.userProfile) {
         if (this.orientation === "landscape") {
-          this.userProfile.dashboards[0].widgets.forEach((widget) => {
-            let quotient = Math.floor(widget.position / 2);
-            let reste = widget.position % 2;
-            if (this.widgets && !this.widgets[quotient]) {
-              this.widgets[quotient] = [];
-            }
-            this.widgets[quotient][reste] = widget.name;
-            this.$options.components[widget.name] = () =>
-              import("../components/widgets/" + widget.name + ".vue");
-          });
+          this.userProfile.dashboards
+            .filter((element) => element.name === "default")[0]
+            .widgets.forEach((widget) => {
+              let quotient = Math.floor(widget.position / 2);
+              let reste = widget.position % 2;
+              if (this.widgets && !this.widgets[quotient]) {
+                this.widgets[quotient] = [];
+              }
+              this.widgets[quotient][reste] = widget.name;
+              this.$options.components[widget.name] = () =>
+                import("../components/widgets/" + widget.name + ".vue");
+            });
         } else {
-          this.userProfile.dashboards[0].widgets.forEach((widget) => {
-            let quotient = Math.floor(widget.position / 4);
-            let reste = widget.position % 4;
-            if (this.widgets && !this.widgets[quotient]) {
-              this.widgets[quotient] = [];
-            }
-            this.widgets[quotient][reste] = widget.name;
-            this.$options.components[widget.name] = () =>
-              import("../components/widgets/" + widget.name + ".vue");
-          });
+          this.userProfile.dashboards
+            .filter((element) => element.name === "default")[0]
+            .widgets.forEach((widget) => {
+              let quotient = Math.floor(widget.position / 4);
+              let reste = widget.position % 4;
+              if (this.widgets && !this.widgets[quotient]) {
+                this.widgets[quotient] = [];
+              }
+              this.widgets[quotient][reste] = widget.name;
+              this.$options.components[widget.name] = () =>
+                import("../components/widgets/" + widget.name + ".vue");
+            });
         }
       }
     },
@@ -126,7 +133,7 @@ export default {
   margin-left: -10px !important;
 }
 
-.home{
+.home {
   background-color: black;
   height: 100%;
 }
