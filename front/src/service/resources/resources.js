@@ -39,6 +39,16 @@ export default class Resources {
     return t;
   }
 
+  async deleteProfileByName(profileNameToDelete) {
+    const url = `http://${this.hostname}:3000/profiles/${profileNameToDelete}`;
+    let t = await axios
+      .delete(url)
+      .catch(() => {
+        return { status: 404 };
+      });
+    return t;
+  }
+
   getOrientation() {
     const url = `http://${this.hostname}:3000/admin/orientation`;
     return axios.get(url);
