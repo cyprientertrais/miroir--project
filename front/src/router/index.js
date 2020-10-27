@@ -51,15 +51,9 @@ const routes = [
   }, 
   {
     path: "/profiles",
-    name: "ProfilesList",
+    name: "Profiles",
     component: () =>
-      import("../views/ProfilesList.vue"),
-  }, 
-  {
-    path: "/editprofiles",
-    name: "EditProfiles",
-    component: () =>
-      import("../views/EditProfiles.vue"),
+      import("../views/Profiles.vue"),
   },
   {
     path: "/parametrage/addProfile",

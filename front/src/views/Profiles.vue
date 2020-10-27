@@ -1,11 +1,20 @@
 <template>
   <v-container fill-height fluid class="profilesListContainer">
     <v-row justify="center" id="WhoIsThis" class="d-flex align-start">
-      <div class="text-lg-h1 text-md-h1 text-sm-h2 text-h3">Qui est-ce ?</div>
+      <div class="text-lg-h1 text-md-h1 text-sm-h2 text-h3">{{titleValue}}</div>
     </v-row>
     <v-row justify="center" align="center" class="profilesList d-flex align-center">
       <v-col cols="6" md="2" sm="4" v-for="profile in profilesArray" :key="profile.id">
-        <v-avatar class="profile elevation-5" size="20vh">{{profile.pseudo}}</v-avatar>
+        <v-badge
+          icon="mdi-pencil"
+          color="green"
+          overlap
+          offset-x="25"
+          offset-y="25"
+          v-model="editing"
+        >
+          <v-avatar class="profile elevation-5" size="20vh">{{profile.pseudo}}</v-avatar>
+        </v-badge>
       </v-col>
       <v-col cols="6" md="2" sm="4" xs="6">
         <v-avatar class="plus" size="20vh">
@@ -14,7 +23,14 @@
       </v-col>
     </v-row>
     <v-row justify="center" id="btnEditProfiles" class="d-flex align-end">
-      <v-btn href="#" class="elevation-5" color="white" x-large outlined>Éditer les profils</v-btn>
+      <v-btn
+        @click="toogleEdit()"
+        href="#"
+        class="elevation-5"
+        color="white"
+        x-large
+        outlined
+      >{{btnValue}}</v-btn>
     </v-row>
   </v-container>
 </template>
@@ -31,7 +47,10 @@ export default {
   data() {
     return {
       color: "primary",
-      profilesArray: ""
+      profilesArray: "",
+      btnValue: "Éditer les profils",
+      titleValue: "Qui est-ce ?",
+      editing: false
     };
   },
   methods: {
@@ -39,6 +58,15 @@ export default {
       ResourcesService.getAllUserProfile().then(res => {
         this.profilesArray = res.data;
       });
+    },
+    toogleEdit() {
+      this.btnValue == "Éditer les profils"
+        ? (this.btnValue = "Terminé")
+        : (this.btnValue = "Éditer les profils");
+      this.titleValue == "Qui est-ce ?"
+        ? (this.titleValue = "Éditer les profils")
+        : (this.titleValue = "Qui est-ce ?");
+      this.editing = !this.editing;
     }
   }
 };
