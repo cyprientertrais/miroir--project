@@ -42,6 +42,12 @@ const routes = [
     name: "AddProfile",
     component: () =>
       import(/* webpackChunkName: "about" */ "../components/AddProfile.vue")
+  },
+  {
+    path: "/parametrage/changeProfile",
+    name: "ChangeProfile",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../components/ChangeProfile.vue")
   }
 ];
 

@@ -50,4 +50,11 @@ export default class Resources {
           .then(response => response.data)
           .catch(error => error);
   }
+
+  changeProfile(data) {
+    const url = `http://${this.hostname}:3000/profile/`;
+    return axios.post(url,data)
+        .then(response => response.data)
+        .catch(error => error);
+}
 }
