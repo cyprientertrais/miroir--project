@@ -17,19 +17,25 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue"),
+      import("../views/About.vue"),
   },
   {
     path: "/parametrage",
     name: "Parametrage",
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Parametrage.vue"),
+      import("../views/Parametrage.vue"),
   },
   {
     path: "/login",
     name: "Login",
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Login.vue"),
+      import("../views/Login.vue"),
+  },
+  {
+    path: "/deleteProfile",
+    name: "DeleteProfile",
+    component: () =>
+      import("../views/DeleteProfile.vue"),
   },
   {
     path: "/reglage",
@@ -48,6 +54,12 @@ const routes = [
     name: "EditProfiles",
     component: () =>
       import("../views/EditProfiles.vue"),
+  },
+  {
+    path: "/parametrage/addProfile",
+    name: "AddProfile",
+    component: () =>
+      import("../components/AddProfile.vue")
   }
 ];
 
