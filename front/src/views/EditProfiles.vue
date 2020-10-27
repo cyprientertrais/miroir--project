@@ -1,19 +1,15 @@
 <template>
-  <v-container fill-height class="profilesListContainer">
+  <v-container fill-height fluid class="profilesListContainer">
     <v-row justify="center" id="WhoIsThis">
       <div class="text-lg-h1 text-md-h1 text-sm-h2 text-h3">Éditer les profils</div>
+      <div class="text-lg-h1 text-md-h1 text-sm-h2 text-h3"><v-icon right color="white" size="60px">mdi-cog</v-icon></div>
     </v-row>
     <v-row justify="center" align="center" class="profilesList">
-      <v-col cols="6" md="3" sm="4" xs="6">
-        <v-avatar class="profile elevation-5" size="20vh">Stéphane</v-avatar>
-      </v-col>
-      <v-col cols="6" md="3" sm="4" xs="6">
-        <v-avatar class="profile elevation-5" size="20vh">Léo</v-avatar>
-      </v-col>
-      <v-col cols="6" md="3" sm="4" xs="6">
-        <v-avatar class="profile elevation-5" size="20vh">Cyprien</v-avatar>
+      <v-col cols="6" md="3" sm="4" v-for="profile in profilesArray" :key="profile.id">
+        <v-avatar class="profile elevation-5" size="20vh">{{profile.pseudo}}</v-avatar>
       </v-col>
     </v-row>
+
     <v-row justify="center" id="btnEditProfiles">
       <v-btn class="elevation-5" color="white" x-large outlined>Terminé</v-btn>
     </v-row>
@@ -22,12 +18,25 @@
 
 
 <script>
+import Resources from "@/service/resources/resources";
+const ResourcesService = new Resources();
 export default {
   name: "ProfilesLists",
+  created() {
+    this.getProfiles();
+  },
   data() {
     return {
-      color: "primary"
+      color: "primary",
+      profilesArray: ""
     };
+  },
+  methods: {
+    getProfiles() {
+      ResourcesService.getAllUserProfile().then(res => {
+        this.profilesArray = res.data;
+      });
+    }
   }
 };
 </script>
@@ -54,7 +63,6 @@ export default {
   text-justify: center;
   align-content: center;
   width: 100%;
-  /*background-color: #ffc0cb;*/
   vertical-align: middle;
   top: 50%;
 }

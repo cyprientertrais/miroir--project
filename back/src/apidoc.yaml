@@ -1,0 +1,122 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Oyna Miror API documentation
+  license:
+    name: MIT
+servers:
+  - url: http://localhost:3000/
+paths:
+  /profiles:
+    get:
+      summary: List all profiles
+      operationId: listProfiles
+      tags:
+        - profile
+      responses:
+        '200':
+          description: A paged array of pets
+          headers:
+            x-next:
+              description: A link to the next page of responses
+              schema:
+                type: string
+          content:
+            application/json:    
+              schema:
+                $ref: "#/components/schemas/Pets"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Create a profile
+      operationId: createProfile
+      tags:
+        - profile
+      responses:
+        '201':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /profiles/{profileName}:
+    get:
+      summary: Info for a specific profile
+      operationId: showProfileByName
+      tags:
+        - profile
+      parameters:
+        - name: profileName
+          in: path
+          required: true
+          description: The name of the profile
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Pet"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /admin/wifiscan:
+    get:
+      summary: List wifi networks
+      operationId: showWifi
+      tags:
+        - admin
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Pet"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+components:
+  schemas:
+    Pet:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        tag:
+          type: string
+    Pets:
+      type: array
+      items:
+        $ref: "#/components/schemas/Pet"
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string

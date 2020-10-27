@@ -1,19 +1,46 @@
-
-import axios from 'axios'; 
+import axios from "axios";
 export default class Resources {
-    axios = require('axios');
-    getPrintedWidgets(params) {
-        const url = `${process.env.VUE_APP_BACK_URL}`
-        return axios.get(url, {params:params});
-    }
+  axios = require("axios");
+  hostname = window.location.hostname;
+  API_KEY = "ee95de4f37a7e21b3714e529ea39a2fb";
 
-    getMeteo(params) {
-        const url = `https://api.openweathermap.org/data/2.5/onecall?lat=50.55&lon=3.03&exclude=current,minutely,hourly,alerts&appid=ee95de4f37a7e21b3714e529ea39a2fb&units=metric`;
-        return axios.get(url, {params:params});
-    }
+  getPrintedWidgets(params) {
+    const url = `${process.env.VUE_APP_BACK_URL}`;
+    return axios.get(url, { params: params });
+  }
 
-    getCity(params) {
-        const url = `https://geocode.xyz/${params.lat},${params.long}?geoit=json`;
-        return axios.get(url);
-    }
+  getMeteo(params) {
+    const url = `https://api.openweathermap.org/data/2.5/onecall?appid=${this.API_KEY}`;
+    return axios.get(url, { params: params });
+  }
+
+  getTodayMeteo(params) {
+    const url = `https://api.openweathermap.org/data/2.5/forecast?appid=${this.API_KEY}`;
+    return axios.get(url, { params: params });
+  }
+
+  getUserProfile(profileName) {
+    const url = `http://${this.hostname}:3000/profiles/${profileName}`;
+    return axios.get(url);
+  }
+
+  getAllUserProfile() {
+    const url = `http://${this.hostname}:3000/profiles/`;
+    return axios.get(url);
+  }
+
+  async checkAdminPassword(hashedPassword) {
+    const url = `http://${this.hostname}:3000/admin/checkAdminPassword`;
+    let t = await axios
+      .post(url, { hashedPassword: hashedPassword })
+      .catch(() => {
+        return { status: 403 };
+      });
+    return t;
+  }
+
+  getOrientation() {
+    const url = `http://${this.hostname}:3000/admin/orientation`;
+    return axios.get(url);
+  }
 }

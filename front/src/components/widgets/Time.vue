@@ -1,5 +1,6 @@
 <template>
   <div align="center" justify="center" class="time">
+    <clock :time="moment().format('LTS')" color="white"></clock>
     <div class="horloge">{{ this.date }}</div>
     <div class="date">{{moment().format('Do MMMM YYYY')}}</div>
   </div>
@@ -7,7 +8,11 @@
 
 <script>
 var moment = require("moment");
+import Clock from 'vue-clock2';
 export default {
+  components: {
+    Clock
+  },
   name: "Time",
   data() {
     return {

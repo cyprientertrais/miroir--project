@@ -1,17 +1,11 @@
 <template>
-  <v-container fill-height class="profilesListContainer">
-    <v-row justify="center" id="WhoIsThis">
+  <v-container fill-height fluid class="profilesListContainer">
+    <v-row justify="center" id="WhoIsThis" class="d-flex align-start">
       <div class="text-lg-h1 text-md-h1 text-sm-h2 text-h3">Qui est-ce ?</div>
     </v-row>
-    <v-row justify="center" align="center" class="profilesList">
-      <v-col cols="6" md="3" sm="4" xs="6">
-        <v-avatar class="profile elevation-5" size="20vh">Stéphane</v-avatar>
-      </v-col>
-      <v-col cols="6" md="3" sm="4" xs="6">
-        <v-avatar class="profile elevation-5" size="20vh">Léo</v-avatar>
-      </v-col>
-      <v-col cols="6" md="3" sm="4" xs="6">
-        <v-avatar class="profile elevation-5" size="20vh">Cyprien</v-avatar>
+    <v-row justify="center" align="center" class="profilesList d-flex align-center">
+      <v-col cols="6" md="3" sm="4" v-for="profile in profilesArray" :key="profile.id">
+        <v-avatar class="profile elevation-5" size="20vh">{{profile.pseudo}}</v-avatar>
       </v-col>
       <v-col cols="6" md="3" sm="4" xs="6">
         <v-avatar class="plus" size="20vh">
@@ -19,40 +13,34 @@
         </v-avatar>
       </v-col>
     </v-row>
-    <v-row justify="center" id="btnEditProfiles">
-      <v-btn class="elevation-5" color="white" x-large outlined>Éditer les profils</v-btn>
+    <v-row justify="center" id="btnEditProfiles" class="d-flex align-end">
+      <v-btn href="#" class="elevation-5" color="white" x-large outlined>Éditer les profils</v-btn>
     </v-row>
   </v-container>
 </template>
 
 
 <script>
+import Resources from "@/service/resources/resources";
+const ResourcesService = new Resources();
 export default {
   name: "ProfilesLists",
+  created() {
+    this.getProfiles();
+  },
   data() {
     return {
-      color: "primary"
+      color: "primary",
+      profilesArray: ""
     };
-  }/*,
+  },
   methods: {
-    getProfiles: async function() {
-      const response = await fetch("http://localhost:3000/profile");
-      if (!response.ok) {
-        const message = `An error has occured: ${response.status}`;
-        throw new Error(message);
-      }
-      return response
-    },
-    renderProfiles : function(){
-      const jsonProfiles = this.getProfiles()
-      console.log(jsonProfiles)
-      let response = ""
-      jsonProfiles.forEach(element => {
-        response += element
+    getProfiles() {
+      ResourcesService.getAllUserProfile().then(res => {
+        this.profilesArray = res.data;
       });
-      return response.json
-    }}*/
-  
+    }
+  }
 };
 </script>
 
@@ -107,7 +95,6 @@ export default {
   text-align: right;
   margin-top: 20px;
   padding-right: 20px;
-  color: aqua;
 }
 div {
   color: white;
@@ -117,8 +104,4 @@ div {
   top: 55%;
   color: pink;
 }
-/*.profiles{
-    background-color: #3c3e41;
-    height: 100%;
-}*/
 </style>

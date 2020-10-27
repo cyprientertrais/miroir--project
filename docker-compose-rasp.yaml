@@ -2,12 +2,9 @@ version: "3.2"
 
 services:
   client:
-    build: ./front
+    image: cypnose/front:latest
     ports:
       - 8080:8080
-    volumes:
-      - ./front:/data/front
-      - /data/front/node_modules
     depends_on: 
       - db
     environment:
@@ -16,12 +13,9 @@ services:
       - core_service_network
 
   server:
-    build: ./back
+    image: cypnose/back:latest
     ports:
       - 3000:3000
-    volumes:
-      - ./back:/data/back
-      - /data/back/node_modules
     depends_on: 
       - db
     environment:
@@ -29,9 +23,7 @@ services:
     networks:
       - core_service_network
   db:
-    build: ./db
-    volumes:
-      - ./db:/var/dump
+    image: cypnose/mongodb:latest
     ports:
       - 27017:27017
     networks:
@@ -39,3 +31,4 @@ services:
 networks:
   core_service_network:
     driver: bridge
+    

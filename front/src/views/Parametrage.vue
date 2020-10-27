@@ -11,8 +11,14 @@ export default {
 }
 </script>
 
+
 <style scoped>
-div{
-    color:white
+div {
+  color: white;
+}
+
+.parametrage {
+  background-color: #3c3e41;
+  height: 100%;
 }
 </style>
