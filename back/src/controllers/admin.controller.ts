@@ -25,7 +25,6 @@ export class AdminController {
   @Get('/wifiscan')
   async getProfiles() {
     var ssh = new SSH2Promise([sshconfig2]);
-    let wifi = '';
     var data = await ssh.exec('parse.sh');
     let tab = data.split('\n');
     let res = { wifi: [] };
@@ -51,5 +50,17 @@ export class AdminController {
   @Get('/orientation')
   async getOrientation() {
     return this.adminService.getOrientation();
+  }
+  @Get('/widgets')
+  async fetWidgets() {
+    return this.adminService.getAvailableWidgets();
+  }
+  @Post('/sendWifi')
+  async getSendWifi(@Body() body, @Res() response) {
+    var ssh = new SSH2Promise([sshconfig2]);
+    var data = await ssh.exec(' echo -e network={ ssid=\\"'+body.ssid+'\\" psk=\\"'+body.password+'\\"} >> /etc/wpa_supplicant/wpa_supplicant.conf ');
+
+    return response.json(200);
+    
   }
 }
