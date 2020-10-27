@@ -57,6 +57,9 @@ const router = new VueRouter({
   routes,
 });
 
+/**
+ * Bloc de redirection -> impossible d'accéder à la configuration si la personne n'est pas connecté
+ */
 router.beforeEach((to, from, next) => {
   if (to.name == "Parametrage" && !sessionStorage.getItem("isAuthenticated")) {
     next({ name: "Login", query: { from: to.name } });
