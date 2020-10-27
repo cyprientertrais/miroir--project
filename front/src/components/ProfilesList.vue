@@ -1,17 +1,20 @@
 <template>
   <v-container fill-height fluid class="profilesListContainer">
-    <v-row justify="center" id="WhoIsThis">
-      <div class="text-lg-h1 text-md-h1 text-sm-h2 text-h3">Éditer les profils</div>
-      <div class="text-lg-h1 text-md-h1 text-sm-h2 text-h3"><v-icon right color="white" size="60px">mdi-cog</v-icon></div>
+    <v-row justify="center" id="WhoIsThis" class="d-flex align-start">
+      <div class="text-lg-h1 text-md-h1 text-sm-h2 text-h3">Qui est-ce ?</div>
     </v-row>
-    <v-row justify="center" align="center" class="profilesList">
-      <v-col cols="6" md="2" sm="3" v-for="profile in profilesArray" :key="profile.id">
+    <v-row justify="center" align="center" class="profilesList d-flex align-center">
+      <v-col cols="6" md="2" sm="4" v-for="profile in profilesArray" :key="profile.id">
         <v-avatar class="profile elevation-5" size="20vh">{{profile.pseudo}}</v-avatar>
       </v-col>
+      <v-col cols="6" md="2" sm="4" xs="6">
+        <v-avatar class="plus" size="20vh">
+          <v-icon size="100" color="white" dark>mdi-account-plus-outline</v-icon>
+        </v-avatar>
+      </v-col>
     </v-row>
-
-    <v-row justify="center" id="btnEditProfiles">
-      <v-btn class="elevation-5" color="white" x-large outlined>Terminé</v-btn>
+    <v-row justify="center" id="btnEditProfiles" class="d-flex align-end">
+      <v-btn @click="toogleEdit()" href="#" class="elevation-5" color="white" x-large outlined>Éditer les profils</v-btn>
     </v-row>
   </v-container>
 </template>
@@ -36,12 +39,14 @@ export default {
       ResourcesService.getAllUserProfile().then(res => {
         this.profilesArray = res.data;
       });
+    },
+    toogleEdit(){
+      console.log("OK ?")
+      this.$root.$emit('editProfiles',true)
     }
   }
 };
 </script>
-
-
 
 <style scoped>
 .profilesListContainer {
@@ -63,6 +68,7 @@ export default {
   text-justify: center;
   align-content: center;
   width: 100%;
+  /*background-color: #ffc0cb;*/
   vertical-align: middle;
   top: 50%;
 }
@@ -93,7 +99,6 @@ export default {
   text-align: right;
   margin-top: 20px;
   padding-right: 20px;
-  color: aqua;
 }
 div {
   color: white;
@@ -103,8 +108,4 @@ div {
   top: 55%;
   color: pink;
 }
-/*.profiles{
-    background-color: #3c3e41;
-    height: 100%;
-}*/
 </style>
