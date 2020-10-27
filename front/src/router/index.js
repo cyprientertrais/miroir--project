@@ -70,7 +70,7 @@ const router = new VueRouter({
 });
 
 /**
- * Bloc de redirection -> impossible d'accéder à la configuration si la personne n'est pas connecté
+ * Bloc de redirection -> impossible d'accéder à la configuration si la personne n'est pas connecté 
  */
 router.beforeEach((to, from, next) => {
   if (to.name == "Parametrage" && !sessionStorage.getItem("isAuthenticated")) {
