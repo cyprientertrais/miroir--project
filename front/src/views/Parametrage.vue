@@ -1,10 +1,16 @@
 <template>
-  <div class="parametrage">
-    is working
+  <div class="home">
   </div>
 </template>
 
-<script></script>
+<script>
+export default {
+  name: "parametrage",
+  components: {
+  },
+}
+</script>
+
 
 <style scoped>
 div {

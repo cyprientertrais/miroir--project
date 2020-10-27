@@ -41,12 +41,9 @@ export class ProfileService {
   async createDashboardFromProfileService(newDashboard : Dashboard,name :string){
 
     let profile = await this.getOne(name)
-    console.log(profile.dashboards)
     const dashboardAlreadyExists = this.doesDashboardNameAlreadyExists(profile.dashboards, newDashboard.name)
     if(dashboardAlreadyExists == true){
-      console.log("Dashboard name already exists")
     }else{
-      console.log("Dashboard created")
       let dash = new Dashboard()
       dash.name = newDashboard.name
       profile.dashboards.push(newDashboard)
@@ -74,19 +71,23 @@ export class ProfileService {
   
 
  doesDashboardNameAlreadyExists(dashboards : Dashboard[], newDashboardName : string) : boolean{
-  console.log(`New dashboard name : ${newDashboardName}`)
   let alreadyExists : boolean;
   dashboards.forEach(element => {
-    console.log(`Dashboard name : ${element.name}`)
     if(newDashboardName === element.name){
-      console.log("is true")
       alreadyExists = true;
     }
   });
-  if(alreadyExists == true){
+  if(alreadyExists == true){ 
     return true;
   }else{
     return false;
   }
 }
+
+/*async addWidgetToDashboard(name : string, dashboard : Dashboard, newWidgetName : Widget){
+  let alreadyExists : boolean;
+  let profile : Promise<Profile>
+  
+}*/
+
 }
