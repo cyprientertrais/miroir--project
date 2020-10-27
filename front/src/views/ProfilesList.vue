@@ -4,10 +4,10 @@
       <div class="text-lg-h1 text-md-h1 text-sm-h2 text-h3">Qui est-ce ?</div>
     </v-row>
     <v-row justify="center" align="center" class="profilesList d-flex align-center">
-      <v-col cols="6" md="3" sm="4" v-for="profile in profilesArray" :key="profile.id">
+      <v-col cols="6" md="2" sm="4" v-for="profile in profilesArray" :key="profile.id">
         <v-avatar class="profile elevation-5" size="20vh">{{profile.pseudo}}</v-avatar>
       </v-col>
-      <v-col cols="6" md="3" sm="4" xs="6">
+      <v-col cols="6" md="2" sm="4" xs="6">
         <v-avatar class="plus" size="20vh">
           <v-icon size="100" color="white" dark>mdi-account-plus-outline</v-icon>
         </v-avatar>

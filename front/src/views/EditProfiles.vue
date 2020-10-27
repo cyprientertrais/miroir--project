@@ -5,7 +5,7 @@
       <div class="text-lg-h1 text-md-h1 text-sm-h2 text-h3"><v-icon right color="white" size="60px">mdi-cog</v-icon></div>
     </v-row>
     <v-row justify="center" align="center" class="profilesList">
-      <v-col cols="6" md="3" sm="4" v-for="profile in profilesArray" :key="profile.id">
+      <v-col cols="6" md="2" sm="3" v-for="profile in profilesArray" :key="profile.id">
         <v-avatar class="profile elevation-5" size="20vh">{{profile.pseudo}}</v-avatar>
       </v-col>
     </v-row>
