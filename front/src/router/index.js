@@ -32,6 +32,12 @@ const routes = [
       import("../views/Login.vue"),
   },
   {
+    path: "/wifi",
+    name: "Wifi",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/WifiChoice.vue"),
+  },
+  {
     path: "/deleteProfile",
     name: "DeleteProfile",
     component: () =>

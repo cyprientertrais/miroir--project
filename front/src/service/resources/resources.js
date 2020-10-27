@@ -54,6 +54,11 @@ export default class Resources {
     return axios.get(url);
   }
 
+  async getWifiList() {
+    const wifiList = `http://${this.hostname}:3000/admin/wifiscan`;
+    return axios.get(wifiList);
+  }
+
   addProfile(data) {
       const url = `http://${this.hostname}:3000/profiles/`;
       return axios.post(url,data)
