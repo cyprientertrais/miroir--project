@@ -1,19 +1,19 @@
 <template>
   <div class="mainDiv">
     <v-sheet align="center" justify="center" class="login" rounded>
-      <div class="titre">Oÿna</div>
+      <div class="titre font-title">Oÿna</div>
       <div class="password">
         <v-text-field
           v-model="password"
           v-on:keyup="inputKeyPressed"
           label="Admin password"
           type="password"
-          class="inputPassword"
+          class="inputPassword font-text"
           dark
           :error="isPasswordWrong"
           :error-messages="wrongPasswordMessage"
         ></v-text-field>
-        <v-btn v-on:click="connectionTentative" elevation="2" class="butonPassword" color="#155b73"
+        <v-btn v-on:click="connectionTentative" elevation="2" class="butonPassword font-text" color="#155b73"
           >Connect</v-btn
         >
       </div>
@@ -71,13 +71,13 @@ export default {
 <style scoped>
 .titre {
   font-weight: bold;
-  font-size: 50px;
+  font-size: 70px;
   color: #ffffff;
   padding-top: 7%;
 }
 
 .password {
-  margin-top: 8%;
+  margin-top: 6%;
 }
 
 .inputPassword {

@@ -2,16 +2,16 @@
     <div class="mainDiv">
         <v-sheet align="center" justify="center" class="deleteProfile" rounded>
             <div class="pageContent">
-                <div class="titre">Supprimer le profil <span class="nameProfile">{{this.profileName}}</span> ?</div>
-                <div class="description">
-                    <div class="questionConfirmation">Êtes-vous sûr de vouloir supprimer ce profil?</div>
+                <div class="titre font-title">SUPPRIMER LE PROFIL <span class="nameProfile">{{this.profileName}}</span> ?</div>
+                <div class="description font-text">
+                    <div class="questionConfirmation">Êtes-vous sûr de vouloir supprimer ce profil ?</div>
                     <div class="descriptionConfirmation">Tous les dashboards associés seront définitivement supprimés, et vous ne pourrez plus y accéder.</div>
                 </div>
                 <div class="butonDelete">
-                    <v-btn v-on:click="deleteProfile" elevation="2" class="butonDelete" color="#b54545">Supprimer le profil</v-btn>
+                    <v-btn v-on:click="deleteProfile" elevation="2" class="butonDelete font-text" color="#b54545">Supprimer le profil</v-btn>
                 </div>
                 <div class="butonCancel">
-                    <v-btn elevation="2" class="butonCancel" color="#155b73">Annuler</v-btn>
+                    <v-btn elevation="2" class="butonCancel font-text" color="#155b73">Annuler</v-btn>
                 </div>
             </div>
         </v-sheet>
@@ -45,7 +45,7 @@ export default {
     return {
         //if true, the snackbar displays
         snackbar: false,
-        snackbarContent: "",
+        snackbarContent: ""
     };
   },
   props: {profileName: String},
@@ -103,7 +103,7 @@ export default {
 }
 
 .butonDelete {
-    margin-top: 10px;
+    margin-top: 17px;
 }
 
 .butonCancel {
