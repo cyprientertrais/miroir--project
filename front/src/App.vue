@@ -30,7 +30,7 @@ export default {
     // get position
     navigator.geolocation.getCurrentPosition(
       (pos) => {
-        this.setLocation(pos);
+        this.setLocation({lat:pos.coords.latitude,long:pos.coords.longitude});
       },
       (err) => {
         console.log("error getting the location:\n" + err.message);
