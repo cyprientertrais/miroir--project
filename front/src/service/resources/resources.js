@@ -44,7 +44,7 @@ export default class Resources {
     return axios.get(url);
   }
 
-  getWifiList() {
+  async getWifiList() {
     const wifiList = `http://${this.hostname}:3000/admin/wifiscan`;
     return axios.get(wifiList);
   }
