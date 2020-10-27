@@ -48,6 +48,27 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
+@font-face {
+  font-family: "Amatic";
+  src: local("Amatic"),
+   url(fonts/Amatic_SC/AmaticSC-Regular.ttf) format("truetype");
+}
+@font-face {
+  font-family: "Poppins";
+  src: local("Poppins"),
+   url(fonts/Poppins/Poppins-Regular.ttf) format("truetype");
+}
+@font-face {
+  font-family: "PoppinsBold";
+  src: local("PoppinsBold"),
+   url(fonts/Poppins/Poppins-SemiBold.ttf) format("truetype");
+}
+.font-title {
+  font-family: "Amatic"
+}
 
+.font-text {
+  font-family: "Poppins"
+}
 </style>
