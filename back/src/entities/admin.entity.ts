@@ -8,6 +8,8 @@ export class Admin{
     orientation: string;
     @Column() 
     adminPassword:string;
+    @Column()
+    widgets: Array<string>;
     constructor(admin?:Partial<Admin>){
         Object.assign(this,admin);
     }

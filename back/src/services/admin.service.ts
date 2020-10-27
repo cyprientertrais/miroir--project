@@ -17,6 +17,13 @@ export class AdminService {
     });
   }
 
+  async getAvailableWidgets() {
+    let e = await this.adminRepository.find();
+    return e.map((element) => {
+      return { widgets: element.widgets};
+    });
+  }
+
   async getAll() {
     let e = await this.adminRepository.find();
     return e;
