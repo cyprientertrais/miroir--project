@@ -37,6 +37,12 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/ReglagePopUp.vue"),
   },
+  {
+    path: "/parametrage/addProfile",
+    name: "AddProfile",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../components/AddProfile.vue")
+  }
 ];
 
 const router = new VueRouter({
