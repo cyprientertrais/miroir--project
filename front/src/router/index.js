@@ -47,19 +47,13 @@ const routes = [
     path: "/reglage",
     name: "Reglage",
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/ReglagePopUp.vue"),
+      import("../views/ReglagePopUp.vue"),
   }, 
   {
     path: "/profiles",
     name: "Profiles",
     component: () =>
       import("../views/Profiles.vue"),
-  },
-  {
-    path: "/parametrage/addProfile",
-    name: "AddProfile",
-    component: () =>
-      import("../components/AddProfile.vue")
   }
 ];
 

@@ -1,14 +1,6 @@
 <template>
 <div class="addProfile" align="center" justify="center">
     <v-container>
-        <v-sheet
-            rounded
-            color="transparent"
-            elevation="4"
-            style="margin-top: 60px"
-            height="500"
-            width="350"
-        >
     
         <h1>Ajouter un profil</h1>
     
@@ -23,7 +15,6 @@
             <v-btn elevation="2" class="button" v-on:click="addProfile" light>Ajouter</v-btn>
             <v-btn elevation="2" class="button" light>Annuler</v-btn>
         </div>
-        </v-sheet>
     </v-container> 
 </div>
 </template>
@@ -67,8 +58,9 @@ export default {
                 }
             } else {
                 this.isProfileNameInvalid = false;
-                alert("Une bonne redirection des familles sur la page des profils");
             }
+
+            this.$emit('profileCreated');
         }
     }
 };

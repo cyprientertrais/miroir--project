@@ -16,8 +16,8 @@
           <v-avatar class="profile elevation-5" size="20vh">{{profile.pseudo}}</v-avatar>
         </v-badge>
       </v-col>
-      <v-col cols="6" md="2" sm="4" xs="6">
-        <v-avatar class="plus" size="20vh">
+      <v-col v-if="profilesArray.length < 6" cols="6" md="2" sm="4" xs="6">
+        <v-avatar class="plus" size="20vh" @click="addProfile = true">
           <v-icon size="100" color="white" dark>mdi-account-plus-outline</v-icon>
         </v-avatar>
       </v-col>
@@ -32,15 +32,23 @@
         outlined
       >{{btnValue}}</v-btn>
     </v-row>
+
+  <v-dialog v-model="addProfile" width="50vh">
+    <AddProfile @profileCreated="getProfiles"/>
+  </v-dialog>
   </v-container>
 </template>
 
 
 <script>
+import AddProfile from "@/components/AddProfile";
 import Resources from "@/service/resources/resources";
 const ResourcesService = new Resources();
 export default {
   name: "ProfilesLists",
+  components:{
+    AddProfile
+  },
   created() {
     this.getProfiles();
   },
@@ -50,7 +58,8 @@ export default {
       profilesArray: "",
       btnValue: "Éditer les profils",
       titleValue: "Qui est-ce ?",
-      editing: false
+      editing: false,
+      addProfile:false
     };
   },
   methods: {
@@ -58,6 +67,8 @@ export default {
       ResourcesService.getAllUserProfile().then(res => {
         this.profilesArray = res.data;
       });
+      
+    this.addProfile = false;
     },
     toogleEdit() {
       this.btnValue == "Éditer les profils"
