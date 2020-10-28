@@ -7,7 +7,7 @@ export class AppService {
     return 'Hello World!';
   }
   async parseRSS(){
-   return await parser.parseURL('https://www.francetvinfo.fr/titres.rss');
+   return await parser.parseURL('https://www.france24.com/fr/rss');
   }
   
 }
