@@ -45,16 +45,17 @@ export default class Resources {
   }
 
   addProfile(data) {
-      const url = `http://${this.hostname}:3000/profile/`;
+      const url = `http://${this.hostname}:3000/profiles/`;
       return axios.post(url,data)
           .then(response => response.data)
           .catch(error => error);
   }
 
-  changeProfile(data) {
-    const url = `http://${this.hostname}:3000/profile/`;
-    return axios.post(url,data)
+  changeProfileName(oldName, newName) {
+    const url = `http://${this.hostname}:3000/profiles/${oldName}`;
+    console.log("info", url);
+    return axios.patch(url, {"name": newName})
         .then(response => response.data)
         .catch(error => error);
-}
+  }
 }

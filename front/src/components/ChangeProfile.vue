@@ -13,14 +13,16 @@
         <h1>Modifier le profil</h1>
     
         <v-text-field
-            id="profileName"
+            id="newProfileName"
             label="Nom d'utilisateur"
+            v-model="newProfileName"
             dark
             :error="isProfileNameInvalid"
             :error-messages="errorMessage"
+            clearable
         ></v-text-field>
         <div class="buttons">
-            <v-btn elevation="2" class="buttonSave" v-on:click="changeProfile" light>Enregistrer</v-btn>
+            <v-btn elevation="2" class="buttonSave" v-on:click="changeProfileName" light>Enregistrer</v-btn>
             <v-btn elevation="2" class="buttonAnnul" light>Annuler</v-btn>
             <v-btn  elevation="2" class="buttonSuppr" light>Supprimer le profil</v-btn>
         </div>
@@ -38,30 +40,33 @@ export default {
     name: "ChangeProfile",
     data() {
         return {
-            profileName: "",
+            oldProfileName: "yaya",
+            newProfileName: "yaya",
             isProfileNameInvalid: false,
             errorMessage: ""
         }
     },
     methods: {
-        async changeProfile() {
-            this.profileName = document.getElementById("profileName").value;
-            const profile = `{"pseudo":"${this.profileName}", "age":0, "dashboards":[]}`;
-            const POSTRequest = ResourcesService.addProfile(JSON.parse(profile));
+        async changeProfileName() {
+            this.newProfileName = document.getElementById("newProfileName").value;
 
-            function getPOSTRequestResponse(POSTRequest) {
-                return POSTRequest.then(function(res) {
+            console.log("Old : " + this.oldProfileName + "\nNew : " + this.newProfileName)
+
+            const PATCHRequest = ResourcesService.changeProfileName(this.oldProfileName,this.newProfileName);
+            
+            function getPATCHRequestResponse(PATCHRequest) {
+                return PATCHRequest.then(function(res) {
                     return JSON.stringify(res);
                 })
             }
             
-            const msg = await getPOSTRequestResponse(POSTRequest);
+            const msg = await getPATCHRequestResponse(PATCHRequest);
 
-            if (msg.includes("Request failed with status code 400")) {
+            if (msg.includes("Request failed with status code 404")) {
                 this.isProfileNameInvalid = true;
-                if (this.profileName.length == 0) {
+                if (this.newProfileName.length == 0) {
                     this.errorMessage = "Veuillez entrer un nom de profil valide.";
-                } else if(this.profileName.length > 15) {
+                } else if(this.newProfileName.length > 15) {
                     this.errorMessage = "La taille du nom ne doit pas dépassé 15 caractères. Veuillez entrer un nom de profil valide.";
                 } else {
                     this.errorMessage = "Ce nom de profil est déjà utilisé. Veuillez entrer un autre nom.";
