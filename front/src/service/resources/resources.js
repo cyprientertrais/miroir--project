@@ -68,7 +68,7 @@ export default class Resources {
   async getNews() {
     
     const url = `http://${this.hostname}:3000/parse/`;
-    return axios.get(url)
+    return axios.post(url,{url:"https://www.france24.com/fr/rss"})
         .then(response => response.data)
         .catch(error => error);
 }

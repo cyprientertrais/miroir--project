@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post,Res } from '@nestjs/common';
 import { AppService } from './app.service';
 
 @Controller()
@@ -9,9 +9,15 @@ export class AppController {
   getHello(): string {
     return this.appService.getHello();
   }
-  @Get("/parse")
-  async parseRss(){
-    return  await this.appService.parseRSS();
+
+  @Post("/parse")
+  async parseRss(@Body() body,@Res() res){
+    if(body.url){
+      return  res.json(await this.appService.parseRSS());
+    }else{
+      return res.sendStatus(400);
+    }
+    
   
   }
 
