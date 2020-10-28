@@ -65,4 +65,11 @@ export default class Resources {
           .then(response => response.data)
           .catch(error => error);
   }
+  async getNews() {
+    
+    const url = `http://${this.hostname}:3000/parse/`;
+    return axios.get(url)
+        .then(response => response.data)
+        .catch(error => error);
+}
 }

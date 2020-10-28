@@ -9,4 +9,10 @@ export class AppController {
   getHello(): string {
     return this.appService.getHello();
   }
+  @Get("/parse")
+  async parseRss(){
+    return  await this.appService.parseRSS();
+  
+  }
+
 }
