@@ -65,10 +65,38 @@ export default {
    url(fonts/Poppins/Poppins-SemiBold.ttf) format("truetype");
 }
 .font-title {
-  font-family: "Amatic"
+  font-family: "Amatic" !important
 }
 
 .font-text {
-  font-family: "Poppins"
+  font-family: "Poppins" !important
+}
+
+.secondary-background {
+   background-color: #2e2e2e !important;
+}
+
+.primary-background {
+   background-color: #3c3e41 !important;
+}
+
+.accent-background {
+  background-color: #155b73 !important;
+}
+
+.warning-background {
+   background-color: #b54545 !important;
+}
+
+.accent-color {
+  color: #155b73 !important;
+}
+
+.warning-color {
+   color: #b54545 !important;
+}
+
+.primary-color {
+   color: #ffffff !important;
 }
 </style>
