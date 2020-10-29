@@ -1,6 +1,6 @@
 <template>
-  <div class="mainDiv">
-    <v-sheet align="center" justify="center" class="login" rounded>
+  <div class="mainDiv primary-background">
+    <v-sheet align="center" justify="center" class="login secondary-background" rounded>
       <div class="titre font-title">Oÿna</div>
       <div class="password">
         <v-text-field
@@ -13,7 +13,7 @@
           :error="isPasswordWrong"
           :error-messages="wrongPasswordMessage"
         ></v-text-field>
-        <v-btn v-on:click="connectionTentative" elevation="2" class="butonPassword font-text" color="#155b73"
+        <v-btn v-on:click="connectionTentative" elevation="2" class="butonPassword font-text accent-background" color="#155b73"
           >Connect</v-btn
         >
       </div>
@@ -87,19 +87,16 @@ export default {
 
 .butonPassword {
   margin-top: 8%;
-  background-color: #155b73;
   color: #ffffff;
 }
 
 .login{
-    background-color: #2e2e2e;
     height: 100%;
 }
 
 .mainDiv{
     height: 100%;
     padding: 5% 12% 5% 12%;
-    background-color: #3c3e41;
 }
 
 @media screen and (max-width: 540px) {
@@ -109,7 +106,6 @@ export default {
   .mainDiv{
     height: 100%;
     padding: 10%;
-    background-color: #3c3e41;
   }
 }
 </style>

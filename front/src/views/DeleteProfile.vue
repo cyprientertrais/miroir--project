@@ -1,17 +1,17 @@
 <template>
-    <div class="mainDiv">
-        <v-sheet align="center" justify="center" class="deleteProfile" rounded>
+    <div class="mainDiv primary-background">
+        <v-sheet align="center" justify="center" class="deleteProfile secondary-background" rounded>
             <div class="pageContent">
-                <div class="titre font-title">SUPPRIMER LE PROFIL <span class="nameProfile">{{this.profileName}}</span> ?</div>
+                <div class="titre font-title">SUPPRIMER LE PROFIL <span class="nameProfile accent-color">{{this.profileName}}</span> ?</div>
                 <div class="description font-text">
                     <div class="questionConfirmation">Êtes-vous sûr de vouloir supprimer ce profil ?</div>
                     <div class="descriptionConfirmation">Tous les dashboards associés seront définitivement supprimés, et vous ne pourrez plus y accéder.</div>
                 </div>
                 <div class="butonDelete">
-                    <v-btn v-on:click="deleteProfile" elevation="2" class="butonDelete font-text" color="#b54545">Supprimer le profil</v-btn>
+                    <v-btn v-on:click="deleteProfile" elevation="2" class="butonDelete font-text warning-background" color="">Supprimer le profil</v-btn>
                 </div>
                 <div class="butonCancel">
-                    <v-btn elevation="2" class="butonCancel font-text" color="#155b73">Annuler</v-btn>
+                    <v-btn elevation="2" class="butonCancel font-text accent-background" color="">Annuler</v-btn>
                 </div>
             </div>
         </v-sheet>
@@ -20,7 +20,8 @@
 
             <template v-slot:action="{ attrs }">
             <v-btn
-                color="#155b73"
+                class="accent-color"
+                color=""
                 text
                 v-bind="attrs"
                 @click="snackbar = false"
@@ -73,7 +74,6 @@ export default {
 .mainDiv{
     height: 100%;
     padding: 5% 12% 5% 12%;
-    background-color: #3c3e41;
 }
 
 .titre {
@@ -83,10 +83,6 @@ export default {
     padding-top: 9%;
 }
 
-.nameProfile {
-    color: #155b73;
-}
-
 .description {
     color: #ffffff;
     width: 35%;
@@ -94,7 +90,6 @@ export default {
 }
 
 .deleteProfile{
-    background-color: #2e2e2e;
     height: 100%;
 }
 
