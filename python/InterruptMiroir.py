@@ -33,6 +33,9 @@ while True :
         # instances lorsqu'il passe pas sa main plusieurs fois.
         sleep(2)
 
-    # En cas d'arrêt par Ctrl+C, on réinitialise les pins
+    # En cas d'arrêt par Ctrl+C
     except KeyboardInterrupt:
+        # On réinitialise les pins
         GPIO.cleanup()
+        # On ferme le programme
+        exit()
