@@ -1,5 +1,7 @@
 <template>
+
   <v-carousel  dark v-if="flux" v-model="model" :show-arrows="true" hide-delimiters>
+
     <v-carousel-item
       
       v-for="(el,i) in flux"
@@ -16,6 +18,7 @@
         :src="el.img"
        
       ></v-img>
+
 <audio autoplay>
 <source :src="el.audio" type="audio/mp3">
 </audio>
@@ -48,13 +51,7 @@ export default {
     };
   },
   methods: {
-    playAudio(url){
-      console.log('Will it play here?? lol');
-   console.log('Play outside of');
-   var audio = new Audio(url); // path to file
-   audio.play();
-    }
-    
+
     
    
   },
