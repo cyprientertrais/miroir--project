@@ -11,7 +11,7 @@
         <strong v-if="userProfile">{{ userProfile.pseudo }}</strong>
       </v-card>
     </v-row>
-    <div class="ma-2" v-if="widgets">
+    <div class="pb-5 ma-2 widgetHolder" v-if="widgets">
       <div v-if="orientation === 'landscape'">
         <v-row
           v-for="(xWidgets, index) in widgets"
@@ -66,7 +66,7 @@ export default {
   },
   data() {
     return {
-      widgets: []
+      widgets: [],
     };
   },
   watch: {
@@ -75,18 +75,18 @@ export default {
     },
     orientation: function() {
       this.setWidgets();
-    }
+    },
   },
   computed: {
-    ...mapGetters(["userProfile", "orientation"])
+    ...mapGetters(["userProfile", "orientation"]),
   },
   methods: {
     setWidgets() {
       if (this.userProfile) {
         if (this.orientation === "landscape") {
           this.userProfile.dashboards
-            .filter(element => element.name === "default")[0]
-            .widgets.forEach(widget => {
+            .filter((element) => element.name === "default")[0]
+            .widgets.forEach((widget) => {
               let quotient = Math.floor(widget.position / 2);
               let reste = widget.position % 2;
               if (this.widgets && !this.widgets[quotient]) {
@@ -98,8 +98,8 @@ export default {
             });
         } else {
           this.userProfile.dashboards
-            .filter(element => element.name === "default")[0]
-            .widgets.forEach(widget => {
+            .filter((element) => element.name === "default")[0]
+            .widgets.forEach((widget) => {
               let quotient = Math.floor(widget.position / 4);
               let reste = widget.position % 4;
               if (this.widgets && !this.widgets[quotient]) {
@@ -113,11 +113,11 @@ export default {
       }
     },
     getOrientation() {
-      ResourcesService.getOrientation().then(res => {
+      ResourcesService.getOrientation().then((res) => {
         this.$store.dispatch("setOrientation", res.data[0].orientation);
       });
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -135,7 +135,14 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background-color: red;
-  height: 500px;
+  height: 100%;
+}
+
+.portrait .row {
+  flex: 0;
+}
+
+.widgetHolder {
+  height: 100%;
 }
 </style>

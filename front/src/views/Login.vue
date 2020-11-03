@@ -13,7 +13,11 @@
           :error="isPasswordWrong"
           :error-messages="wrongPasswordMessage"
         ></v-text-field>
-        <v-btn v-on:click="connectionTentative" elevation="2" class="butonPassword font-text" color="#155b73"
+        <v-btn
+          v-on:click="connectionTentative"
+          elevation="2"
+          class="butonPassword font-text"
+          color="#155b73"
           >Connect</v-btn
         >
       </div>
@@ -22,7 +26,7 @@
 </template>
 
 <script>
-import { sha256 } from 'js-sha256';
+import { sha256 } from "js-sha256";
 import Resources from "@/service/resources/resources";
 
 const ResourcesService = new Resources();
@@ -33,7 +37,7 @@ export default {
     return {
       password: "",
       isPasswordWrong: false,
-      wrongPasswordMessage: ""
+      wrongPasswordMessage: "",
     };
   },
   computed: {},
@@ -42,12 +46,14 @@ export default {
       //hash password
       const hashedPassword = sha256(this.password);
       //askbackif the password is right, recieve 200 or 403
-      const responseCheckPassword = await ResourcesService.checkAdminPassword(hashedPassword);
+      const responseCheckPassword = await ResourcesService.checkAdminPassword(
+        hashedPassword
+      );
       //check if call responds 200 or 403
-      if (responseCheckPassword.status===200) {
+      if (responseCheckPassword.status === 200) {
         //if yes, modification global variable to say user is connected and redirect
         sessionStorage.setItem("isAuthenticated", true);
-        this.$router.push(this.$route.query.from || "/");
+        this.$router.push(this.$route.query.from || "/settings");
       } else {
         //if no, display error
         this.isPasswordWrong = true;
@@ -63,9 +69,9 @@ export default {
         this.isPasswordWrong = false;
         this.wrongPasswordMessage = "";
       }
-    }
+    },
   },
-  mounted: function() {}
+  mounted: function() {},
 };
 </script>
 <style scoped>
@@ -91,22 +97,22 @@ export default {
   color: #ffffff;
 }
 
-.login{
-    background-color: #2e2e2e;
-    height: 100%;
+.login {
+  background-color: #2e2e2e;
+  height: 100%;
 }
 
-.mainDiv{
-    height: 100%;
-    padding: 5% 12% 5% 12%;
-    background-color: #3c3e41;
+.mainDiv {
+  height: 100%;
+  padding: 5% 12% 5% 12%;
+  background-color: #3c3e41;
 }
 
 @media screen and (max-width: 540px) {
   .titre {
     padding-top: 40%;
   }
-  .mainDiv{
+  .mainDiv {
     height: 100%;
     padding: 10%;
     background-color: #3c3e41;

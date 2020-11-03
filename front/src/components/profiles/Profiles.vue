@@ -53,12 +53,13 @@
       >
     </v-row>
 
-    <v-dialog v-model="addProfile" width="50vh">
+    <v-dialog v-model="addProfile" width="500px">
       <AddProfile @profileCreated="getProfiles" />
     </v-dialog>
 
-    <v-dialog v-model="editingChoosedProfile" width="50vh">
+    <v-dialog v-model="editingChoosedProfile" width="500px">
       <ChangeProfile
+        v-if="editingChoosedProfile"
         @profileChanged="profileEdited"
         :profile="choosedProfile"
       />
@@ -66,17 +67,16 @@
   </v-container>
 </template>
 
-
 <script>
-import AddProfile from "@/components/AddProfile";
-import ChangeProfile from "@/components/ChangeProfile";
+import AddProfile from "@/components/profiles/AddProfile";
+import ChangeProfile from "@/components/profiles/ChangeProfile";
 import Resources from "@/service/resources/resources";
 const ResourcesService = new Resources();
 export default {
   name: "ProfilesLists",
   components: {
     AddProfile,
-    ChangeProfile
+    ChangeProfile,
   },
   created() {
     this.getProfiles(true);
@@ -90,13 +90,16 @@ export default {
       editing: false,
       addProfile: false,
       choosedProfile: undefined,
-      editingChoosedProfile: false
+      editingChoosedProfile: false,
     };
   },
   methods: {
-    profileEdited() {
+    profileEdited(causedByProfileDeleted) {
       this.choosedProfile = null;
       this.editingChoosedProfile = false;
+      if (causedByProfileDeleted) {
+        this.getProfiles(true);
+      }
     },
     editProfile(profile) {
       if (this.editing) {
@@ -106,11 +109,10 @@ export default {
     },
     getProfiles(value) {
       if (value) {
-        ResourcesService.getAllUserProfile().then(res => {
+        ResourcesService.getAllUserProfile().then((res) => {
           this.profilesArray = res.data;
         });
       }
-
       this.addProfile = false;
     },
     toogleEdit() {
@@ -121,8 +123,8 @@ export default {
         ? (this.titleValue = "Éditer les profils")
         : (this.titleValue = "Qui est-ce ?");
       this.editing = !this.editing;
-    }
-  }
+    },
+  },
 };
 </script>
 

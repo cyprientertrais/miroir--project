@@ -16,20 +16,17 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () =>
-      import("../views/About.vue"),
+    component: () => import("../views/About.vue"),
   },
   {
-    path: "/parametrage",
-    name: "Parametrage",
-    component: () =>
-      import("../views/Parametrage.vue"),
+    path: "/settings",
+    name: "Settings",
+    component: () => import("../views/Settings.vue"),
   },
   {
     path: "/login",
     name: "Login",
-    component: () =>
-      import("../views/Login.vue"),
+    component: () => import("../views/Login.vue"),
   },
   {
     path: "/wifi",
@@ -37,24 +34,6 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/WifiChoice.vue"),
   },
-  {
-    path: "/deleteProfile",
-    name: "DeleteProfile",
-    component: () =>
-      import("../views/DeleteProfile.vue"),
-  },
-  {
-    path: "/reglage",
-    name: "Reglage",
-    component: () =>
-      import("../views/ReglagePopUp.vue"),
-  }, 
-  {
-    path: "/profiles",
-    name: "Profiles",
-    component: () =>
-      import("../views/Profiles.vue"),
-  }
 ];
 
 const router = new VueRouter({
@@ -64,10 +43,10 @@ const router = new VueRouter({
 });
 
 /**
- * Bloc de redirection -> impossible d'accéder à la configuration si la personne n'est pas connecté 
+ * Bloc de redirection -> impossible d'accéder à la configuration si la personne n'est pas connecté
  */
 router.beforeEach((to, from, next) => {
-  if (to.name == "Parametrage" && !sessionStorage.getItem("isAuthenticated")) {
+  if (to.name == "Settings" && !sessionStorage.getItem("isAuthenticated")) {
     next({ name: "Login", query: { from: to.name } });
   } else next();
 });
