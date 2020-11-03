@@ -4,9 +4,9 @@
       <v-row justify="center"
         ><clock :time="moment().format('LTS')" color="white"></clock
       ></v-row>
-      <v-row justify="center"
+      <!-- <v-row justify="center"
         ><div class="horloge">{{ this.date }}</div></v-row
-      >
+      > -->
       <v-row justify="center">
         <div class="date">{{ moment().format("Do MMMM YYYY") }}</div></v-row
       >

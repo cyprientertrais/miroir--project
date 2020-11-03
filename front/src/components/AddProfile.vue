@@ -13,7 +13,7 @@
         ></v-text-field>
         <div class="buttons"> 
             <v-btn elevation="2" class="button" v-on:click="addProfile" light>Ajouter</v-btn>
-            <v-btn elevation="2" class="button" light>Annuler</v-btn>
+            <v-btn elevation="2" class="button" @click="cancelProfile" light>Annuler</v-btn>
         </div>
     </v-container> 
 </div>
@@ -34,7 +34,10 @@ export default {
         }
     },
     methods: {
-        async addProfile() {
+        cancelProfile(){
+            this.$emit('profileCreated',false);
+        },
+      async addProfile() {
             this.profileName = document.getElementById("profileName").value;
             const profile = `{"pseudo":"${this.profileName}", "age":0, "dashboards":[]}`;
             const POSTRequest = ResourcesService.addProfile(JSON.parse(profile));
@@ -57,10 +60,11 @@ export default {
                     this.errorMessage = "Ce nom de profil est déjà utilisé. Veuillez entrer un autre nom.";
                 }
             } else {
+                this.$emit('profileCreated',true);
                 this.isProfileNameInvalid = false;
             }
 
-            this.$emit('profileCreated');
+            
         }
     }
 };

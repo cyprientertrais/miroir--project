@@ -65,4 +65,12 @@ export default class Resources {
           .then(response => response.data)
           .catch(error => error);
   }
+
+  changeProfileName(oldName, newName) {
+    const url = `http://${this.hostname}:3000/profiles/${oldName}`;
+    console.log("info", url);
+    return axios.patch(url, {"name": newName})
+        .then(response => response.data)
+        .catch(error => error);
+  }
 }

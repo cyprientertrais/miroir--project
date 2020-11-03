@@ -31,27 +31,20 @@
           </v-col>
         </v-row>
       </div>
-      <div v-if="orientation === 'portrait'">
-        <v-card
-          v-for="(xWidgets, index) in widgets"
-          :key="index"
-          :class="index === 0 ? '' : 'd-flex align-end'"
-          color="black"
-        >
-          <v-row>
-            <v-col
-              v-for="(yWidgets, index2) in xWidgets"
-              :key="index2"
-              cols="12"
-              sm="12"
-              md="2"
-              lg="2"
-              xl="3"
-            >
-              <component :is="yWidgets"></component>
-            </v-col>
-          </v-row>
-        </v-card>
+      <div v-if="orientation === 'portrait'" class="portrait">
+        <v-row v-for="(xWidgets, index) in widgets" :key="index">
+          <v-col
+            v-for="(yWidgets, index2) in xWidgets"
+            :key="index2"
+            cols="12"
+            sm="12"
+            md="2"
+            lg="2"
+            xl="3"
+          >
+            <component :is="yWidgets"></component>
+          </v-col>
+        </v-row>
       </div>
     </div>
   </div>
@@ -73,7 +66,7 @@ export default {
   },
   data() {
     return {
-      widgets: [],
+      widgets: []
     };
   },
   watch: {
@@ -82,18 +75,18 @@ export default {
     },
     orientation: function() {
       this.setWidgets();
-    },
+    }
   },
   computed: {
-    ...mapGetters(["userProfile", "orientation"]),
+    ...mapGetters(["userProfile", "orientation"])
   },
   methods: {
     setWidgets() {
       if (this.userProfile) {
         if (this.orientation === "landscape") {
           this.userProfile.dashboards
-            .filter((element) => element.name === "default")[0]
-            .widgets.forEach((widget) => {
+            .filter(element => element.name === "default")[0]
+            .widgets.forEach(widget => {
               let quotient = Math.floor(widget.position / 2);
               let reste = widget.position % 2;
               if (this.widgets && !this.widgets[quotient]) {
@@ -105,8 +98,8 @@ export default {
             });
         } else {
           this.userProfile.dashboards
-            .filter((element) => element.name === "default")[0]
-            .widgets.forEach((widget) => {
+            .filter(element => element.name === "default")[0]
+            .widgets.forEach(widget => {
               let quotient = Math.floor(widget.position / 4);
               let reste = widget.position % 4;
               if (this.widgets && !this.widgets[quotient]) {
@@ -120,11 +113,11 @@ export default {
       }
     },
     getOrientation() {
-      ResourcesService.getOrientation().then((res) => {
+      ResourcesService.getOrientation().then(res => {
         this.$store.dispatch("setOrientation", res.data[0].orientation);
       });
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -136,5 +129,13 @@ export default {
 .home {
   background-color: black;
   height: 100%;
+}
+
+.portrait {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: red;
+  height: 500px;
 }
 </style>

@@ -17,7 +17,6 @@
         </v-sheet>
         <v-snackbar v-model="snackbar">
         {{ snackbarContent }}
-
             <template v-slot:action="{ attrs }">
             <v-btn
                 color="#155b73"
