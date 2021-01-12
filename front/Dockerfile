@@ -6,5 +6,5 @@ RUN pip3 install --no-cache --upgrade pip setuptools
 WORKDIR /data/front
 
 COPY package*.json ./
-RUN npm install
+RUN npm ci
 CMD [ "npm", "run","serve" ]
