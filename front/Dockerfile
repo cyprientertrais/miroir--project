@@ -1,10 +1,22 @@
-FROM node:10-alpine
-ENV NODE_ENV production
-RUN apk add --update --no-cache python3 make g++ && ln -sf python3 /usr/bin/python
-RUN python3 -m ensurepip
-RUN pip3 install --no-cache --upgrade pip setuptools
-WORKDIR /data/front
+FROM node
 
+# installe un simple serveur http pour servir un contenu statique
+RUN npm install -g http-server
+
+# définit le dossier 'app' comme dossier de travail
+WORKDIR /app
+
+# copie 'package.json' et 'package-lock.json' (si disponible)
 COPY package*.json ./
-RUN npm ci
-CMD [ "npm", "run","serve" ]
+
+# installe les dépendances du projet
+RUN npm install
+
+# copie les fichiers et dossiers du projet dans le dossier de travail (par exemple : le dossier 'app')
+COPY . .
+
+# construit l'app pour la production en la minifiant
+RUN npm run build
+
+EXPOSE 8080
+CMD [ "http-server", "dist" ]

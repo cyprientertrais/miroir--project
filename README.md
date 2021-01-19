@@ -2,10 +2,14 @@
 
 LAP5US team members are pleased to welcome you :blush:
 
+# Installation
+
+First you have to install docker and docker-compose
+    - Docker installation: https://docs.docker.com/get-docker/
+    - Docker compose installation: https://docs.docker.com/compose/install/
 
 # Run the project
 
- - First install docker on your computer
  - In the project root run two commands
 
      - `docker-compose build`
