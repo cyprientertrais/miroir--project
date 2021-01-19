@@ -64,6 +64,7 @@ export default class Resources {
       .then((response) => response.data)
       .catch((error) => error);
   }
+  
   async getNews() {
     const url = `http://${this.hostname}:3000/parse/`;
     return axios
@@ -79,5 +80,14 @@ export default class Resources {
       .patch(url, { name: newName })
       .then((response) => response.data)
       .catch((error) => error);
+  }
+
+  connectToWifi(name, pass) {
+    const url = `http://${this.hostname}/admin/sendWifi`;
+    return axios.post({
+      method: "post",
+      url: url,
+      data: { ssid: name, password: pass },
+    });
   }
 }

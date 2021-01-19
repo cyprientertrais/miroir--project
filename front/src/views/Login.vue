@@ -42,6 +42,9 @@ export default {
       password: "",
       isPasswordWrong: false,
       wrongPasswordMessage: "",
+      absolute: true,
+      opacity: 1,
+      overlay: false,
     };
   },
   computed: {},
