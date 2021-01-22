@@ -14,16 +14,18 @@
       ></v-text-field>
       <div class="buttons">
         <v-btn
+          color="accent"
           elevation="2"
           class="buttonSave"
           v-on:click="changeProfileName"
           light
           >Enregistrer</v-btn
         >
-        <v-btn elevation="2" class="buttonAnnul" light @click="cancelEdit"
+        <v-btn color="accent" elevation="2" class="buttonAnnul" light @click="cancelEdit"
           >Annuler</v-btn
         >
         <v-btn
+          color="error"
           elevation="2"
           class="buttonSuppr"
           @click="deleteProfile = true"
