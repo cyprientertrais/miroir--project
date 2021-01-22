@@ -1,39 +1,54 @@
-import { Dashboard } from '../entities/dashboard.entity'
-import { Controller, Get, Post, Param, Res, Body, BadRequestException, Delete, Patch } from '@nestjs/common'
-import { Profile } from '../entities/profile.entity'
-import { ProfileService } from '../services/profile.service'
+import { Dashboard } from '../entities/dashboard.entity';
+import {
+  Controller,
+  Get,
+  Post,
+  Param,
+  Res,
+  Body,
+  BadRequestException,
+  Delete,
+  Patch,
+} from '@nestjs/common';
+import { Profile } from '../entities/profile.entity';
+import { ProfileService } from '../services/profile.service';
 
 @Controller('/profiles')
 export class ProfileController {
-  constructor (private readonly profileService: ProfileService) {}
+  constructor(private readonly profileService: ProfileService) {}
 
   @Get()
-  async getProfiles () {
-    return await this.profileService.getAll()
+  async getProfiles() {
+    return await this.profileService.getAll();
   }
 
   @Post()
-
-  async postProfile (@Body() profile: Profile): Promise<any> {
+  async postProfile(@Body() profile: Profile): Promise<any> {
     if (!profile) {
-      throw new BadRequestException('Profile have been wrong disable')
+      throw new BadRequestException('Profile have been wrong disable');
     }
-    return await this.profileService.createOne(profile)
+    return await this.profileService.createOne(profile);
   }
 
   @Get(':name')
-  async getProfile (@Param('name') name: string) {
-    return await this.profileService.getOne(name)
+  async getProfile(@Param('name') name: string) {
+    return await this.profileService.getOne(name);
   }
 
   @Get(':name/dashboards')
-  async getAllDashboards (@Param('name') name: string) {
-    return await this.profileService.getAllDashboardsFromProfileService(name)
+  async getAllDashboards(@Param('name') name: string) {
+    return await this.profileService.getAllDashboardsFromProfileService(name);
   }
 
   @Post(':name/dashboard')
-  async postDashboardToProfile (@Body() dashboard: Dashboard, @Param('name') name: string) {
-    return await this.profileService.createDashboardFromProfileService(dashboard, name)
+  async postDashboardToProfile(
+    @Body() dashboard: Dashboard,
+    @Param('name') name: string,
+  ) {
+    return await this.profileService.createDashboardFromProfileService(
+      dashboard,
+      name,
+    );
   }
   /* @Post(':name/:dashboard/:widget')
   async postWidgetToDashboard(@Body() widget : Widget, @Param('name') name : string, @Param('dashboard') dashboard : Dashboard){
@@ -54,14 +69,18 @@ export class ProfileController {
     return await this.profileService.createOne(newUser)
   } */
   @Patch(':name')
-  async updateProfile (@Param('name') name: string, @Body('name') newName: string, @Res() res) {
-    const action = await this.profileService.update(name, newName)
-    return res.status(action.status).json(action)
+  async updateProfile(
+    @Param('name') name: string,
+    @Body('name') newName: string,
+    @Res() res,
+  ) {
+    const action = await this.profileService.update(name, newName);
+    return res.status(action.status).json(action);
   }
 
   @Delete(':name')
-  async deleteProfile (@Param('name') name: string, @Res() res) {
-    const action = await this.profileService.delete(name)
-    return res.status(action.status).json(action)
+  async deleteProfile(@Param('name') name: string, @Res() res) {
+    const action = await this.profileService.delete(name);
+    return res.status(action.status).json(action);
   }
 }

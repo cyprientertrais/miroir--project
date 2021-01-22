@@ -1,19 +1,19 @@
-import { IsNotEmpty, IsString } from 'class-validator'
-import { Column, Entity, PrimaryColumn } from 'typeorm'
+import { IsNotEmpty, IsString } from 'class-validator';
+import { Column, Entity, PrimaryColumn } from 'typeorm';
 @Entity('admin')
 export class Admin {
-    @PrimaryColumn()
-    @IsNotEmpty()
-    @IsString()
-    orientation: string;
+  @PrimaryColumn()
+  @IsNotEmpty()
+  @IsString()
+  orientation: string;
 
-    @Column()
-    adminPassword: string;
+  @Column()
+  adminPassword: string;
 
-    @Column()
-    widgets: string[];
+  @Column()
+  widgets: string[];
 
-    constructor (admin?: Partial<Admin>) {
-      Object.assign(this, admin)
-    }
+  constructor(admin?: Partial<Admin>) {
+    Object.assign(this, admin);
+  }
 }

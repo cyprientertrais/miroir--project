@@ -1,31 +1,31 @@
-import { Injectable } from '@nestjs/common'
-import { InjectRepository } from '@nestjs/typeorm'
-import { MongoRepository } from 'typeorm'
-import { Admin } from '../entities/admin.entity'
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { MongoRepository } from 'typeorm';
+import { Admin } from '../entities/admin.entity';
 
 @Injectable()
 export class AdminService {
-  constructor (
+  constructor(
     @InjectRepository(Admin)
-    private readonly adminRepository: MongoRepository<Admin>
+    private readonly adminRepository: MongoRepository<Admin>,
   ) {}
 
-  async getOrientation () {
-    const e = await this.adminRepository.find()
+  async getOrientation() {
+    const e = await this.adminRepository.find();
     return e.map((element) => {
-      return { orientation: element.orientation }
-    })
+      return { orientation: element.orientation };
+    });
   }
 
-  async getAvailableWidgets () {
-    const e = await this.adminRepository.find()
+  async getAvailableWidgets() {
+    const e = await this.adminRepository.find();
     return e.map((element) => {
-      return { widgets: element.widgets }
-    })
+      return { widgets: element.widgets };
+    });
   }
 
-  async getAll () {
-    const e = await this.adminRepository.find()
-    return e
+  async getAll() {
+    const e = await this.adminRepository.find();
+    return e;
   }
 }
