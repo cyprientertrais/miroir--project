@@ -1,5 +1,5 @@
 <template>
-  <div class="mainDiv">
+  <v-sheet color="primary" class="mainDiv">
     <div align="center" justify="center" class="pageContent">
       <div class="titre font-title">
         SUPPRIMER LE PROFIL
@@ -19,7 +19,7 @@
           v-on:click="deleteProfile"
           elevation="2"
           class="butonDelete font-text"
-          color="#b54545"
+          color="error"
           >Supprimer le profil</v-btn
         >
       </div>
@@ -27,7 +27,7 @@
         <v-btn
           elevation="2"
           class="butonCancel font-text"
-          color="#155b73"
+          color="accent"
           @click="cancelDelete"
           >Annuler</v-btn
         >
@@ -41,7 +41,7 @@
         </v-btn>
       </template>
     </v-snackbar>
-  </div>
+  </v-sheet>
 </template>
 
 <script>
@@ -90,7 +90,6 @@ export default {
 .mainDiv {
   height: 100%;
   padding: 5% 12% 5% 12%;
-  background-color: #3c3e41;
 }
 
 .titre {
@@ -101,7 +100,7 @@ export default {
 }
 
 .nameProfile {
-  color: #155b73;
+  color: var(--v-accent-base);
 }
 
 .description {
@@ -111,7 +110,6 @@ export default {
 }
 
 .deleteProfile {
-  background-color: #2e2e2e;
   height: 100%;
 }
 

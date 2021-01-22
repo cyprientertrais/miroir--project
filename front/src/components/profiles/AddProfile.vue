@@ -1,5 +1,5 @@
 <template>
-  <div class="addProfile" align="center" justify="center">
+  <v-sheet color="primary" class="addProfile" align="center" justify="center">
     <v-container>
       <h1>Ajouter un profil</h1>
 
@@ -11,15 +11,15 @@
         :error-messages="errorMessage"
       ></v-text-field>
       <div class="buttons">
-        <v-btn elevation="2" class="button" v-on:click="addProfile" light
+        <v-btn color="accent" elevation="2" class="button" v-on:click="addProfile" light
           >Ajouter</v-btn
         >
-        <v-btn elevation="2" class="button" @click="cancelProfile" light
+        <v-btn color="accent" elevation="2" class="button" @click="cancelProfile" light
           >Annuler</v-btn
         >
       </div>
     </v-container>
-  </div>
+  </v-sheet>
 </template>
 
 <script>
@@ -75,7 +75,6 @@ export default {
 
 <style scoped>
 .addProfile {
-  background-color: #3c3e41;
   height: 100%;
   color: white;
 }
