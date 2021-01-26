@@ -68,7 +68,7 @@ export default {
     return {
       listWifi: null,
       selectItem: null,
-      item: ["toto", "titi", "tutu", "aymeric", "pupute", "salope", "connasse", "enculé", "cuculélé"],
+      item: ["toto", "tata", "tut","aymerci","pupute","connasse","biatch","pikachu","wesh" ],
       popUp: false,
     };
   },
@@ -98,6 +98,7 @@ export default {
 .wifi {
   height: 100%;
   padding: 0% 7% 5% 7%;
+  background-color: #3C3E41;
 }
 .butt {
   margin-top: 8%;
