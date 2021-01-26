@@ -12,17 +12,33 @@ import {
 } from '@nestjs/common';
 import { Profile } from '../entities/profile.entity';
 import { ProfileService } from '../services/profile.service';
+import {ApiOperation, ApiProperty, ApiTags} from "@nestjs/swagger";
 
-@Controller('/profiles')
+@ApiTags('profiles')
+@Controller('profiles')
 export class ProfileController {
   constructor(private readonly profileService: ProfileService) {}
 
-  @Get()
+  @ApiOperation({
+    summary : 'Get all profiles'
+  })
+  @Get('/')
   async getProfiles() {
     return await this.profileService.getAll();
   }
 
-  @Post()
+  @ApiOperation({
+    summary : 'Get a profile by his name'
+  })
+  @Get('/:name')
+  async getProfile(@Param('name') name: string) {
+    return await this.profileService.getOne(name);
+  }
+
+  @ApiOperation({
+    summary : 'Add a profile',
+  })
+  @Post('')
   async postProfile(@Body() profile: Profile): Promise<any> {
     if (!profile) {
       throw new BadRequestException('Profile have been wrong disable');
@@ -30,17 +46,40 @@ export class ProfileController {
     return await this.profileService.createOne(profile);
   }
 
-  @Get(':name')
-  async getProfile(@Param('name') name: string) {
-    return await this.profileService.getOne(name);
+  @ApiOperation({
+    summary : 'Update a profile',
+  })
+  @Patch('/:name')
+  async updateProfile(
+      @Param('name') name: string,
+      @Body('name') newName: string,
+      @Res() res,
+  ) {
+    const action = await this.profileService.update(name, newName);
+    return res.status(action.status).json(action);
   }
 
-  @Get(':name/dashboards')
+  @ApiOperation({
+    summary : 'Delete a profile',
+  })
+  @Delete('/:name')
+  async deleteProfile(@Param('name') name: string, @Res() res) {
+    const action = await this.profileService.delete(name);
+    return res.status(action.status).json(action);
+  }
+
+  @ApiOperation({
+    summary : 'Get all dashboards of a profile',
+  })
+  @Get()
   async getAllDashboards(@Param('name') name: string) {
     return await this.profileService.getAllDashboardsFromProfileService(name);
   }
 
-  @Post(':name/dashboard')
+  @ApiOperation({
+    summary : 'Add a dashboard to a profile',
+  })
+  @Post('/:name')
   async postDashboardToProfile(
     @Body() dashboard: Dashboard,
     @Param('name') name: string,
@@ -72,19 +111,5 @@ export class ProfileController {
     return await this.profileService.createOne(newUser)
   } */
 
-  @Patch(':name')
-  async updateProfile(
-    @Param('name') name: string,
-    @Body('name') newName: string,
-    @Res() res,
-  ) {
-    const action = await this.profileService.update(name, newName);
-    return res.status(action.status).json(action);
-  }
 
-  @Delete(':name')
-  async deleteProfile(@Param('name') name: string, @Res() res) {
-    const action = await this.profileService.delete(name);
-    return res.status(action.status).json(action);
-  }
 }

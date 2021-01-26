@@ -22,10 +22,11 @@ export class ProfileService {
 
   async getOne(name: string): Promise<Profile> {
     const e = await this.profileRepository.findOne({ pseudo: name });
-    if (e === null) {
-      throw new NotFoundException();
+    if (e === undefined) {
+      throw new NotFoundException("User " + name + " not found");
+    } else {
+      return e;
     }
-    return e;
   }
 
   async createOne(profile: Profile) {
