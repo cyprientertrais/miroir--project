@@ -1,102 +1,105 @@
 <template>
-  <v-app>
-    <v-main>
-      <router-view></router-view>
-    </v-main>
-  </v-app>
+    <v-app>
+        <v-main>
+            <router-view></router-view>
+        </v-main>
+    </v-app>
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import moment from "moment";
+    import {mapActions} from "vuex";
+    import moment from "moment";
 
-export default {
-  name: "App",
+    export default {
+        name: "App",
 
-  components: {},
+        components: {},
 
-  data() {
-    return {};
-  },
+        data() {
+            return {};
+        },
 
-  created() {
-    moment.locale("fr");
+        created() {
+            moment.locale("fr");
 
-    if (!("geolocation" in navigator)) {
-      this.errorStr = "Geolocation is not available.";
-      return;
-    }
+            if (!("geolocation" in navigator)) {
+                this.errorStr = "Geolocation is not available.";
+                return;
+            }
 
-    // get position
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        this.setLocation({lat:pos.coords.latitude,long:pos.coords.longitude});
-      },
-      (err) => {
-        console.log("error getting the location:\n" + err.message);
-      }
-    );
-  },
+            // get position
+            navigator.geolocation.getCurrentPosition(
+                (pos) => {
+                    this.setLocation({lat: pos.coords.latitude, long: pos.coords.longitude});
+                },
+                (err) => {
+                    console.log("error getting the location:\n" + err.message);
+                }
+            );
+        },
 
-  methods: {
-    ...mapActions(["setLocation", "setUserProfile"]),
-  },
+        methods: {
+            ...mapActions(["setLocation", "setUserProfile"]),
+        },
 
-  mounted() {
-    this.setUserProfile("Invité");
-  },
-};
+        mounted() {
+            this.setUserProfile("Invité");
+        },
+    };
 </script>
 
 <style>
-@font-face {
-  font-family: "Amatic";
-  src: local("Amatic"),
-   url(fonts/Amatic_SC/AmaticSC-Regular.ttf) format("truetype");
-}
-@font-face {
-  font-family: "Poppins";
-  src: local("Poppins"),
-   url(fonts/Poppins/Poppins-Regular.ttf) format("truetype");
-}
-@font-face {
-  font-family: "PoppinsBold";
-  src: local("PoppinsBold"),
-   url(fonts/Poppins/Poppins-SemiBold.ttf) format("truetype");
-}
-.font-title {
-  font-family: "Amatic" !important
-}
+    @font-face {
+        font-family: "Amatic";
+        src: local("Amatic"),
+        url(fonts/Amatic_SC/AmaticSC-Regular.ttf) format("truetype");
+    }
 
-.font-text {
-  font-family: "Poppins" !important
-}
+    @font-face {
+        font-family: "Poppins";
+        src: local("Poppins"),
+        url(fonts/Poppins/Poppins-Regular.ttf) format("truetype");
+    }
 
-.secondary-background {
-   background-color: #2e2e2e !important;
-}
+    @font-face {
+        font-family: "PoppinsBold";
+        src: local("PoppinsBold"),
+        url(fonts/Poppins/Poppins-SemiBold.ttf) format("truetype");
+    }
 
-.primary-background {
-   background-color: #3c3e41 !important;
-}
+    .font-title {
+        font-family: "Amatic" !important
+    }
 
-.accent-background {
-  background-color: #155b73 !important;
-}
+    .font-text {
+        font-family: "Poppins" !important
+    }
 
-.warning-background {
-   background-color: #b54545 !important;
-}
+    .secondary-background {
+        background-color: #2e2e2e !important;
+    }
 
-.accent-color {
-  color: #155b73 !important;
-}
+    .primary-background {
+        background-color: #3c3e41 !important;
+    }
 
-.warning-color {
-   color: #b54545 !important;
-}
+    .accent-background {
+        background-color: #155b73 !important;
+    }
 
-.primary-color {
-   color: #ffffff !important;
-}
+    .warning-background {
+        background-color: #b54545 !important;
+    }
+
+    .accent-color {
+        color: #155b73 !important;
+    }
+
+    .warning-color {
+        color: #b54545 !important;
+    }
+
+    .primary-color {
+        color: #ffffff !important;
+    }
 </style>
