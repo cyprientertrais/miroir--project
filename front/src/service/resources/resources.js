@@ -35,7 +35,7 @@ export default class Resources {
       .post(url, { hashedPassword: hashedPassword })
       .catch(() => {
         return { status: 403 };
-      });
+      }); 
     return t;
   }
 
