@@ -114,10 +114,6 @@ export default {
         });
       }
       this.addProfile = false;
-      this.profilesArray=[]
-      this.profilesArray[0]={
-        "pseudo": "Invité"
-      }
     },
     toogleEdit() {
       this.btnValue == "Éditer les profils"
