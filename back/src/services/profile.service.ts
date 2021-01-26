@@ -69,6 +69,18 @@ export class ProfileService {
       status: 404,
       message: 'An error occured when trying to remove ' + name,
     };
+<<<<<<< HEAD
+  async delete(name : string ){
+    if(name === "Invité"){return {"status":401,"message":"Can't delete guest profile"};}
+    let res = await this.profileRepository.deleteOne({pseudo:name});
+    let obj={};
+    console.log(res.result);
+    if(res.result.ok ==1 && res.result.n==1){
+      return {"status":204,"message":"Successfully deleted"};
+    }
+    return {"status":404,"message":"Error"};
+=======
+>>>>>>> d128f8c23d9d9f9a9ce4c296c577590c3e611418
   }
 
   async update(name: string, newName: string) {
