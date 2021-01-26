@@ -26,6 +26,7 @@
           v-model="editing"
         >
           <v-avatar
+            color="primary"
             class="profile elevation-5"
             size="20vh"
             @click="editProfile(profile)"
@@ -46,9 +47,8 @@
         @click="toogleEdit()"
         href="#"
         class="elevation-5"
-        color="white"
+        color="accent"
         x-large
-        outlined
         >{{ btnValue }}</v-btn
       >
     </v-row>
@@ -155,7 +155,6 @@ export default {
 .profile {
   margin: 10px;
   font-size: 30px;
-  background-color: #3c3e41;
 }
 .plus {
   margin: 10px;
@@ -171,7 +170,6 @@ export default {
 .profile:hover {
   cursor: pointer;
   size: 300;
-  background-color: #3c3e41;
   border: 5px white solid;
 }
 .paramDiv {

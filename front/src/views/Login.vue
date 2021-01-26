@@ -1,9 +1,10 @@
 <template>
-  <div class="mainDiv primary-background">
+  <v-sheet class="mainDiv" color="primary">
     <v-sheet
       align="center"
       justify="center"
-      class="login secondary-background"
+      class="login"
+      color="secondary"
       rounded
     >
       <div class="titre font-title">Oÿna</div>
@@ -21,13 +22,13 @@
         <v-btn
           v-on:click="connectionTentative"
           elevation="2"
-          class="butonPassword font-text accent-background"
-          color="#155b73"
+          class="butonPassword font-text"
+          color="accent"
           >Connect</v-btn
         >
       </div>
     </v-sheet>
-  </div>
+  </v-sheet>
 </template>
 
 <script>

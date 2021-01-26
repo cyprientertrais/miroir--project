@@ -1,5 +1,5 @@
 <template>
-  <div class="settings">
+  <v-sheet color="secondary" class="settings">
     <v-btn small fab @click="openDialog">
       <v-icon dark>mdi-cog</v-icon>
     </v-btn>
@@ -7,7 +7,7 @@
     <v-dialog v-model="settingsPopup" width="500px">
       <Reglage @closeDialog="closeDialog" />
     </v-dialog>
-  </div>
+  </v-sheet>
 </template>
 
 <script>
@@ -38,7 +38,6 @@ export default {
 
 <style scoped>
 .settings {
-  background-color: #3c3e41;
   height: 100%;
 }
 
