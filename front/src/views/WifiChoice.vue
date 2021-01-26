@@ -1,6 +1,6 @@
 <template>
   <v-container fluid class="wifi">
-    <div align="center" justify="center" class="wifi">
+    <div align="center" justify="center" class="wifi bg-primary" >
       <v-row justify="center">
         <div class="text-lg-h1 text-md-h1 text-sm-h2 text-h3 titre">
           IMirror
@@ -50,7 +50,7 @@
           <v-btn text @click="popUp = false" class="butt">
             Close
           </v-btn>
-          <v-btn text @click='sendWifi("coucou", "beuh")' class="butt">
+          <v-btn text @click='sendWifi(item[id],Password)' class="butt">
             Send
           </v-btn>
         </v-card-actions>
@@ -68,28 +68,7 @@ export default {
     return {
       listWifi: null,
       selectItem: null,
-      item: [
-        "coucou",
-        "beuh",
-        "tamere",
-        "tonpere",
-        "fghrdg",
-        "dghdter",
-        "zrzte",
-        "ertzer",
-        "dfgdfgdfg",
-        "ertertetr",
-        "erterter",
-        "ermtkomeok",
-        "erter",
-        "lkerlk,",
-        "erokdf",
-        "erokerpok",
-        "erlje",
-        "ertert",
-        "erter",
-        "ertjjio",
-      ],
+      item: [],
       popUp: false,
     };
   },
@@ -101,7 +80,7 @@ export default {
     sendWifi2(id) {
       console.log(this.item[id]);
     },
-    sendWifi(name = "taMere", pass = "laPute") {
+    sendWifi(name, pass) {
       ResourcesService.connectToWifi(name, pass);
     },
   },
@@ -119,7 +98,6 @@ export default {
 .wifi {
   height: 100%;
   padding: 0% 7% 5% 7%;
-  background-color: #3c3e41; /*  */
 }
 .butt {
   margin-top: 8%;
