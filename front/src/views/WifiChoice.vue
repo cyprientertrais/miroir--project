@@ -68,7 +68,7 @@ export default {
     return {
       listWifi: null,
       selectItem: null,
-      item: [],
+      item: ["toto", "titi", "tutu", "aymeric", "pupute", "salope", "connasse", "enculé", "cuculélé"],
       popUp: false,
     };
   },
