@@ -62,6 +62,7 @@ export class ProfileService {
   }
 
   async delete(name: string) {
+    if(name === "Invité"){return {"status":401,"message":"Can't delete guest profile"};}
     const res = await this.profileRepository.deleteOne({ pseudo: name });
     if (res.result.ok === 1 && res.result.n === 1) {
       return { status: 204, message: 'User ' + name + ' successfully deleted' };
@@ -70,18 +71,6 @@ export class ProfileService {
       status: 404,
       message: 'An error occured when trying to remove ' + name,
     };
-<<<<<<< addSwaggerAuto
-=======
-  async delete(name : string ){
-    if(name === "Invité"){return {"status":401,"message":"Can't delete guest profile"};}
-    let res = await this.profileRepository.deleteOne({pseudo:name});
-    let obj={};
-    console.log(res.result);
-    if(res.result.ok ==1 && res.result.n==1){
-      return {"status":204,"message":"Successfully deleted"};
-    }
-    return {"status":404,"message":"Error"};
->>>>>>> add verification on profile name
   }
 
   async update(name: string, newName: string) {
