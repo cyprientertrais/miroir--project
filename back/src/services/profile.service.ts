@@ -51,22 +51,24 @@ export class ProfileService {
       newDashboard.name,
     );
     if (dashboardAlreadyExists === true) {
-      //TODO
+      //TODO : SEND AN INFO TO THE FRONT IN ORDER TO INFORM THAT A USER WITH THE SAME NAME EXIST
     } else {
       const dash = new Dashboard();
       dash.name = newDashboard.name;
       profile.dashboards.push(newDashboard);
-      this.profileRepository.save(profile);
+      await this.profileRepository.save(profile);
     }
   }
 
   async delete(name: string) {
     const res = await this.profileRepository.deleteOne({ pseudo: name });
-    console.log(res.result);
     if (res.result.ok === 1 && res.result.n === 1) {
-      return { status: 204, message: 'Successfully deleted' };
+      return { status: 204, message: 'User ' + name + ' successfully deleted' };
     }
-    return { status: 404, message: 'Error' };
+    return {
+      status: 404,
+      message: 'An error occured when trying to remove ' + name,
+    };
   }
 
   async update(name: string, newName: string) {
@@ -77,28 +79,35 @@ export class ProfileService {
       newvalues,
     );
     if (res.result.ok === 1 && res.result.n === 1) {
-      return { status: 204, message: 'Successfully deleted' };
+      return {
+        status: 204,
+        message: 'User ' + name + ' was successfully updated into ' + newName,
+      };
     }
-    return { status: 404, message: 'Error' };
+    return {
+      status: 404,
+      message: 'An error occured when trying to update ' + name,
+    };
   }
 
   doesDashboardNameAlreadyExists(
     dashboards: Dashboard[],
     newDashboardName: string,
   ): boolean {
-    let alreadyExists: boolean;
+    let alreadyExists: boolean = false;
     dashboards.forEach((element) => {
       if (newDashboardName === element.name) {
         alreadyExists = true;
       }
     });
-    if (alreadyExists === true) {
+    if (alreadyExists) {
       return true;
     } else {
       return false;
     }
   }
 
+  //TODO
   /* async addWidgetToDashboard(name : string, dashboard : Dashboard, newWidgetName : Widget){
       let alreadyExists : boolean;
       let profile : Promise<Profile>

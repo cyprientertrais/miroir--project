@@ -28,4 +28,13 @@ export class AdminService {
     const e = await this.adminRepository.find();
     return e;
   }
+
+  async checkAdminPassword(body) {
+    const infos = await this.getAll();
+    if (infos[0].adminPassword === body.hashedPassword) {
+      return { status: 200, message: 'Good password' };
+    } else {
+      return { status: 400, message: 'The password mentioned is wrong' };
+    }
+  }
 }

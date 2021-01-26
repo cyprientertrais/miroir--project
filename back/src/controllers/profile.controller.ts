@@ -50,6 +50,9 @@ export class ProfileController {
       name,
     );
   }
+
+  //TODO TRASH CODE ?
+
   /* @Post(':name/:dashboard/:widget')
   async postWidgetToDashboard(@Body() widget : Widget, @Param('name') name : string, @Param('dashboard') dashboard : Dashboard){
     return await this.profileService.addWidgetToDashboard(name,dashboard,widget)
@@ -68,6 +71,7 @@ export class ProfileController {
     newUser.pseudo = name
     return await this.profileService.createOne(newUser)
   } */
+
   @Patch(':name')
   async updateProfile(
     @Param('name') name: string,

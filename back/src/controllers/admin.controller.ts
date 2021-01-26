@@ -9,11 +9,13 @@ const sshconfig2 = {
 };
 
 @Controller('/admin')
+// TODO REFACT ADMIN / WIDGETS / WIFI
 export class AdminController {
   constructor(private readonly adminService: AdminService) {}
 
   @Get('/wifiscan')
   async getProfiles() {
+    // TODO METTRE DANS LE SERVICE
     const ssh = new SSH2Promise([sshconfig2]);
     const data = await ssh.exec('parse.sh');
     const tab = data.split('\n');
@@ -28,13 +30,7 @@ export class AdminController {
 
   @Post('/checkAdminPassword')
   async checkAdminPassword(@Body() body, @Res() res) {
-    console.log(body);
-    const infos = await this.adminService.getAll();
-    if (infos[0].adminPassword === body.hashedPassword) {
-      return res.send(200);
-    } else {
-      return res.send(403);
-    }
+    return this.adminService.checkAdminPassword(body);
   }
 
   @Get('/orientation')
@@ -51,15 +47,16 @@ export class AdminController {
   async getSendWifi(@Body() body, @Res() response) {
     const ssh = new SSH2Promise([sshconfig2]);
     // A quoi ça sert ??
-    // eslint-disable-next-line no-unused-vars
-    const data = await ssh.exec(
+    // TODO METTRE DANS LE SERVICE
+
+    await ssh.exec(
       ' echo -e network={ ssid=\\"' +
         body.ssid +
         '\\" psk=\\"' +
         body.password +
         '\\"} >> /etc/wpa_supplicant/wpa_supplicant.conf ',
     );
-
+    /** PBM : ET SI CA MARCHE PAS 200 QUAND MEME ?**/
     return response.json(200);
   }
 }

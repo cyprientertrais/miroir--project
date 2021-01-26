@@ -5,8 +5,8 @@
   "author": "LAP5US",
   "license": "MIT",
   "scripts": {
-    "build": "npm run eslint && tsc -p tsconfig.build.json",
-    "start": "npm run eslint && ts-node -r tsconfig-paths/register src/main.ts",
+    "build": "npm run clean && tsc -p tsconfig.build.json",
+    "start": "npm run clean && ts-node -r tsconfig-paths/register src/main.ts",
     "start:dev": "nodemon",
     "start:debug": "nodemon --config nodemon-debug.json",
     "start:prod": "node dist/src/main.js",
