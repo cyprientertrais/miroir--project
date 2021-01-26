@@ -12,7 +12,7 @@
     "start:prod": "node dist/src/main.js",
     "prestart:prod": "rimraf dist && npm run build",
     "format": "prettier --write \"src/**/*.ts\"",
-    "clean" : "npm run eslint && npm run format",
+    "clean": "npm run eslint && npm run format",
     "eslint": "eslint src/**/*.ts",
     "eslint_fix": "eslint src/**/*.ts --fix",
     "test": "jest",

@@ -100,11 +100,7 @@ export class ProfileService {
         alreadyExists = true;
       }
     });
-    if (alreadyExists) {
-      return true;
-    } else {
-      return false;
-    }
+    return alreadyExists;
   }
 
   //TODO
