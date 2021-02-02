@@ -38,7 +38,7 @@ export class ProfileController {
   @ApiOperation({
     summary : 'Add a profile',
   })
-  @Post('')
+  @Post()
   async postProfile(@Body() profile: Profile): Promise<any> {
     if (!profile) {
       throw new BadRequestException('Profile have been wrong disable');
@@ -69,7 +69,7 @@ export class ProfileController {
   }
 
   @ApiOperation({
-    summary : 'Get all dashboards of a profile',
+    summary : 'Get all dashboards',
   })
   @Get()
   async getAllDashboards(@Param('name') name: string) {
