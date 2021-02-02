@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Post, Res } from '@nestjs/common';
 import { AdminService } from '../services/admin.service';
 import SSH2Promise = require('ssh2-promise');
+import {ApiTags} from "@nestjs/swagger";
 
 const sshconfig2 = {
   host: '10.3.141.1',
@@ -8,7 +9,8 @@ const sshconfig2 = {
   password: 'ssh_miroir',
 };
 
-@Controller('/admin')
+@ApiTags('admin')
+@Controller('admin')
 // TODO REFACT ADMIN / WIDGETS / WIFI
 export class AdminController {
   constructor(private readonly adminService: AdminService) {}
