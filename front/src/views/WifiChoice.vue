@@ -1,18 +1,12 @@
 <template>
   <v-container fluid class="wifi">
-    <div align="center" justify="center" class="wifi bg-primary" >
+    <v-sheet align="center" justify="center" color="primary">
       <v-row justify="center">
-        <div class="text-lg-h1 text-md-h1 text-sm-h2 text-h3 titre">
-          IMirror
+        <div class="text-lg-h1 text-md-h1 text-sm-h2 text-h3 titre ma-5">
+          Liste Wifi
         </div>
       </v-row>
-      <div class="wifi">
-        <v-list rounded class="liste">
-          <v-row justify="center">
-            <div class="text-lg-h5 text-md-h5 text-sm-h6 text-subtitle-1 titre">
-              Liste Wifi
-            </div>
-          </v-row>
+        <v-list rounded class="liste" height="70vh">
          <!-- <v-virtual-scroll :items="item" height="80%" item-height="80%">-->
             <v-list-item-group
               v-model="selectItem"
@@ -33,8 +27,7 @@
             </v-list-item-group>
         <!--  </v-virtual-scroll>-->
         </v-list>
-      </div>
-    </div>
+    </v-sheet>
 
     <v-dialog v-model="popUp" dark width="500px">
       <v-card dark>
@@ -68,7 +61,7 @@ export default {
     return {
       listWifi: null,
       selectItem: null,
-      item: ["toto", "tata", "tut","aymerci","pupute","connasse","biatch","pikachu","wesh" ],
+      item: ["toto", "tata", "tut","aymerci","pupute","connasse","biatch","pikachu","wesh","zobi", "lamouche","tete","tyty", "gogol","ertijp","drtijo","zerjizp","drtdljhl" ],
       popUp: false,
     };
   },
