@@ -22,7 +22,7 @@ export class ProfileController {
   @ApiOperation({
     summary : 'Get all profiles'
   })
-  @Get('/')
+  @Get()
   async getProfiles() {
     return await this.profileService.getAll();
   }
@@ -69,9 +69,9 @@ export class ProfileController {
   }
 
   @ApiOperation({
-    summary : 'Get all dashboards',
+    summary : 'Get all dashboards from a profile ',
   })
-  @Get()
+  @Get('/dashboards/:name')
   async getAllDashboards(@Param('name') name: string) {
     return await this.profileService.getAllDashboardsFromProfileService(name);
   }
