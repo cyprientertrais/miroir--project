@@ -1,14 +1,53 @@
 <template>
-  <v-container align="center" justify="center" class="popup">
-    <v-card elevation ="22" color ="#3c3e41" class ="white--text"> <v-row justify="center" >  <h1 class="titre">Réglages</h1>   </v-row>
+  <v-container color="primary" align="center" justify="center" class="popup">
+    <v-card elevation="22" color="primary" class="white--text">
+      <v-row justify="center"> <h1 class="titre">Réglages</h1> </v-row>
       <v-row>
         <v-col>
-          <div class = "listButtons">
-              <v-row justify="center">  <v-btn v-on:click="onClickProfils" elevation="2" class="profils ma-2 white--text" color = "#155b73"> Gestion des profils </v-btn> </v-row>
-              <v-row justify="center">  <v-btn v-on:click="onClickWifi" elevation="2" class="wifi ma-2 white--text" color = "#155b73"> Gestion des Wifi </v-btn> </v-row>
-              <v-row justify="center">  <v-btn v-on:click="onClickUsine" elevation="2" class="usine ma-2 white--text" color = "#155b73"> Retour aux paramètre d'usine </v-btn> </v-row>
-              <v-row justify="center">  <v-btn v-on:click="onClickRetour" elevation="2" class="retour ma-3 white--text" color = "#155b73"> Retour </v-btn>   </v-row>
-          </div>
+          <v-sheet color="primary" class="listButtons">
+            <v-row justify="center">
+              <v-btn 
+              v-if="this.$router.history.current.path !== '/settings'"
+                v-on:click="onClickProfils"
+                elevation="2"
+                class="profils ma-2 white--text"
+                color="accent"
+              >
+                Gestion des profils
+              </v-btn>
+            </v-row>
+            <v-row justify="center">
+              <v-btn
+                v-if="this.$router.history.current.path !== '/wifi'"
+                v-on:click="onClickWifi"
+                elevation="2"
+                class="wifi ma-2 white--text"
+                color="accent"
+              >
+                Gestion des Wifi
+              </v-btn>
+            </v-row>
+            <v-row justify="center">
+              <v-btn
+                v-on:click="onClickUsine"
+                elevation="2"
+                class="usine ma-2 white--text"
+                color="error"
+              >
+                Retour aux paramètre d'usine
+              </v-btn>
+            </v-row>
+            <v-row justify="center">
+              <v-btn
+                v-on:click="onClickRetour"
+                elevation="2"
+                class="retour ma-3 white--text"
+                color="accent"
+              >
+                Retour
+              </v-btn>
+            </v-row>
+          </v-sheet>
         </v-col>
       </v-row>
     </v-card>
@@ -19,31 +58,25 @@
 export default {
   name: "Settings",
   data() {
-    return {
-    };
+    return {};
   },
   computed: {},
   methods: {
     onClickProfils() {
-      console.log("onClickProfils")
+      this.$router.push("/settings");
     },
-    onClickWifi(){
-      console.log("onClickWifi")
-  },
-    onClickUsine(){
-      console.log("oncClickUsine")
+    onClickWifi() {
+      this.$router.push("/wifi")
+    },
+    onClickUsine() {
+      console.log("oncClickUsine");
     },
     onClickRetour() {
-      console.log("onClickRetour")
+      this.$emit("closeDialog");
     },
-}
+  },
 };
-
-
-
 </script>
-<style scoped>
-
-</style>
+<style scoped></style>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

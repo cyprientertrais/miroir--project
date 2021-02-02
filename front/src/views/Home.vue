@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    <v-row>
       <v-card
         dark
         class="username"
@@ -10,8 +9,7 @@
       >
         <strong v-if="userProfile">{{ userProfile.pseudo }}</strong>
       </v-card>
-    </v-row>
-    <div class="ma-2" v-if="widgets">
+    <div class=" ma-2 widgetHolder" v-if="widgets">
       <div v-if="orientation === 'landscape'">
         <v-row
           v-for="(xWidgets, index) in widgets"
@@ -31,27 +29,20 @@
           </v-col>
         </v-row>
       </div>
-      <div v-if="orientation === 'portrait'">
-        <v-card
-          v-for="(xWidgets, index) in widgets"
-          :key="index"
-          :class="index === 0 ? '' : 'd-flex align-end'"
-          color="black"
-        >
-          <v-row>
-            <v-col
-              v-for="(yWidgets, index2) in xWidgets"
-              :key="index2"
-              cols="12"
-              sm="12"
-              md="2"
-              lg="2"
-              xl="3"
-            >
-              <component :is="yWidgets"></component>
-            </v-col>
-          </v-row>
-        </v-card>
+      <div v-if="orientation === 'portrait'" class="portrait">
+        <v-row v-for="(xWidgets, index) in widgets" :key="index">
+          <v-col
+            v-for="(yWidgets, index2) in xWidgets"
+            :key="index2"
+            cols="12"
+            sm="12"
+            md="2"
+            lg="2"
+            xl="3"
+          >
+            <component :is="yWidgets"></component>
+          </v-col>
+        </v-row>
       </div>
     </div>
   </div>
@@ -131,10 +122,28 @@ export default {
 <style scoped>
 .username {
   margin-left: -10px !important;
+  height: 25px;
 }
 
 .home {
   background-color: black;
   height: 100%;
 }
+
+.portrait {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.widgetHolder {
+  height: 100vh -25px ;
+}
+
+.row {
+width: 100%;
+margin: 0;
+}
+
 </style>

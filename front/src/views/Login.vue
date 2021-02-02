@@ -1,6 +1,12 @@
 <template>
-  <div class="mainDiv primary-background">
-    <v-sheet align="center" justify="center" class="login secondary-background" rounded>
+  <v-sheet class="mainDiv" color="primary">
+    <v-sheet
+      align="center"
+      justify="center"
+      class="login"
+      color="secondary"
+      rounded
+    >
       <div class="titre font-title">Oÿna</div>
       <div class="password">
         <v-text-field
@@ -13,27 +19,29 @@
           :error="isPasswordWrong"
           :error-messages="wrongPasswordMessage"
         ></v-text-field>
-        <v-btn v-on:click="connectionTentative" elevation="2" class="butonPassword font-text accent-background" color="#155b73"
+        <v-btn
+          v-on:click="connectionTentative"
+          elevation="2"
+          class="butonPassword font-text"
+          color="accent"
           >Connect</v-btn
         >
       </div>
     </v-sheet>
-  </div>
+  </v-sheet>
 </template>
 
 <script>
-import { sha256 } from 'js-sha256';
+import { sha256 } from "js-sha256";
 import Resources from "@/service/resources/resources";
-
 const ResourcesService = new Resources();
-
 export default {
   name: "Connection",
   data() {
     return {
       password: "",
       isPasswordWrong: false,
-      wrongPasswordMessage: ""
+      wrongPasswordMessage: "",
     };
   },
   computed: {},
@@ -42,12 +50,14 @@ export default {
       //hash password
       const hashedPassword = sha256(this.password);
       //askbackif the password is right, recieve 200 or 403
-      const responseCheckPassword = await ResourcesService.checkAdminPassword(hashedPassword);
+      const responseCheckPassword = await ResourcesService.checkAdminPassword(
+        hashedPassword
+      );
       //check if call responds 200 or 403
-      if (responseCheckPassword.status===200) {
+      if (responseCheckPassword.status === 200) {
         //if yes, modification global variable to say user is connected and redirect
         sessionStorage.setItem("isAuthenticated", true);
-        this.$router.push(this.$route.query.from || "/");
+        this.$router.push(this.$route.query.from || "/settings");
       } else {
         //if no, display error
         this.isPasswordWrong = true;
@@ -63,9 +73,9 @@ export default {
         this.isPasswordWrong = false;
         this.wrongPasswordMessage = "";
       }
-    }
+    },
   },
-  mounted: function() {}
+  mounted: function() {},
 };
 </script>
 <style scoped>
@@ -75,35 +85,29 @@ export default {
   color: #ffffff;
   padding-top: 7%;
 }
-
 .password {
   margin-top: 6%;
 }
-
 .inputPassword {
   width: 160px;
   margin-top: 10px;
 }
-
 .butonPassword {
   margin-top: 8%;
   color: #ffffff;
 }
-
-.login{
-    height: 100%;
+.login {
+  height: 100%;
 }
-
-.mainDiv{
-    height: 100%;
-    padding: 5% 12% 5% 12%;
+.mainDiv {
+  height: 100%;
+  padding: 5% 12% 5% 12%;
 }
-
 @media screen and (max-width: 540px) {
   .titre {
     padding-top: 40%;
   }
-  .mainDiv{
+  .mainDiv {
     height: 100%;
     padding: 10%;
   }

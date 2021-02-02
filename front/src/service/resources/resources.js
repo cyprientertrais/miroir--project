@@ -41,11 +41,9 @@ export default class Resources {
 
   async deleteProfileByName(profileNameToDelete) {
     const url = `http://${this.hostname}:3000/profiles/${profileNameToDelete}`;
-    let t = await axios
-      .delete(url)
-      .catch(() => {
-        return { status: 404 };
-      });
+    let t = await axios.delete(url).catch(() => {
+      return { status: 404 };
+    });
     return t;
   }
 
@@ -60,16 +58,25 @@ export default class Resources {
   }
 
   addProfile(data) {
-      const url = `http://${this.hostname}:3000/profiles/`;
-      return axios.post(url,data)
-          .then(response => response.data)
-          .catch(error => error);
+    const url = `http://${this.hostname}:3000/profiles/`;
+    return axios
+      .post(url, data)
+      .then((response) => response.data)
+      .catch((error) => error);
   }
   async getNews() {
-    
     const url = `http://${this.hostname}:3000/parse/`;
-    return axios.post(url,{url:"https://www.france24.com/fr/rss"})
-        .then(response => response.data)
-        .catch(error => error);
-}
+    return axios
+      .post(url, { url: "https://www.france24.com/fr/rss" })
+      .then((response) => response.data)
+      .catch((error) => error);
+  }
+
+  changeProfileName(oldName, newName) {
+    const url = `http://${this.hostname}:3000/profiles/${oldName}`;
+    return axios
+      .patch(url, { name: newName })
+      .then((response) => response.data)
+      .catch((error) => error);
+  }
 }

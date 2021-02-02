@@ -11,21 +11,30 @@ export class AdminService {
   ) {}
 
   async getOrientation() {
-    let e = await this.adminRepository.find();
+    const e = await this.adminRepository.find();
     return e.map((element) => {
       return { orientation: element.orientation };
     });
   }
 
   async getAvailableWidgets() {
-    let e = await this.adminRepository.find();
+    const e = await this.adminRepository.find();
     return e.map((element) => {
-      return { widgets: element.widgets};
+      return { widgets: element.widgets };
     });
   }
 
   async getAll() {
-    let e = await this.adminRepository.find();
+    const e = await this.adminRepository.find();
     return e;
+  }
+
+  async checkAdminPassword(body) {
+    const infos = await this.getAll();
+    if (infos[0].adminPassword === body.hashedPassword) {
+      return { status: 200, message: 'Good password' };
+    } else {
+      return { status: 400, message: 'The password mentioned is wrong' };
+    }
   }
 }
