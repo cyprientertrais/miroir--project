@@ -9,7 +9,7 @@
       >
         <strong v-if="userProfile">{{ userProfile.pseudo }}</strong>
       </v-card>
-    <div class="pb-5 ma-2 widgetHolder" v-if="widgets">
+    <div class=" ma-2 widgetHolder" v-if="widgets">
       <div v-if="orientation === 'landscape'">
         <v-row
           v-for="(xWidgets, index) in widgets"
@@ -122,6 +122,7 @@ export default {
 <style scoped>
 .username {
   margin-left: -10px !important;
+  height: 25px;
 }
 
 .home {
@@ -137,7 +138,7 @@ export default {
 }
 
 .widgetHolder {
-  height: 100%;
+  height: 100vh -25px ;
 }
 
 .row {
