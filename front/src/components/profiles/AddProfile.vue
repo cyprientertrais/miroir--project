@@ -9,6 +9,8 @@
         dark
         :error="isProfileNameInvalid"
         :error-messages="errorMessage"
+        maxlength="20"
+        v-model="profileName"
       ></v-text-field>
       <div class="buttons">
         <v-btn color="accent" elevation="2" class="button" v-on:click="addProfile" light
@@ -38,10 +40,10 @@ export default {
   },
   methods: {
     cancelProfile() {
+      this.profileName='';
       this.$emit("profileCreated", false);
     },
     async addProfile() {
-      this.profileName = document.getElementById("profileName").value;
       const profile = `{"pseudo":"${this.profileName}", "age":0, "dashboards":[]}`;
       const POSTRequest = ResourcesService.addProfile(JSON.parse(profile));
 
@@ -57,9 +59,9 @@ export default {
         this.isProfileNameInvalid = true;
         if (this.profileName.length == 0) {
           this.errorMessage = "Veuillez entrer un nom de profil valide.";
-        } else if (this.profileName.length > 15) {
+        } else if (this.profileName.length > 20) {
           this.errorMessage =
-            "La taille du nom ne doit pas dépassé 15 caractères. Veuillez entrer un nom de profil valide.";
+            "La taille du nom ne doit pas dépassé 20 caractères. Veuillez entrer un nom de profil valide.";
         } else {
           this.errorMessage =
             "Ce nom de profil est déjà utilisé. Veuillez entrer un autre nom.";
@@ -67,6 +69,7 @@ export default {
       } else {
         this.$emit("profileCreated", true);
         this.isProfileNameInvalid = false;
+        this.profileName='';
       }
     },
   },

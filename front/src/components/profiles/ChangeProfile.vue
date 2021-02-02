@@ -6,10 +6,11 @@
       <v-text-field
         id="newProfileName"
         label="Nom d'utilisateur"
-        v-model="profile.pseudo"
+        v-model="newPseudo"
         dark
         :error="isProfileNameInvalid"
         :error-messages="errorMessage"
+        maxlength="20"
         clearable
       ></v-text-field>
       <div class="buttons">
@@ -58,7 +59,7 @@ export default {
     DeleteProfile,
   },
   created() {
-    this.oldPseudo = this.profile.pseudo;
+    this.newPseudo = this.profile.pseudo;
   },
   mounted() {
     console.log("mounted");
@@ -67,7 +68,7 @@ export default {
     return {
       isProfileNameInvalid: false,
       errorMessage: "",
-      oldPseudo: "",
+      newPseudo: "",
       deleteProfile: false,
     };
   },
@@ -81,12 +82,12 @@ export default {
       }
     },
     cancelEdit() {
-      this.$emit("profileChanged");
+      this.$emit("profileChanged", false);
     },
     async changeProfileName() {
       const PATCHRequest = ResourcesService.changeProfileName(
-        this.oldPseudo,
-        this.profile.pseudo
+        this.profile.pseudo,
+        this.newPseudo
       );
 
       function getPATCHRequestResponse(PATCHRequest) {
@@ -99,11 +100,11 @@ export default {
 
       if (msg.includes("Request failed with status code 404")) {
         this.isProfileNameInvalid = true;
-        if (this.newProfileName.length == 0) {
+        if (this.newProfileName.length === 0) {
           this.errorMessage = "Veuillez entrer un nom de profil valide.";
-        } else if (this.newProfileName.length > 15) {
+        } else if (this.newProfileName.length > 20) {
           this.errorMessage =
-            "La taille du nom ne doit pas dépassé 15 caractères. Veuillez entrer un nom de profil valide.";
+            "La taille du nom ne doit pas dépassé 20 caractères. Veuillez entrer un nom de profil valide.";
         } else {
           this.errorMessage =
             "Ce nom de profil est déjà utilisé. Veuillez entrer un autre nom.";

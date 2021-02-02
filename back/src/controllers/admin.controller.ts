@@ -32,7 +32,8 @@ export class AdminController {
 
   @Post('/checkAdminPassword')
   async checkAdminPassword(@Body() body, @Res() res) {
-    return this.adminService.checkAdminPassword(body);
+    const value = await this.adminService.checkAdminPassword(body);
+    return res.status(value.status).send(value.message)
   }
 
   @Get('/orientation')
