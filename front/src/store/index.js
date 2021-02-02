@@ -10,7 +10,8 @@ export default new Vuex.Store({
   state: {
     location: undefined,
     userProfile: undefined,
-    orientation: undefined
+    orientation: undefined,
+    wifiList: undefined,
   },
   mutations: {
     setLocation(state, location){
@@ -21,6 +22,9 @@ export default new Vuex.Store({
     },
     setOrientation(state, orientation){
       state.orientation = orientation
+    },
+    setWifiList(state, wifiList){
+      state.wifiList = wifiList
     },
   },
   actions: {

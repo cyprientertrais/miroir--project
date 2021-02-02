@@ -1,10 +1,22 @@
 <template>
   <v-container fill-height fluid class="profilesListContainer">
     <v-row justify="center" id="WhoIsThis" class="d-flex align-start">
-      <div class="text-lg-h1 text-md-h1 text-sm-h2 text-h3">{{titleValue}}</div>
+      <div class="text-lg-h1 text-md-h1 text-sm-h2 text-h3">
+        {{ titleValue }}
+      </div>
     </v-row>
-    <v-row justify="center" align="center" class="profilesList d-flex align-center">
-      <v-col cols="6" md="2" sm="4" v-for="profile in profilesArray" :key="profile.id">
+    <v-row
+      justify="center"
+      align="center"
+      class="profilesList d-flex align-center"
+    >
+      <v-col
+        cols="6"
+        md="2"
+        sm="4"
+        v-for="profile in profilesArray"
+        :key="profile.id"
+      >
         <v-badge
           icon="mdi-pencil"
           color="green"
@@ -13,12 +25,20 @@
           offset-y="25"
           v-model="editing"
         >
-          <v-avatar class="profile elevation-5" size="20vh">{{profile.pseudo}}</v-avatar>
+          <v-avatar
+            color="primary"
+            class="profile elevation-5"
+            size="20vh"
+            @click="editProfile(profile)"
+            >{{ profile.pseudo }}</v-avatar
+          >
         </v-badge>
       </v-col>
-      <v-col cols="6" md="2" sm="4" xs="6">
-        <v-avatar class="plus" size="20vh">
-          <v-icon size="100" color="white" dark>mdi-account-plus-outline</v-icon>
+      <v-col v-if="profilesArray.length < 6" cols="6" md="2" sm="4" xs="6">
+        <v-avatar class="plus" size="20vh" @click="addProfile = true">
+          <v-icon size="100" color="white" dark
+            >mdi-account-plus-outline</v-icon
+          >
         </v-avatar>
       </v-col>
     </v-row>
@@ -27,22 +47,39 @@
         @click="toogleEdit()"
         href="#"
         class="elevation-5"
-        color="white"
+        color="accent"
         x-large
-        outlined
-      >{{btnValue}}</v-btn>
+        >{{ btnValue }}</v-btn
+      >
     </v-row>
+
+    <v-dialog v-model="addProfile" width="500px">
+      <AddProfile @profileCreated="getProfiles" />
+    </v-dialog>
+
+    <v-dialog v-model="editingChoosedProfile" width="500px">
+      <ChangeProfile
+        v-if="editingChoosedProfile"
+        @profileChanged="profileEdited"
+        :profile="choosedProfile"
+      />
+    </v-dialog>
   </v-container>
 </template>
 
-
 <script>
+import AddProfile from "@/components/profiles/AddProfile";
+import ChangeProfile from "@/components/profiles/ChangeProfile";
 import Resources from "@/service/resources/resources";
 const ResourcesService = new Resources();
 export default {
   name: "ProfilesLists",
+  components: {
+    AddProfile,
+    ChangeProfile,
+  },
   created() {
-    this.getProfiles();
+    this.getProfiles(true);
   },
   data() {
     return {
@@ -50,14 +87,33 @@ export default {
       profilesArray: "",
       btnValue: "Éditer les profils",
       titleValue: "Qui est-ce ?",
-      editing: false
+      editing: false,
+      addProfile: false,
+      choosedProfile: undefined,
+      editingChoosedProfile: false,
     };
   },
   methods: {
-    getProfiles() {
-      ResourcesService.getAllUserProfile().then(res => {
-        this.profilesArray = res.data;
-      });
+    profileEdited(causedByProfileDeleted) {
+      this.choosedProfile = null;
+      this.editingChoosedProfile = false;
+      if (causedByProfileDeleted) {
+        this.getProfiles(true);
+      }
+    },
+    editProfile(profile) {
+      if (this.editing) {
+        this.choosedProfile = profile;
+        this.editingChoosedProfile = true;
+      }
+    },
+    getProfiles(value) {
+      if (value) {
+        ResourcesService.getAllUserProfile().then((res) => {
+          this.profilesArray = res.data;
+        });
+      }
+      this.addProfile = false;
     },
     toogleEdit() {
       this.btnValue == "Éditer les profils"
@@ -67,8 +123,8 @@ export default {
         ? (this.titleValue = "Éditer les profils")
         : (this.titleValue = "Qui est-ce ?");
       this.editing = !this.editing;
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -99,7 +155,6 @@ export default {
 .profile {
   margin: 10px;
   font-size: 30px;
-  background-color: #3c3e41;
 }
 .plus {
   margin: 10px;
@@ -115,7 +170,6 @@ export default {
 .profile:hover {
   cursor: pointer;
   size: 300;
-  background-color: #3c3e41;
   border: 5px white solid;
 }
 .paramDiv {
