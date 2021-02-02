@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    <v-row>
       <v-card
         dark
         class="username"
@@ -10,7 +9,6 @@
       >
         <strong v-if="userProfile">{{ userProfile.pseudo }}</strong>
       </v-card>
-    </v-row>
     <div class="pb-5 ma-2 widgetHolder" v-if="widgets">
       <div v-if="orientation === 'landscape'">
         <v-row
@@ -138,11 +136,13 @@ export default {
   height: 100%;
 }
 
-.portrait .row {
-  flex: 0;
-}
-
 .widgetHolder {
   height: 100%;
 }
+
+.row {
+width: 100%;
+margin: 0;
+}
+
 </style>
