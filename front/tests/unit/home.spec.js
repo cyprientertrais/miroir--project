@@ -27,8 +27,6 @@ describe("Home.vue", () => {
   
   it("shallowMount component home", () => {
     const wrapper = shallowMount(Home,{store, localVue});
-    console.log(wrapper)
-    console.log(wrapper.text())
     expect(wrapper.text()).toMatch('Time')
   });
 
