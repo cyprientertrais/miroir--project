@@ -63,8 +63,7 @@ export default {
   computed: {},
   methods: {
     onClickProfils() {
-      this.$router.push("/settings")
-      console.log(this.$router.history.current.path);
+      this.$router.push("/settings");
     },
     onClickWifi() {
       this.$router.push("/wifi")
