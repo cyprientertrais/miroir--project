@@ -6,6 +6,8 @@ export class Admin {
   @IsNotEmpty()
   @IsString()
   orientation: string;
+  @Column()
+  location: string;
 
   @Column()
   adminPassword: string;
