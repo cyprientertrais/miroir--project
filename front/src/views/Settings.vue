@@ -26,7 +26,6 @@ export default {
   },
   methods: {
     openDialog() {
-      console.log("click");
       this.settingsPopup = true;
     },
     closeDialog() {
