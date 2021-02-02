@@ -1,5 +1,5 @@
-import { IsNotEmpty, IsString } from 'class-validator';
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { IsNotEmpty, IsString } from 'class-validator'
+import { Column, Entity, PrimaryColumn } from 'typeorm'
 @Entity('admin')
 export class Admin {
   @PrimaryColumn()
@@ -14,6 +14,6 @@ export class Admin {
   widgets: string[];
 
   constructor(admin?: Partial<Admin>) {
-    Object.assign(this, admin);
+    Object.assign(this, admin)
   }
 }
