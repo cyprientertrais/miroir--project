@@ -6,7 +6,8 @@
         <v-col>
           <v-sheet color="primary" class="listButtons">
             <v-row justify="center">
-              <v-btn
+              <v-btn 
+              v-if="this.$router.history.current.path !== '/settings'"
                 v-on:click="onClickProfils"
                 elevation="2"
                 class="profils ma-2 white--text"
@@ -17,6 +18,7 @@
             </v-row>
             <v-row justify="center">
               <v-btn
+                v-if="this.$router.history.current.path !== '/wifi'"
                 v-on:click="onClickWifi"
                 elevation="2"
                 class="wifi ma-2 white--text"
@@ -61,10 +63,11 @@ export default {
   computed: {},
   methods: {
     onClickProfils() {
-      console.log("onClickProfils");
+      this.$router.push("/settings")
+      console.log(this.$router.history.current.path);
     },
     onClickWifi() {
-      console.log("onClickWifi");
+      this.$router.push("/wifi")
     },
     onClickUsine() {
       console.log("oncClickUsine");
