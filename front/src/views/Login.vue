@@ -57,7 +57,7 @@ export default {
       if (responseCheckPassword.status === 200) {
         //if yes, modification global variable to say user is connected and redirect
         sessionStorage.setItem("isAuthenticated", true);
-        this.$router.push(this.$route.query.from || "/");
+        this.$router.push(this.$route.query.from || "/settings");
       } else {
         //if no, display error
         this.isPasswordWrong = true;
