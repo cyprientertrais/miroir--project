@@ -55,7 +55,7 @@ export default {
           return;
       }
 
-      const profile = `{"pseudo":"${this.profileName}", "age":0, "dashboards":[]}`;
+      const profile = `{"pseudo":"${this.profileName}"}`;
       const msg = await ResourcesService.addProfile(JSON.parse(profile)).then(function(res) {
           return JSON.stringify(res);
         });
