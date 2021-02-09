@@ -2,19 +2,15 @@
   <v-card v-if="todayMeteo" dark class="pa-3">
     <v-row>
       <v-col>
-        <v-row justify="center" align="center"
-          ><strong>{{ todayMeteo.dt }} à {{ city.name }}</strong></v-row
-        >
-        <!-- <v-row>
-            <v-col v-for=""></v-col>
-        </v-row> -->
-        <v-row justify="center" align="center"
-          ><img :src="getIconUrl(todayMeteo)"
-        /></v-row>
-        <v-row justify="center" align="center"
-          >{{ todayMeteo.temp.min.toFixed(0) }}°C -
-          {{ todayMeteo.temp.max.toFixed(0) }}°C</v-row
-        >
+        <v-row justify="center" align="center" >
+          <strong>{{ todayMeteo.dt }} à {{ city.name }}</strong>
+        </v-row>
+        <v-row justify="center" align="center">
+          <img :src="getIconUrl(todayMeteo)"/>
+        </v-row>
+        <v-row justify="center" align="center">
+          Min {{ todayMeteo.temp.min.toFixed(0) }}°C Max {{ todayMeteo.temp.max.toFixed(0) }}°C
+        </v-row>
       </v-col>
     </v-row>
 
@@ -40,10 +36,10 @@
           <strong>{{ meteo.dt }}</strong>
         </v-row>
         <v-row justify="center" align="center">
-          min: {{ meteo.temp.min.toFixed(0) }}°C
+          Min {{ meteo.temp.min.toFixed(0) }}°C
         </v-row>
         <v-row justify="center" align="center">
-          max: {{ meteo.temp.max.toFixed(0) }}°C
+          Max {{ meteo.temp.max.toFixed(0) }}°C
         </v-row>
       </v-col>
     </v-row>
