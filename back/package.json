@@ -15,11 +15,11 @@
     "clean": "npm run eslint && npm run format",
     "eslint": "eslint src/**/*.ts",
     "eslint_fix": "eslint src/**/*.ts --fix",
-    "test": "jest",
+    "test": "jest --config ./test/unitary/jest-unitary.json",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/e2e/jest-e2e.json"
   },
   "dependencies": {
     "@nestjs/common": "^7.6.5",
