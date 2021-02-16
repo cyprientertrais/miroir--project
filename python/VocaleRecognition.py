@@ -12,7 +12,6 @@ class VocaleRecognition():
 
     uri = "ws://localhost:8765"
 
-
     def main(self):
         """
         Main function that wait for waker word
@@ -35,6 +34,9 @@ class VocaleRecognition():
         self.send(dataJson)
 
     def itemInCommon(self, list1 : list, list2 : list) -> str:
+        """
+        Compare two strings and return common words
+        """
 
 
         if type(list1) == list and type(list2) == list:
@@ -69,6 +71,9 @@ class VocaleRecognition():
 
 
     def waiting(self):
+        """
+        waiting function that waiting waker word
+        """
         
         while(True):
             print("Attente de sortie de veille")
@@ -81,6 +86,9 @@ class VocaleRecognition():
 
 
     def send(self, data):
+        """
+        Send data through websockets
+        """
         
         asyncio.get_event_loop().run_until_complete(self.sendWS(data))
 
@@ -94,6 +102,10 @@ class VocaleRecognition():
             # print(f"< {greeting}")
 
     def listen(self) -> list:
+        """
+        Listen function that listen on microphone what you say.
+        It uses Google API.
+        """
 
         recognition = speech_recognition.Recognizer()
 
@@ -128,18 +140,4 @@ class VocaleRecognition():
 if __name__=="__main__":
 
     vr = VocaleRecognition()
-    # vr.main()
-
-    vocal =["BOnjour","Wino"]
-
     vr.main()
-    
-
-    # data = dict(
-    #             text="words",
-    #             status=404
-    #         )
-    
-    # js = json.loads(data)
-
-    # print(js)
