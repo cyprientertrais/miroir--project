@@ -1,16 +1,11 @@
-import speech_recognition
-from time import sleep
-import requests
-import asyncio
-import websockets
+# from time import sleep
+from Websocket import Websocket
 import json
+from Recognition import Recognition
 
 class VocaleRecognition():
 
     waker=["aulnat","wina","winner","lina","inna","linda","diana","oyonnax","anna","amina", "bonjour", "miroir"]
-    # waker=["oïna","Toto"]
-
-    uri = "ws://localhost:8765"
 
     def main(self):
         """
@@ -18,26 +13,31 @@ class VocaleRecognition():
         """
         
         self.waiting()
-        print("Je vous écoute")
-        words = self.listen()
-        if words == None:
-            data = dict(
-                text=words,
-                status=404
-                )
-        else:
-            data = dict(
-                text=words,
-                status=200
-                )
-        dataJson = json.dumps(data)
-        self.send(dataJson)
+        
+        words = str()
+        status = int()
+        
+        try:
+            words = Recognition().listen()
+            status = 1
+        except ValueError:
+            words = "Noise Issu"
+            status = 2
+        except ConnectionError:
+            words = "Internet Connection Issu"
+            status = 3
+
+        data = dict(
+            text=words,
+            status=status
+            )
+
+        Websocket(port = 8765).send(data=json.dumps(data))
 
     def itemInCommon(self, list1 : list, list2 : list) -> str:
         """
         Compare two strings and return common words
         """
-
 
         if type(list1) == list and type(list2) == list:
             if len(list1)<len(list2):
@@ -77,65 +77,17 @@ class VocaleRecognition():
         
         while(True):
             print("Attente de sortie de veille")
-            text = self.listen()
-            if text == None :
+            try:
+                text = Recognition().listen()
+            except ValueError:
                 continue
+            except ConnectionError:
+                continue
+
             value = self.itemInCommon(text, self.waker)
             if value != None:
+                print("Fin de la veille")
                 return True
-
-
-    def send(self, data):
-        """
-        Send data through websockets
-        """
-        
-        asyncio.get_event_loop().run_until_complete(self.sendWS(data))
-
-    async def sendWS(self, data):
-        async with websockets.connect(self.uri) as websocket:
-
-            await websocket.send(data)
-            print(data)
-
-            # greeting = await websocket.recv()
-            # print(f"< {greeting}")
-
-    def listen(self) -> list:
-        """
-        Listen function that listen on microphone what you say.
-        It uses Google API.
-        """
-
-        recognition = speech_recognition.Recognizer()
-
-        text = list()
-
-        with speech_recognition.Microphone() as source:
-
-            try:
-                recognition.adjust_for_ambient_noise(source, duration=0.5)
-                
-                # print("Ecoute...")
-                audio = recognition.listen(source)
-                text = recognition.recognize_google(audio, show_all=False, language="fr-FR")
-
-            except speech_recognition.UnknownValueError:
-                print("Recognition error")
-                return None
-                # raise speech_recognition.UnknownValueError
-                
-            except speech_recognition.RequestError:
-                print("Connection error")
-                return None
-                # raise speech_recognition.RequestError
-        
-        # if type(text) == str:
-        #     text = [text]
-
-        text = text.lower()
-        # print(text)
-        return text
 
 if __name__=="__main__":
 
