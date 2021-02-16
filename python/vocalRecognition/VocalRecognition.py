@@ -3,7 +3,7 @@ from Websocket import Websocket
 import json
 from Recognition import Recognition
 
-class VocaleRecognition():
+class VocalRecognition():
 
     waker=["aulnat","wina","winner","lina","inna","linda","diana","oyonnax","anna","amina", "bonjour", "miroir"]
 
