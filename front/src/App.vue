@@ -9,7 +9,7 @@
 <script>
 import { mapActions } from "vuex";
 import moment from "moment";
-import WidgetResources from "@/service/resources/WidgetResources";
+import WidgetResources from "./service/resources/WidgetResources";
 
 const widgetResources = new WidgetResources();
 
@@ -30,34 +30,21 @@ export default {
       return;
     }
 
-    // widgetResources.getLocation().then((res) => {
-    //   if (res.data) {
-    //     this.setLocation({
-    //       lat: res.data[0].coords.latitude,
-    //       long: res.data[0].coords.longitude,
-    //     });
-    //   } else {
-
-    //   }
-    //   console.log("location =", !res.data);
-    // });
-
-    // get position
     navigator.geolocation.getCurrentPosition(
       (pos) => {
-          const location = {
+        const location = {
           lat: pos.coords.latitude,
           long: pos.coords.longitude,
-        }
-        console.log(location)
+        };
+
         this.setLocation(location);
-        widgetResources.postLocation(location)
+        widgetResources.postLocation(location);
       },
       (err) => {
-          this.widgetResources.getLocation().then(res => {
-            this.setLocation(res.data[0]);
-          })
-          console.log(err)
+        console.error(err);
+        widgetResources.getLocation().then((res) => {
+          this.setLocation(res.data[0].location);
+        });
       }
     );
   },
