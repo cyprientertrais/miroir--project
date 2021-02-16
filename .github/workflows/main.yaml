@@ -24,18 +24,13 @@ jobs:
         name: Go to back
         run: cd ./back
       - name: Build, Push and Release a Docker container to Heroku. # Your custom step name
-        uses: gonuit/heroku-docker-deploy@v1.1.0 # GitHub action name (leave it as it is).
+        uses: akhileshns/heroku-deploy@v3.11.10 # This is the action
         with:
-          email: ${{ secrets.HEROKU_EMAIL }}
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
-
-          # Dokerfile name. Optional, by default will be set to "Dockerfile".
-          dockerfile_name: Dockerfile
-
-          # Additional options of docker build command. (Optional)
-          docker_options: "--no-cache"
-          dockerfile_directory: "./back/"
+          heroku_email: ${{secrets.HEROKU_EMAIL}}
+          appdir: "back" # <- This will point to the api folder in your project
+          usedocker: true
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v1
