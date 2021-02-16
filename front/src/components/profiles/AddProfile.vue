@@ -82,13 +82,6 @@ export default {
   color: white;
 }
 
-h1 {
-  color: white;
-  font-size: 30px;
-  padding-top: 20%;
-  font-weight: bold;
-}
-
 .v-text-field {
   margin-top: 30%;
   width: 160px;

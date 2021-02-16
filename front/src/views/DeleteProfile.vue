@@ -2,16 +2,17 @@
     <div class="mainDiv primary-background">
         <v-sheet align="center" justify="center" class="deleteProfile secondary-background" rounded>
             <div class="pageContent">
-                <div class="titre font-title">SUPPRIMER LE PROFIL <span class="nameProfile accent-color">{{this.profileName}}</span> ?</div>
+                <div class="title font-title">SUPPRIMER LE PROFIL <span class="nameProfile accent-color">{{this.profileName}}</span> ?</div>
                 <div class="description font-text">
                     <div class="questionConfirmation">Êtes-vous sûr de vouloir supprimer ce profil ?</div>
                     <div class="descriptionConfirmation">Tous les dashboards associés seront définitivement supprimés, et vous ne pourrez plus y accéder.</div>
-                </div>
-                <div class="butonDelete">
-                    <v-btn v-on:click="deleteProfile" elevation="2" class="butonDelete font-text warning-background" color="">Supprimer le profil</v-btn>
-                </div>
-                <div class="butonCancel">
-                    <v-btn elevation="2" class="butonCancel font-text accent-background" color="">Annuler</v-btn>
+                
+                    <div class="butonDelete">   
+                    <v-btn v-on:click="deleteProfile" elevation="2" class="butonDelete warning-background" color="">Supprimer le profil</v-btn>
+                    </div>
+                    <div class="butonCancel">
+                        <v-btn elevation="2" class="butonCancel accent-background" color="">Annuler</v-btn>
+                    </div>
                 </div>
             </div>
         </v-sheet>
@@ -76,15 +77,12 @@ export default {
     padding: 5% 12% 5% 12%;
 }
 
-.titre {
-    font-weight: bold;
+.title {
     font-size: 40px;
-    color: #ffffff;
     padding-top: 9%;
 }
 
 .description {
-    color: #ffffff;
     width: 35%;
     margin-top: 3%;
 }
@@ -106,7 +104,7 @@ export default {
 }
 
 @media screen and (max-width: 800px) {
-    .titre {
+    .title {
         padding: 12% 10% 0% 10%;
     }
 

@@ -7,7 +7,7 @@
       color="secondary"
       rounded
     >
-      <div class="titre font-title">Oÿna</div>
+      <div class="font-title">Oÿna</div>
       <div class="password">
         <v-text-field
           v-model="password"
@@ -79,12 +79,6 @@ export default {
 };
 </script>
 <style scoped>
-.titre {
-  font-weight: bold;
-  font-size: 70px;
-  color: #ffffff;
-  padding-top: 7%;
-}
 .password {
   margin-top: 6%;
 }
@@ -104,7 +98,7 @@ export default {
   padding: 5% 12% 5% 12%;
 }
 @media screen and (max-width: 540px) {
-  .titre {
+  .title {
     padding-top: 40%;
   }
   .mainDiv {

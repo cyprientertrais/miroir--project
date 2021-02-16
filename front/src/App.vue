@@ -67,11 +67,16 @@
         url(fonts/Poppins/Poppins-SemiBold.ttf) format("truetype");
     }
 
-    .font-title {
+    .font-title, h1 {
+        color: #ffffff;
+        letter-spacing: .15rem;
+        font-size: 4rem;
         font-family: "Amatic" !important
+        
     }
 
     .font-text {
+        color: #ffffff;
         font-family: "Poppins" !important
     }
 
@@ -102,4 +107,5 @@
     .primary-color {
         color: #ffffff !important;
     }
+
 </style>
