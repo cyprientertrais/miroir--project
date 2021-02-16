@@ -20,8 +20,10 @@ jobs:
       -
         name: Checkout
         uses: actions/checkout@v2
-      - name: Build, Push and Release a Docker container to Heroku. # Your custom step name
+      -
+        name: Go to back
         run: cd ./back
+      - name: Build, Push and Release a Docker container to Heroku. # Your custom step name
         uses: gonuit/heroku-docker-deploy@v1.1.0 # GitHub action name (leave it as it is).
         with:
           email: ${{ secrets.HEROKU_EMAIL }}
