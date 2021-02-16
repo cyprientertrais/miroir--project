@@ -8,6 +8,6 @@ RUN npm ci && npm install  --save @nestjs/config @nestjs/typeorm
 COPY . .
 ADD ./src /data/back
 
-EXPOSE 3000
+EXPOSE 5000
 
-CMD ["npm", "run", "start"]
+CMD ["npm", "run", "start:dev"]
