@@ -114,11 +114,11 @@ export default {
       }
     },
     editProfile(profile) {
+      this.inviteProfil = false;
       if (this.editing && profile.pseudo != "Invité") {
         this.choosedProfile = profile;
         this.editingChoosedProfile = true;
-        this.inviteProfil = false;
-      } else {
+      } else if (this.editing && profile.pseudo === "Invité") {
         this.inviteProfil = true;
       }
     },
@@ -131,6 +131,7 @@ export default {
       this.addProfile = false;
     },
     toogleEdit() {
+      this.inviteProfil = false;
       this.btnValue == "Éditer les profils"
         ? (this.btnValue = "Terminé")
         : (this.btnValue = "Éditer les profils");
