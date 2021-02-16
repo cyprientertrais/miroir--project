@@ -4,6 +4,8 @@ on:
   push:
     tags:
       - 'v*'
+    branches:
+      - "bdd-migration"
 
 jobs:
   multi:
@@ -18,6 +20,16 @@ jobs:
       -
         name: Checkout
         uses: actions/checkout@v2
+      - name: Build, Push and Deploy to Heroku #set the whatever name you want to this step
+        id: heroku
+        uses: jctaveras/heroku-deploy@v1.0.0  # use the latest version of the action
+        with:
+          email: ${{ secrets.HEROKU_EMAIL }} # your heroku email
+          api_key: ${{ secrets.HEROKU_API_KEY }} # your  heroku api key
+          app_name: ${{ secrets.HEROKU_APP_NAME }} # you aplication name
+          dockerfile_path: './back' # set the path to the folder wher the Dokerfile is located
+          options: '' # Docker Build Options
+          formation: '' # Docker Dyno Formation. By default is web
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -44,25 +56,4 @@ jobs:
           tags: |
             cypnose/front:latest
             cypnose/front:${{ env.VERSION }}
-      -
-        name: Build and push BACK .....
-        uses: docker/build-push-action@v2
-        with:
-          context: ./back
-          file: ./back/Dockerfile_prod
-          platforms: linux/arm/v7
-          push: true
-          tags: |
-            cypnose/back:latest
-            cypnose/back:${{ env.VERSION }}
-      -
-        name: Build and push DB ....
-        uses: docker/build-push-action@v2
-        with:
-          context: ./db
-          file: ./db/Dockerfile_prod
-          platforms: linux/arm/v7
-          push: true
-          tags: |
-            cypnose/mongodb:latest
-            cypnose/mongodb:${{ env.VERSION }}
+      

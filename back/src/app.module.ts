@@ -22,15 +22,15 @@ import { Admin } from './entities/admin.entity'
       /* url: process.env.HOST
         ? 'mongodb://db:27017'
         : 'mongodb://192.168.99.100:27017',*/
-      url: process.env.HOST
-        ? 'mongodb://db:27017'
+      url: process.env.MONGO
+        ? process.env.MONGO
         : 'mongodb://localhost:27017',
-      database: 'mirror',
+      database: 'project',
       entities: [__dirname + '/entities/*.entity{.ts,.js}'],
-      ssl: false,
-      useUnifiedTopology: true,
-      useNewUrlParser: true,
       synchronize: true,
+      ssl: true,
+      useUnifiedTopology: true,
+      useNewUrlParser: true
     }),
   ],
   controllers: [AppController, ProfileController, AdminController],
