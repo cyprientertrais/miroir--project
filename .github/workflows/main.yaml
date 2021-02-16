@@ -30,6 +30,7 @@ jobs:
           heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
           heroku_email: ${{secrets.HEROKU_EMAIL}}
           appdir: "back" # <- This will point to the api folder in your project
+          procfile: web: npm run start:dev
           usedocker: true
       -
         name: Set up QEMU
