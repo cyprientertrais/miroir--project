@@ -2,6 +2,8 @@
 # speech to text and text to speech
 import speech_recognition as sr
 import pyttsx3
+import json
+from ActionWS import ActionWS
 
 # Initialize the recognizer
 r = sr.Recognizer()
@@ -15,6 +17,39 @@ def SpeakText(command):
     engine.say(command)
     engine.runAndWait()
 
+
+def createJson(info, actionType: ActionWS):
+
+    print(actionType)
+    if actionType == ActionWS.ChangeProfile:
+        return json.dumps({'action': ('changeProfile'),'name': (info)})
+    elif actionType == ActionWS.ChangeRadio:
+        return json.dumps({'action': ('changeRadio'),'name': (info)})
+    elif actionType == ActionWS.ChangeNews:
+        return json.dumps({'action': ('changeNews'),'name': (info)})
+    else:
+        return json.dumps({'error': ('error occured')})
+
+    #GO BASH miseEnVeille = "{\"action\": changeRadio, \"radio\": {}}"
+
+def vocalTextTreatment(vocalText):
+    array = vocalText.split(" ")
+    if array[0] == "miroir":
+        if vocalText.find("affiche le profil de") != -1 and len(array) == 6 :
+            profileName = array[5]
+            print("OK PROFILE = {}".format(profileName))
+            print(createJson(profileName, ActionWS.ChangeProfile))
+        elif vocalText.find("mets la radio") != -1 and (len(array) == 5 or len(array) == 6):
+            radioName = vocalText[20:]
+            print("OK RADIO = {}".format(radioName))
+            print(createJson(radioName, ActionWS.ChangeRadio))
+            # CHANGE NEWS TODO
+        elif vocalText.find("mise en veille") or vocalText.find("mets-toi en veille") != -1 and (len(array) == 4):
+            print("OK MISE EN VEILLE")
+        else:
+            print("MIROIR BUT NOPE")
+    else:
+        print("NOPE")
 
 # Loop infinitely for user to
 # speak
@@ -41,11 +76,12 @@ while(1):
 
             print("Treating info....")
             # Using ggogle to recognize audio
-            MyText = r.recognize_google(audio2,language="fr-FR")
-            MyText = MyText.lower()
+            myText = r.recognize_google(audio2,language="fr-FR")
+            myText = myText.lower()
 
-            print("As tu dis : "+MyText +"?")
-            SpeakText(MyText)
+            print("As tu dis : "+myText + " ?")
+            vocalTextTreatment(myText)
+            SpeakText(myText)
 
     except sr.RequestError as e:
         print("Could not request results; {0}".format(e))
@@ -53,3 +89,8 @@ while(1):
     except sr.UnknownValueError:
         print("unknown error occured")
 
+
+createJson("Toto","changeProfile")
+vocalTextTreatment("miroir affiche le profil de Toto")
+vocalTextTreatment("miroir mets la radio Virgin radio")
+str = "Fun Radio , RTL2 Europe 1 France Inter Virgin Radio"
