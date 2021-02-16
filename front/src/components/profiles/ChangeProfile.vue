@@ -62,7 +62,6 @@ export default {
     this.newPseudo = this.profile.pseudo;
   },
   mounted() {
-    console.log("mounted");
   },
   data() {
     return {

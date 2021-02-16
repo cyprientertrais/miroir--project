@@ -16,6 +16,21 @@ export class AdminService {
       return { orientation: element.orientation }
     })
   }
+  async getLocation() {
+    const e = await this.adminRepository.find();
+    return e.map((element) => {
+      return { location: element.location };
+    });
+  }
+  async postLocation(body) {
+    const newLocation = {
+      $set: {
+        location:body.location,
+      },
+    };
+    return await this.adminRepository.updateOne({},newLocation);
+    
+  }
 
   async getAvailableWidgets() {
     const e = await this.adminRepository.find()

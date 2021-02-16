@@ -41,6 +41,16 @@ export class AdminController {
     return this.adminService.getOrientation()
   }
 
+  @Get('/location')
+  async getLocation() {
+    return this.adminService.getLocation();
+  }
+
+  @Post('/location')
+  async postLocation(@Body() body) {
+    return this.adminService.postLocation(body);
+  }
+
   @Get('/widgets')
   async fetWidgets() {
     return this.adminService.getAvailableWidgets()
