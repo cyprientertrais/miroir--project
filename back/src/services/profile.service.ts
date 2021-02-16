@@ -61,7 +61,9 @@ export class ProfileService {
   }
 
   async delete(name: string) {
-    if(name === "Invité"){return {"status":401,"message":"Can't delete guest profile"};}
+    if (name === 'Invité') {
+      return { status: 401, message: "Can't delete guest profile" };
+    }
     const res = await this.profileRepository.deleteOne({ pseudo: name });
     if (res.result.ok === 1 && res.result.n === 1) {
       return { status: 204, message: 'User ' + name + ' successfully deleted' };
