@@ -4,15 +4,16 @@ import websockets
 class Websocket():
 
     def __init__(self, port):
-        
+
         self.port = str(port)
         self.uri = "ws://localhost:"+self.port
+        print("Listening on" + self.uri)
 
     def send(self, data):
         """
         Send data through websockets
         """
-        
+
         asyncio.get_event_loop().run_until_complete(self.sendWS(data))
 
     async def sendWS(self, data):
