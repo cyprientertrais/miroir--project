@@ -45,9 +45,9 @@
 </template>
 
 <script>
-import Resources from "@/service/resources/resources";
+import UserResources from "@/service/resources/UserResources";
 
-const ResourcesService = new Resources();
+const userService = new UserResources();
 
 export default {
   name: "DeleteProfile",
@@ -55,7 +55,7 @@ export default {
     return {
       //if true, the snackbar displays
       snackbar: false,
-      snackbarContent: "",
+      snackbarContent: ""
     };
   },
   props: ["profileName"],
@@ -66,7 +66,7 @@ export default {
     },
     deleteProfile: async function() {
       const profileToDelete = this.profileName;
-      const responseDeleteProfile = await ResourcesService.deleteProfileByName(
+      const responseDeleteProfile = await userService.deleteProfileByName(
         profileToDelete
       );
       if (responseDeleteProfile.status === 204) {
@@ -80,9 +80,9 @@ export default {
         console.log(`Le profil n'a pas pu être supprimé.`);
         this.$emit("endDelete", false);
       }
-    },
+    }
   },
-  mounted: function() {},
+  mounted: function() {}
 };
 </script>
 

@@ -17,11 +17,11 @@ export default {
   name: "settings",
   components: {
     Profiles,
-    Reglage,
+    Reglage
   },
   data() {
     return {
-      settingsPopup: false,
+      settingsPopup: false
     };
   },
   methods: {
@@ -30,8 +30,8 @@ export default {
     },
     closeDialog() {
       this.settingsPopup = false;
-    },
-  },
+    }
+  }
 };
 </script>
 

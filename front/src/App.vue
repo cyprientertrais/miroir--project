@@ -31,18 +31,18 @@ export default {
     }
 
     navigator.geolocation.getCurrentPosition(
-      (pos) => {
+      pos => {
         const location = {
           lat: pos.coords.latitude,
-          long: pos.coords.longitude,
+          long: pos.coords.longitude
         };
 
         this.setLocation(location);
         widgetResources.postLocation(location);
       },
-      (err) => {
+      err => {
         console.error(err);
-        widgetResources.getLocation().then((res) => {
+        widgetResources.getLocation().then(res => {
           this.setLocation(res.data[0].location);
         });
       }
@@ -50,12 +50,12 @@ export default {
   },
 
   methods: {
-    ...mapActions(["setLocation", "setUserProfile"]),
+    ...mapActions(["setLocation", "setUserProfile"])
   },
 
   mounted() {
     this.setUserProfile("Invité");
-  },
+  }
 };
 </script>
 

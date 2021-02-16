@@ -70,13 +70,13 @@
 <script>
 import AddProfile from "@/components/profiles/AddProfile";
 import ChangeProfile from "@/components/profiles/ChangeProfile";
-import Resources from "@/service/resources/resources";
-const ResourcesService = new Resources();
+import UserResources from "@/service/resources/UserResources";
+const userService = new UserResources();
 export default {
   name: "ProfilesLists",
   components: {
     AddProfile,
-    ChangeProfile,
+    ChangeProfile
   },
   created() {
     this.getProfiles(true);
@@ -90,7 +90,7 @@ export default {
       editing: false,
       addProfile: false,
       choosedProfile: undefined,
-      editingChoosedProfile: false,
+      editingChoosedProfile: false
     };
   },
   methods: {
@@ -109,7 +109,7 @@ export default {
     },
     getProfiles(value) {
       if (value) {
-        ResourcesService.getAllUserProfile().then((res) => {
+        userService.getAllUserProfile().then(res => {
           this.profilesArray = res.data;
         });
       }
@@ -123,8 +123,8 @@ export default {
         ? (this.titleValue = "Éditer les profils")
         : (this.titleValue = "Qui est-ce ?");
       this.editing = !this.editing;
-    },
-  },
+    }
+  }
 };
 </script>
 
