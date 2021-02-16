@@ -44,28 +44,27 @@ export default {
       this.$emit("profileCreated", false);
     },
     async addProfile() {
-      const profile = `{"pseudo":"${this.profileName}", "age":0, "dashboards":[]}`;
-      const POSTRequest = ResourcesService.addProfile(JSON.parse(profile));
-
-      function getPOSTRequestResponse(POSTRequest) {
-        return POSTRequest.then(function(res) {
-          return JSON.stringify(res);
-        });
+      if (this.profileName.length == 0) {
+        this.isProfileNameInvalid = true;
+        this.errorMessage = "Veuillez entrer un nom de profil valide.";
+        return;
+      } else if (this.profileName.length > 20) {
+        this.isProfileNameInvalid = true;
+        this.errorMessage =
+          "La taille du nom ne doit pas dépasser 20 caractères. Veuillez entrer un nom de profil valide.";
+          return;
       }
 
-      const msg = await getPOSTRequestResponse(POSTRequest);
+      const profile = `{"pseudo":"${this.profileName}"}`;
+      const msg = await ResourcesService.addProfile(JSON.parse(profile)).then(function(res) {
+          return JSON.stringify(res);
+        });
+
 
       if (msg.includes("Request failed with status code 400")) {
         this.isProfileNameInvalid = true;
-        if (this.profileName.length == 0) {
-          this.errorMessage = "Veuillez entrer un nom de profil valide.";
-        } else if (this.profileName.length > 20) {
-          this.errorMessage =
-            "La taille du nom ne doit pas dépassé 20 caractères. Veuillez entrer un nom de profil valide.";
-        } else {
-          this.errorMessage =
-            "Ce nom de profil est déjà utilisé. Veuillez entrer un autre nom.";
-        }
+        this.errorMessage =
+          "Ce nom de profil est déjà utilisé. Veuillez entrer un autre nom.";
       } else {
         this.$emit("profileCreated", true);
         this.isProfileNameInvalid = false;

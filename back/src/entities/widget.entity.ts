@@ -1,5 +1,5 @@
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
-import { Entity, PrimaryColumn } from 'typeorm';
+import { IsNotEmpty, IsNumber, IsString } from 'class-validator'
+import { Entity, PrimaryColumn } from 'typeorm'
 
 @Entity('widget')
 export class Widget {

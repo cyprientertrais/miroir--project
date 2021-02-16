@@ -62,7 +62,6 @@ export default {
     this.newPseudo = this.profile.pseudo;
   },
   mounted() {
-    console.log("mounted");
   },
   data() {
     return {
@@ -75,40 +74,37 @@ export default {
   methods: {
     profilDeleted(deleted) {
       if (deleted) {
-        this.deleteProfile = false;
         this.$emit("profileChanged", true);
-      } else {
-        this.deleteProfile = false;
       }
+      this.deleteProfile = false;
     },
     cancelEdit() {
       this.$emit("profileChanged", false);
     },
     async changeProfileName() {
-      const PATCHRequest = ResourcesService.changeProfileName(
-        this.profile.pseudo,
-        this.newPseudo
-      );
-
-      function getPATCHRequestResponse(PATCHRequest) {
-        return PATCHRequest.then(function(res) {
-          return JSON.stringify(res);
-        });
+      if (this.newPseudo.length === 0) {
+        this.isProfileNameInvalid = true;
+        this.errorMessage = "Veuillez entrer un nom de profil valide.";
+        return;
+      } else if (this.newPseudo.length > 20) {
+        this.isProfileNameInvalid = true;
+        this.errorMessage =
+          "La taille du nom ne doit pas dépasser 20 caractères. Veuillez entrer un nom de profil valide.";
+        return;
       }
 
-      const msg = await getPATCHRequestResponse(PATCHRequest);
+      const msg = await ResourcesService.changeProfileName(
+        this.profile.pseudo,
+        this.newPseudo
+      ).then(function(res) {
+        return JSON.stringify(res);
+      });
+
 
       if (msg.includes("Request failed with status code 404")) {
         this.isProfileNameInvalid = true;
-        if (this.newProfileName.length === 0) {
-          this.errorMessage = "Veuillez entrer un nom de profil valide.";
-        } else if (this.newProfileName.length > 20) {
-          this.errorMessage =
-            "La taille du nom ne doit pas dépassé 20 caractères. Veuillez entrer un nom de profil valide.";
-        } else {
-          this.errorMessage =
+        this.errorMessage =
             "Ce nom de profil est déjà utilisé. Veuillez entrer un autre nom.";
-        }
       } else {
         this.$emit("profileChanged");
         this.isProfileNameInvalid = false;

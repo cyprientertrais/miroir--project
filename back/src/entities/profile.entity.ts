@@ -1,13 +1,13 @@
-import { Dashboard } from './dashboard.entity';
-import { Column, Entity, Index, ObjectIdColumn, PrimaryColumn } from 'typeorm';
+import { Dashboard } from './dashboard.entity'
+import { Column, Entity, Index, ObjectIdColumn, PrimaryColumn } from 'typeorm'
 import {
-  IsInt,
   IsNotEmpty,
   IsOptional,
   IsString,
   ValidateNested,
-} from 'class-validator';
-import { Type } from 'class-transformer';
+} from 'class-validator'
+import { Type } from 'class-transformer'
+import { ApiProperty } from '@nestjs/swagger'
 
 @Entity('profile')
 export class Profile {
@@ -18,19 +18,30 @@ export class Profile {
   @IsNotEmpty()
   @IsString()
   @Index({ unique: true })
+  @ApiProperty()
   pseudo: string;
-
-  @Column()
-  @IsInt()
-  age: number;
 
   @Column()
   @IsOptional()
   @ValidateNested({ each: true })
   @Type(() => Dashboard)
-  dashboards: Dashboard[];
+  dashboards: Dashboard[] = [
+    {
+      name: 'default',
+      widgets: [
+        {
+          name: 'Weather',
+          position: 2,
+        },
+        {
+          name: 'Time',
+          position: 1,
+        },
+      ],
+    },
+  ];
 
   constructor(profile?: Profile) {
-    Object.assign(this, profile);
+    Object.assign(this, profile)
   }
 }

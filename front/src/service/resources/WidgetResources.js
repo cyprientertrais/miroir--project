@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export default class Resources {
+export default class WidgetResources {
     axios = require("axios");
     hostname = window.location.hostname;
     API_KEY = "ee95de4f37a7e21b3714e529ea39a2fb";
@@ -23,6 +23,16 @@ export default class Resources {
     getOrientation() {
         const url = `http://${this.hostname}:3000/admin/orientation`;
         return axios.get(url);
+    }
+
+    getLocation() {
+        const url = `http://${this.hostname}:3000/admin/location`
+        return axios.get(url);
+    }
+
+    postLocation(location){
+        const url = `http://${this.hostname}:3000/admin/location`
+        return axios.post(url, {location:location}) 
     }
 
     async getNews() {
