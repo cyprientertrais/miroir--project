@@ -26,7 +26,7 @@ import { Admin } from './admin/admin.entity'
         ? 'mongodb://db:27017'
         : 'mongodb://localhost:27017',
       database: 'mirror',
-      entities: [__dirname + '/entities/*.entity{.ts,.js}'],
+      entities: [__dirname + '/*/*.entity{.ts,.js}'],
       ssl: false,
       useUnifiedTopology: true,
       useNewUrlParser: true,
