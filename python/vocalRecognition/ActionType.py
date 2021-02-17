@@ -1,6 +1,7 @@
 import enum
 
-class ActionWS(enum.Enum):
+class ActionType(enum.Enum):
     ChangeProfile = "changeProfile"
     ChangeRadio = "changeRadio"
     ChangeNews = "changeNews"
+    MiseEnVeille = "miseEnVeille"
