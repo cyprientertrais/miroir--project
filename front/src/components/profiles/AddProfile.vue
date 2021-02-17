@@ -13,10 +13,20 @@
         v-model="profileName"
       ></v-text-field>
       <div class="buttons">
-        <v-btn color="accent" elevation="2" class="button" v-on:click="addProfile" light
+        <v-btn
+          color="accent"
+          elevation="2"
+          class="button"
+          v-on:click="addProfile"
+          light
           >Ajouter</v-btn
         >
-        <v-btn color="accent" elevation="2" class="button" @click="cancelProfile" light
+        <v-btn
+          color="accent"
+          elevation="2"
+          class="button"
+          @click="cancelProfile"
+          light
           >Annuler</v-btn
         >
       </div>
@@ -25,9 +35,9 @@
 </template>
 
 <script>
-import Resources from "@/service/resources/resources";
+import UserService from "@/service/resources/UserResources";
 
-const ResourcesService = new Resources();
+const userService = new UserService();
 
 export default {
   name: "AddProfile",
@@ -35,12 +45,12 @@ export default {
     return {
       profileName: "",
       isProfileNameInvalid: false,
-      errorMessage: "",
+      errorMessage: ""
     };
   },
   methods: {
     cancelProfile() {
-      this.profileName='';
+      this.profileName = "";
       this.$emit("profileCreated", false);
     },
     async addProfile() {
@@ -52,14 +62,15 @@ export default {
         this.isProfileNameInvalid = true;
         this.errorMessage =
           "La taille du nom ne doit pas dépasser 20 caractères. Veuillez entrer un nom de profil valide.";
-          return;
+        return;
       }
 
       const profile = `{"pseudo":"${this.profileName}"}`;
-      const msg = await ResourcesService.addProfile(JSON.parse(profile)).then(function(res) {
+      const msg = await userService
+        .addProfile(JSON.parse(profile))
+        .then(function(res) {
           return JSON.stringify(res);
         });
-
 
       if (msg.includes("Request failed with status code 400")) {
         this.isProfileNameInvalid = true;
@@ -68,10 +79,10 @@ export default {
       } else {
         this.$emit("profileCreated", true);
         this.isProfileNameInvalid = false;
-        this.profileName='';
+        this.profileName = "";
       }
-    },
-  },
+    }
+  }
 };
 </script>
 

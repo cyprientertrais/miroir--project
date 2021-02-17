@@ -19,25 +19,25 @@ var moment = require("moment");
 import Clock from "vue-clock2";
 export default {
   components: {
-    Clock,
+    Clock
   },
   name: "Time",
   data() {
     return {
-      date: null,
+      date: null
     };
   },
   computed: {},
   methods: {
     moment: function() {
       return moment();
-    },
+    }
   },
   mounted: function() {
     setInterval(() => {
       this.date = moment().format("HH:mm:ss");
     }, 1000);
-  },
+  }
 };
 </script>
 <style scoped>
