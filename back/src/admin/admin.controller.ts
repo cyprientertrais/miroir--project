@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Post, Res } from '@nestjs/common'
-import { AdminService } from '../services/admin.service'
+import { AdminService } from './admin.service'
 import SSH2Promise = require('ssh2-promise');
 import { ApiTags } from '@nestjs/swagger'
 

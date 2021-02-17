@@ -1,16 +1,16 @@
 import { Module } from '@nestjs/common'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
-import { ProfileController } from './controllers/profile.controller'
-import { ProfileService } from './services/profile.service'
+import { ProfileController } from './profile/profile.controller'
+import { ProfileService } from './profile/profile.service'
 import { ConfigModule } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
-import { Profile } from './entities/profile.entity'
+import { Profile } from './profile/profile.entity'
 import { Dashboard } from './entities/dashboard.entity'
 import { Widget } from './entities/widget.entity'
-import { AdminController } from './controllers/admin.controller'
-import { AdminService } from './services/admin.service'
-import { Admin } from './entities/admin.entity'
+import { AdminController } from './admin/admin.controller'
+import { AdminService } from './admin/admin.service'
+import { Admin } from './admin/admin.entity'
 
 @Module({
   imports: [
@@ -26,7 +26,7 @@ import { Admin } from './entities/admin.entity'
         ? 'mongodb://db:27017'
         : 'mongodb://localhost:27017',
       database: 'mirror',
-      entities: [__dirname + '/entities/*.entity{.ts,.js}'],
+      entities: [__dirname + '/*/*.entity{.ts,.js}'],
       ssl: false,
       useUnifiedTopology: true,
       useNewUrlParser: true,

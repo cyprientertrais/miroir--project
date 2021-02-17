@@ -1,4 +1,4 @@
-import { Dashboard } from './dashboard.entity'
+import { Dashboard } from '../entities/dashboard.entity'
 import { Column, Entity, Index, ObjectIdColumn, PrimaryColumn } from 'typeorm'
 import {
   IsNotEmpty,
