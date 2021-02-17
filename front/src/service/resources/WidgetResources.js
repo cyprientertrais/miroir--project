@@ -4,9 +4,11 @@ export default class WidgetResources {
   axios = require("axios");
   hostname = window.location.hostname;
   API_KEY = "ee95de4f37a7e21b3714e529ea39a2fb";
-
+  API(){
+    return process.env.NODE_ENV==="production" ? "https://back-miroir.herokuapp.com" :"http://localhost:3000";
+  }
   getPrintedWidgets(params) {
-    const url = `${process.env.VUE_APP_BACK_URL}`;
+    const url = `${this.API()}`;
     return axios.get(url, { params: params });
   }
 
@@ -21,22 +23,22 @@ export default class WidgetResources {
   }
 
   getOrientation() {
-    const url = `http://${this.hostname}:3000/admin/orientation`;
+    const url = `${this.API()}/admin/orientation`;
     return axios.get(url);
   }
 
   getLocation() {
-    const url = `http://${this.hostname}:3000/admin/location`;
+    const url = `${this.API()}/admin/location`;
     return axios.get(url);
   }
 
   postLocation(location) {
-    const url = `http://${this.hostname}:3000/admin/location`;
+    const url = `${this.API()}/admin/location`;
     return axios.post(url, { location: location });
   }
 
   getNews() {
-    const url = `http://${this.hostname}:3000/parse/`;
+    const url = `${this.API()}/parse/`;
     return axios
       .post(url, { url: "https://www.france24.com/fr/rss" })
       .then(response => response.data)

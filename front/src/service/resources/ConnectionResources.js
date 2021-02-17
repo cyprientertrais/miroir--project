@@ -2,9 +2,11 @@ import axios from "axios";
 export default class ConnectionResources {
   axios = require("axios");
   hostname = window.location.hostname;
-
+  API(){
+    return process.env.NODE_ENV==="production" ? "https://back-miroir.herokuapp.com" :"http://localhost:3000";
+  }
   async checkAdminPassword(hashedPassword) {
-    const url = `http://${this.hostname}:3000/admin/checkAdminPassword`;
+    const url = `${this.API()}/admin/checkAdminPassword`;
     let t = await axios
       .post(url, { hashedPassword: hashedPassword })
       .catch(() => {
@@ -14,7 +16,7 @@ export default class ConnectionResources {
   }
 
   async getWifiList() {
-    const wifiList = `http://${this.hostname}:3000/admin/wifiscan`;
+    const wifiList = `${this.API()}/admin/wifiscan`;
     return axios.get(wifiList);
   }
 }
