@@ -4,9 +4,6 @@ on:
   push:
     tags:
       - 'v*'
-    branches:
-      - "bdd-migration"
-
 jobs:
   multi:
     runs-on: ubuntu-latest
