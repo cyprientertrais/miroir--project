@@ -20,9 +20,6 @@ jobs:
       -
         name: Checkout
         uses: actions/checkout@v2
-      -
-        name: Go to back
-        run: cd ./back
       - name: Build, Push and Release a Docker container to Heroku. # Your custom step name
         uses: akhileshns/heroku-deploy@v3.11.10 # This is the action
         with:
@@ -30,7 +27,6 @@ jobs:
           heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
           heroku_email: ${{secrets.HEROKU_EMAIL}}
           appdir: "back" # <- This will point to the api folder in your project
-          procfile: "web: npm run start:dev"
           usedocker: true
       -
         name: Set up QEMU
