@@ -5,7 +5,7 @@ export default class WidgetResources {
   hostname = window.location.hostname;
   API_KEY = "ee95de4f37a7e21b3714e529ea39a2fb";
   API(){
-    return process.env.ENV ? "https://back-miroir.herokuapp.com" :"http://localhost:3000";
+    return process.env.NODE_ENV==="production" ? "https://back-miroir.herokuapp.com" :"http://localhost:3000";
   }
   getPrintedWidgets(params) {
     const url = `${this.API()}`;
