@@ -3,6 +3,7 @@ import pyttsx3
 import json
 import re
 from ActionType import ActionType
+import websockets
 
 # Initialize the recognizer
 r = sr.Recognizer()
@@ -56,19 +57,23 @@ def returnVocalInfo(vocalText, actionMirror):
     print(res)
     return res
 
-def vocalTextTreatment(vocalText):
+def vocalTextTreatment(vocalText) -> json:
 
     profileName = returnVocalInfo(vocalText,ActionType.ChangeProfile)
     radioName = returnVocalInfo(vocalText,ActionType.ChangeRadio)
     enVeille = returnVocalInfo(vocalText,ActionType.MiseEnVeille)
 
     if re.search("^miroir", vocalText):
+        json = str()
         if profileName != "":
             print("OK PROFILE = {}".format(profileName))
-            print(createJson(profileName, ActionType.ChangeProfile))
+            # print(createJson(profileName, ActionType.ChangeProfile))
+            json = createJson(profileName, ActionType.ChangeProfile)
+            return json
         elif radioName != "":
             print("OK RADIO = {}".format(radioName))
-            print(createJson(radioName, ActionType.ChangeRadio))
+            json = createJson(radioName, ActionType.ChangeRadio)
+            return json
         elif enVeille != "":
             print("OK MISE EN VEILLE")
             # CHANGE NEWS TODO
@@ -78,7 +83,7 @@ def vocalTextTreatment(vocalText):
         print("NOPE")
 
 
-def launchListening():
+async def launchListening(websocket):
     # Loop infinitely for user to
     # speak
     while 1:
@@ -107,7 +112,10 @@ def launchListening():
 
                 print("As tu dis : "+myText + " ?")
                 #SpeakText(myText)
-                vocalTextTreatment(myText)
+                json = vocalTextTreatment(myText)
+                print(json)
+                await websocket.send(json)
+                print("Sent")
 
         except sr.RequestError as e:
             print("Could not request results; {0}".format(e))
@@ -115,5 +123,6 @@ def launchListening():
         except sr.UnknownValueError:
             print("unknown error occured")
 
+if __name__ == "__main__":
 
-launchListening()
+    launchListening()
