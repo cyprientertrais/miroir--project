@@ -3,7 +3,7 @@ WORKDIR /app
 
 COPY ./ /app
 
-RUN npm ci ; \
+RUN npm install ; \
     npm run  build
 
 CMD ["npm", "run","start:prod"]
