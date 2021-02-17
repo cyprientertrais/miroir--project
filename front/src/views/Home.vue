@@ -1,14 +1,14 @@
 <template>
   <div class="home">
-      <v-card
-        dark
-        class="username"
-        style="text-align: center"
-        width="250px"
-        shaped
-      >
-        <strong v-if="userProfile">{{ userProfile.pseudo }}</strong>
-      </v-card>
+    <v-card
+      dark
+      class="username"
+      style="text-align: center"
+      width="250px"
+      shaped
+    >
+      <strong v-if="userProfile">{{ userProfile.pseudo }}</strong>
+    </v-card>
     <div class=" ma-2 widgetHolder" v-if="widgets">
       <div v-if="orientation === 'landscape'">
         <v-row
@@ -51,9 +51,9 @@
 <script>
 import { mapGetters } from "vuex";
 import moment from "moment";
-import Resources from "@/service/resources/resources";
+import WidgetResources from "@/service/resources/WidgetResources";
 
-const ResourcesService = new Resources();
+const widgetService = new WidgetResources();
 export default {
   name: "Home",
   components: {},
@@ -64,7 +64,7 @@ export default {
   },
   data() {
     return {
-      widgets: [],
+      widgets: []
     };
   },
   watch: {
@@ -73,18 +73,18 @@ export default {
     },
     orientation: function() {
       this.setWidgets();
-    },
+    }
   },
   computed: {
-    ...mapGetters(["userProfile", "orientation"]),
+    ...mapGetters(["userProfile", "orientation"])
   },
   methods: {
     setWidgets() {
       if (this.userProfile) {
         if (this.orientation === "landscape") {
           this.userProfile.dashboards
-            .filter((element) => element.name === "default")[0]
-            .widgets.forEach((widget) => {
+            .filter(element => element.name === "default")[0]
+            .widgets.forEach(widget => {
               let quotient = Math.floor(widget.position / 2);
               let reste = widget.position % 2;
               if (this.widgets && !this.widgets[quotient]) {
@@ -96,8 +96,8 @@ export default {
             });
         } else {
           this.userProfile.dashboards
-            .filter((element) => element.name === "default")[0]
-            .widgets.forEach((widget) => {
+            .filter(element => element.name === "default")[0]
+            .widgets.forEach(widget => {
               let quotient = Math.floor(widget.position / 4);
               let reste = widget.position % 4;
               if (this.widgets && !this.widgets[quotient]) {
@@ -111,11 +111,11 @@ export default {
       }
     },
     getOrientation() {
-      ResourcesService.getOrientation().then((res) => {
+      widgetService.getOrientation().then(res => {
         this.$store.dispatch("setOrientation", res.data[0].orientation);
       });
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -138,12 +138,11 @@ export default {
 }
 
 .widgetHolder {
-  height: 100vh -25px ;
+  height: 100vh -25px;
 }
 
 .row {
-width: 100%;
-margin: 0;
+  width: 100%;
+  margin: 0;
 }
-
 </style>

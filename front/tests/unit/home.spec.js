@@ -1,33 +1,47 @@
-import { shallowMount, createLocalVue } from "@vue/test-utils";
-import Home from "@/views/Home.vue";
-import Vuex from 'vuex'
-import Vuetify from 'vuetify'
-import Vue from "vue";
+// import { shallowMount, createLocalVue } from "@vue/test-utils";
+// import Home from "@/views/Home.vue";
+// import Vuex from "vuex";
+// import Vuetify from "vuetify";
+// import Vue from "vue";
 
-const localVue = createLocalVue()
-Vue.use(Vuetify)
-Vue.use(Vuex)
+// const localVue = createLocalVue();
+// Vue.use(Vuetify);
+// Vue.use(Vuex);
+// //
+// describe("Home.vue", () => {
+//   let getters;
+//   let store;
+//   let vuetify;
 
-describe("Home.vue", () => {
-  let getters
-  let store
-  let vuetify
+//   beforeEach(() => {
+//     vuetify = new Vuetify();
+//     getters = {
+//       userProfile: () => {
+//         return {
+//           id: "5f6f4d3e2fc33f001288711d",
+//           pseudo: "Invité",
+//           age: 22,
+//           dashboards: [
+//             {
+//               name: "default",
+//               widgets: [
+//                 { name: "Weather", position: 2 },
+//                 { name: "Time", position: 1 }
+//               ]
+//             }
+//           ]
+//         };
+//       },
+//       orientation: () => "landscape"
+//     };
 
-  beforeEach(() => {
-    vuetify = new Vuetify()
-    getters = {
-      userProfile: () => {return { id: "5f6f4d3e2fc33f001288711d", pseudo: "Invité", age: 22, dashboards: [{ name: "default", widgets: [{ name: 'Weather', position: 2 }, { name: 'Time', position: 1 }] }] }},
-      orientation: () => 'landscape'
-    }
+//     store = new Vuex.Store({
+//       getters
+//     });
+//   });
 
-    store = new Vuex.Store({
-      getters
-    })
-  })
-  
-  it("shallowMount component home", () => {
-    const wrapper = shallowMount(Home,{store, localVue});
-    expect(wrapper.text()).toMatch('Time')
-  });
-
-});
+//   it("shallowMount component home", () => {
+//     const wrapper = shallowMount(Home, { store, localVue });
+//     expect(wrapper.text()).toMatch("Time");
+//   });
+// });

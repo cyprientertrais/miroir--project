@@ -22,7 +22,12 @@
           light
           >Enregistrer</v-btn
         >
-        <v-btn color="accent" elevation="2" class="buttonAnnul" light @click="cancelEdit"
+        <v-btn
+          color="accent"
+          elevation="2"
+          class="buttonAnnul"
+          light
+          @click="cancelEdit"
           >Annuler</v-btn
         >
         <v-btn
@@ -47,28 +52,27 @@
 </template>
 
 <script>
-import Resources from "@/service/resources/resources";
+import UserResources from "@/service/resources/UserResources";
 import DeleteProfile from "@/components/profiles/DeleteProfile";
 
-const ResourcesService = new Resources();
+const userService = new UserResources();
 
 export default {
   name: "ChangeProfile",
   props: ["profile"],
   components: {
-    DeleteProfile,
+    DeleteProfile
   },
   created() {
     this.newPseudo = this.profile.pseudo;
   },
-  mounted() {
-  },
+  mounted() {},
   data() {
     return {
       isProfileNameInvalid: false,
       errorMessage: "",
       newPseudo: "",
-      deleteProfile: false,
+      deleteProfile: false
     };
   },
   methods: {
@@ -93,24 +97,22 @@ export default {
         return;
       }
 
-      const msg = await ResourcesService.changeProfileName(
-        this.profile.pseudo,
-        this.newPseudo
-      ).then(function(res) {
-        return JSON.stringify(res);
-      });
-
+      const msg = await userService
+        .changeProfileName(this.profile.pseudo, this.newPseudo)
+        .then(function(res) {
+          return JSON.stringify(res);
+        });
 
       if (msg.includes("Request failed with status code 404")) {
         this.isProfileNameInvalid = true;
         this.errorMessage =
-            "Ce nom de profil est déjà utilisé. Veuillez entrer un autre nom.";
+          "Ce nom de profil est déjà utilisé. Veuillez entrer un autre nom.";
       } else {
         this.$emit("profileChanged");
         this.isProfileNameInvalid = false;
       }
-    },
-  },
+    }
+  }
 };
 </script>
 

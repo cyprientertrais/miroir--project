@@ -1,9 +1,7 @@
 import axios from "axios";
-export default class Resources {
+export default class ConnectionResources {
   axios = require("axios");
   hostname = window.location.hostname;
-  API_KEY = "ee95de4f37a7e21b3714e529ea39a2fb";
-
 
   async checkAdminPassword(hashedPassword) {
     const url = `http://${this.hostname}:3000/admin/checkAdminPassword`;
@@ -19,5 +17,4 @@ export default class Resources {
     const wifiList = `http://${this.hostname}:3000/admin/wifiscan`;
     return axios.get(wifiList);
   }
-
 }
