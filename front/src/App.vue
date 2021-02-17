@@ -10,6 +10,7 @@
     import {mapActions} from "vuex";
     import moment from "moment";
 
+
     export default {
         name: "App",
 
@@ -20,6 +21,12 @@
         },
 
         created() {
+
+            if(this.$store.state.socket.isConnected){
+                console.log("sendingToServ")
+                this.$store.dispatch('sendMessage',"toto")
+            }
+
             moment.locale("fr");
 
             if (!("geolocation" in navigator)) {

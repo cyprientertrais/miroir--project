@@ -1,6 +1,9 @@
 import Vue from "vue";
 import Vuetify from "vuetify/lib";
+import store from '../store'
+import VueNativeSock from 'vue-native-websocket'
 
+Vue.use(VueNativeSock, 'ws://localhost:1234', { store: store, reconnection:true,reconnectionAttempts:5,reconnectionDelay: 3000 })
 Vue.use(Vuetify);
 
 export default new Vuetify({
