@@ -11,30 +11,27 @@ export class AdminService {
   ) {}
 
   async getOrientation() {
-    const e = await this.adminRepository.find()
-    return e.map((element) => {
-      return { orientation: element.orientation }
-    })
+    return await this.adminRepository.findOne(
+      {
+        select: ["orientation"]
+      }
+    )
   }
 
   async getAvailableWidgets() {
-    const e = await this.adminRepository.find()
-    return e.map((element) => {
-      return { widgets: element.widgets }
-    })
-  }
-
-  async getAll() {
-    const e = await this.adminRepository.find()
-    return e
+    return await this.adminRepository.findOne(
+      {
+        select: ["widgets"]
+      }
+    )
   }
 
   async checkAdminPassword(body) {
-    const infos = await this.getAll()
-    if (infos[0].adminPassword === body.hashedPassword) {
-      return { status: 200, message: 'Good password' }
-    } else {
-      return { status: 400, message: 'The password mentioned is wrong' }
-    }
+    const value = await this.adminRepository.findOne(
+      {
+        select: ["adminPassword"]
+      }
+    );
+    return (body.hashedPassword === value.adminPassword);
   }
 }
