@@ -37,6 +37,11 @@ export default class WidgetResources {
     return axios.post(url, { location: location });
   }
 
+    getAllWidgets() {
+        const url = `http://${this.hostname}:3000/admin/widgets`;
+        return axios.get(url);
+    }
+
   getNews() {
     const url = `${this.API()}/parse/`;
     return axios
