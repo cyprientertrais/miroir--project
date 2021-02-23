@@ -17,22 +17,23 @@
         v-for="profile in profilesArray"
         :key="profile.id"
       >
-        <v-badge
-          icon="mdi-pencil"
-          color="green"
-          overlap
-          offset-x="25"
-          offset-y="25"
-          v-model="editing"
+        <v-avatar
+          color="primary"
+          class="profile elevation-5"
+          size="20vh"
+          @click="editProfile(profile)"
         >
-          <v-avatar
-            color="primary"
-            class="profile elevation-5"
-            size="20vh"
-            @click="editProfile(profile)"
-            >{{ profile.pseudo }}</v-avatar
+          <v-icon
+            x-large
+            dark
+            v-if="profile.pseudo != 'Invité' && editing"
+            class="profil-avatar"
+            color="grey"
           >
-        </v-badge>
+            mdi-pencil
+          </v-icon>
+          <span class="profil-avatar">{{ profile.pseudo }}</span>
+        </v-avatar>
       </v-col>
       <v-col v-if="profilesArray.length < 6" cols="6" md="2" sm="4" xs="6">
         <v-avatar class="plus" size="20vh" @click="addProfile = true">
@@ -53,10 +54,20 @@
       >
     </v-row>
 
+    <v-row justify="center">
+      <v-alert
+        dense
+        outlined
+        type="error"
+        v-if="inviteProfil === true && editing"
+      >
+        Impossible de supprimer le profil <strong>invité</strong>
+      </v-alert>
+    </v-row>
+
     <v-dialog v-model="addProfile" width="500px">
       <AddProfile @profileCreated="getProfiles" />
     </v-dialog>
-
     <v-dialog v-model="editingChoosedProfile" width="500px">
       <ChangeProfile
         v-if="editingChoosedProfile"
@@ -70,13 +81,13 @@
 <script>
 import AddProfile from "@/components/profiles/AddProfile";
 import ChangeProfile from "@/components/profiles/ChangeProfile";
-import Resources from "@/service/resources/resources";
-const ResourcesService = new Resources();
+import UserResources from "@/service/resources/UserResources";
+const userService = new UserResources();
 export default {
   name: "ProfilesLists",
   components: {
     AddProfile,
-    ChangeProfile,
+    ChangeProfile
   },
   created() {
     this.getProfiles(true);
@@ -91,6 +102,7 @@ export default {
       addProfile: false,
       choosedProfile: undefined,
       editingChoosedProfile: false,
+      inviteProfil: false,
     };
   },
   methods: {
@@ -102,20 +114,24 @@ export default {
       }
     },
     editProfile(profile) {
-      if (this.editing) {
+      this.inviteProfil = false;
+      if (this.editing && profile.pseudo != "Invité") {
         this.choosedProfile = profile;
         this.editingChoosedProfile = true;
+      } else if (this.editing && profile.pseudo === "Invité") {
+        this.inviteProfil = true;
       }
     },
     getProfiles(value) {
       if (value) {
-        ResourcesService.getAllUserProfile().then((res) => {
+        userService.getAllUserProfile().then(res => {
           this.profilesArray = res.data;
         });
       }
       this.addProfile = false;
     },
     toogleEdit() {
+      this.inviteProfil = false;
       this.btnValue == "Éditer les profils"
         ? (this.btnValue = "Terminé")
         : (this.btnValue = "Éditer les profils");
@@ -123,8 +139,8 @@ export default {
         ? (this.titleValue = "Éditer les profils")
         : (this.titleValue = "Qui est-ce ?");
       this.editing = !this.editing;
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -177,6 +193,9 @@ export default {
   text-align: right;
   margin-top: 20px;
   padding-right: 20px;
+}
+.profil-avatar {
+  position: absolute;
 }
 div {
   color: white;

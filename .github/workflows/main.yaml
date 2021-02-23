@@ -18,6 +18,14 @@ jobs:
       -
         name: Checkout
         uses: actions/checkout@v2
+      - name: Build, Push and Release a Docker container to Heroku. # Your custom step name
+        uses: akhileshns/heroku-deploy@v3.11.10 # This is the action
+        with:
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
+          heroku_email: ${{secrets.HEROKU_EMAIL}}
+          appdir: "back" # <- This will point to the api folder in your project
+          usedocker: true
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -44,25 +52,4 @@ jobs:
           tags: |
             cypnose/front:latest
             cypnose/front:${{ env.VERSION }}
-      -
-        name: Build and push BACK .....
-        uses: docker/build-push-action@v2
-        with:
-          context: ./back
-          file: ./back/Dockerfile_prod
-          platforms: linux/arm/v7
-          push: true
-          tags: |
-            cypnose/back:latest
-            cypnose/back:${{ env.VERSION }}
-      -
-        name: Build and push DB ....
-        uses: docker/build-push-action@v2
-        with:
-          context: ./db
-          file: ./db/Dockerfile_prod
-          platforms: linux/arm/v7
-          push: true
-          tags: |
-            cypnose/mongodb:latest
-            cypnose/mongodb:${{ env.VERSION }}
+      

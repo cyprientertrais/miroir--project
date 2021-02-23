@@ -15,9 +15,9 @@ async function bootstrap() {
   SwaggerModule.setup('swagger', app, document)
 
   app.useGlobalPipes(new ValidationPipe())
-  await app.listen(3000)
+  await app.listen(5000)
 
-  console.log('Listening at localhost:%s (HTTP)', 3000)
-  console.log('Swagger at localhost:%s/swagger (SWAGGER)', 3000)
+  console.log('Listening at localhost:%s (HTTP)', 5000)
+  console.log('Swagger at localhost:%s/swagger (SWAGGER)', 5000)
 }
 bootstrap()
