@@ -16,8 +16,7 @@ export class ProfileService {
   ) {}
 
   async getAll() {
-    const e = await this.profileRepository.find()
-    return e
+    return await this.profileRepository.find()
   }
 
   async getOne(name: string): Promise<Profile> {
@@ -35,11 +34,18 @@ export class ProfileService {
     return this.profileRepository.save(new Profile(profile)).catch((err) => {
       throw new BadRequestException(err)
     })
-  }
+  } 
 
   async getAllDashboardsFromProfileService(name: string) {
-    const e = await this.getOne(name)
-    return e.dashboards
+    return await this.profileRepository.findOne(
+      {
+        select:["dashboards"],
+        where: 
+        {
+          pseudo: name
+        }
+      }
+    )
   }
 
   async createDashboardFromProfileService(
@@ -59,7 +65,7 @@ export class ProfileService {
       profile.dashboards.push(newDashboard)
       await this.profileRepository.save(profile)
     }
-  }
+  } 
 
   async delete(name: string) {
     if (name === 'Invité') {
@@ -93,7 +99,7 @@ export class ProfileService {
       status: 404,
       message: 'An error occured when trying to update ' + name,
     }
-  }
+  } 
 
   doesDashboardNameAlreadyExists(
     dashboards: Dashboard[],
