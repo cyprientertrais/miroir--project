@@ -4,7 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { Profile } from '../entities/profile.entity'
+import { Profile } from './profile.entity'
 import { MongoRepository } from 'typeorm'
 import { Dashboard } from '../entities/dashboard.entity'
 
