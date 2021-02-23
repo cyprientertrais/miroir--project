@@ -3,6 +3,11 @@ import RPi.GPIO as GPIO
 from time import sleep
 
 def execute():
+    
+    pinEcran = 19
+
+    # On envoie le signal à l'écran et son état initial est haut
+    GPIO.setup(pinEcran, GPIO.OUT, initial=GPIO.HIGH)
     # On appui sur le bouton
     GPIO.output(pinEcran, GPIO.LOW)
     sleep(0.5)
