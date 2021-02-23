@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Post, Res } from '@nestjs/common'
-import { AdminService } from '../services/admin.service'
+import { AdminService } from './admin.service'
 import SSH2Promise = require('ssh2-promise');
 import { ApiTags } from '@nestjs/swagger'
 
@@ -32,8 +32,12 @@ export class AdminController {
 
   @Post('/checkAdminPassword')
   async checkAdminPassword(@Body() body, @Res() res) {
-    const value = await this.adminService.checkAdminPassword(body);
-    return res.status(value.status).send(value.message)
+    const isValid = await this.adminService.checkAdminPassword(body);
+   
+    if(!isValid){
+      return res.sendStatus(403);
+    }
+    return res.sendStatus(200);
   }
 
   @Get('/orientation')
