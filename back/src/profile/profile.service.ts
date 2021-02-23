@@ -16,8 +16,7 @@ export class ProfileService {
   ) {}
 
   async getAll() {
-    const e = await this.profileRepository.find()
-    return e
+    return await this.profileRepository.find()
   }
 
   async getOne(name: string): Promise<Profile> {
@@ -35,11 +34,18 @@ export class ProfileService {
     return this.profileRepository.save(new Profile(profile)).catch((err) => {
       throw new BadRequestException(err)
     })
-  }
+  } 
 
   async getAllDashboardsFromProfileService(name: string) {
-    const e = await this.getOne(name)
-    return e.dashboards
+    return await this.profileRepository.findOne(
+      {
+        select:["dashboards"],
+        where: 
+        {
+          pseudo: name
+        }
+      }
+    )
   }
 
   async createDashboardFromProfileService(
@@ -59,7 +65,7 @@ export class ProfileService {
       profile.dashboards.push(newDashboard)
       await this.profileRepository.save(profile)
     }
-  }
+  } 
 
   async delete(name: string) {
     if (name === 'Invité') {
@@ -76,23 +82,18 @@ export class ProfileService {
     }
   }
 
-  async update(name: string, newName: string) {
-    newName = newName.charAt(0).toUpperCase() + newName.slice(1)
-    const newvalues = { $set: { pseudo: newName } }
-    const res = await this.profileRepository.updateOne(
-      { pseudo: name },
-      newvalues,
-    )
-    if (res.result.ok === 1 && res.result.n === 1) {
-      return {
-        status: 204,
-        message: 'User ' + name + ' was successfully updated into ' + newName,
-      }
+  async update(name: string, profile: Profile) {
+    profile.pseudo = profile.pseudo.charAt(0).toUpperCase() + profile.pseudo.slice(1)
+    const actualProfile = await this.getOne(name);
+    if(!actualProfile){
+      return false;
     }
-    return {
-      status: 404,
-      message: 'An error occured when trying to update ' + name,
-    }
+    
+    this.profileRepository.update(actualProfile, profile).catch((err) => {
+      return false;
+    });
+
+    return true;
   }
 
   doesDashboardNameAlreadyExists(

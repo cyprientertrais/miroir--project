@@ -3,10 +3,11 @@ import axios from "axios";
 export default class Resources {
   axios = require("axios");
   hostname = window.location.hostname;
-  API(){
-    return process.env.NODE_ENV==="production" ? "https://back-miroir.herokuapp.com" :"http://localhost:5000";
+  API() {
+    return process.env.NODE_ENV === "production"
+      ? "https://back-miroir.herokuapp.com"
+      : "http://localhost:5000";
   }
-  
 
   async getAllUserProfile() {
     const url = `${this.API()}/profiles/`;
@@ -24,7 +25,7 @@ export default class Resources {
   async changeProfileName(oldName, newName) {
     const url = `${this.API()}/profiles/${oldName}`;
     return axios
-      .patch(url, { name: newName })
+      .patch(url, { pseudo: newName })
       .then(response => response.data)
       .catch(error => error);
   }

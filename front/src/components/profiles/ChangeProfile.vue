@@ -13,7 +13,7 @@
         maxlength="20"
         clearable
       ></v-text-field>
-      <div class="buttons">
+      <div class="buttons font-text">
         <v-btn
           color="accent"
           elevation="2"
@@ -108,7 +108,7 @@ export default {
         this.errorMessage =
           "Ce nom de profil est déjà utilisé. Veuillez entrer un autre nom.";
       } else {
-        this.$emit("profileChanged");
+        this.$emit("profileChanged", true);
         this.isProfileNameInvalid = false;
       }
     }
