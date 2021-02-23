@@ -32,16 +32,27 @@ export class AdminController {
 
   @Post('/checkAdminPassword')
   async checkAdminPassword(@Body() body, @Res() res) {
-    const isValid = this.adminService.checkAdminPassword(body);
+    const isValid = await this.adminService.checkAdminPassword(body);
+   
     if(!isValid){
-      return res.status(403);
+      return res.sendStatus(403);
     }
-    return res.status(200);
+    return res.sendStatus(200);
   }
 
   @Get('/orientation')
   async getOrientation() {
     return this.adminService.getOrientation()
+  }
+
+  @Get('/location')
+  async getLocation() {
+    return this.adminService.getLocation();
+  }
+
+  @Post('/location')
+  async postLocation(@Body() body) {
+    return this.adminService.postLocation(body);
   }
 
   @Get('/widgets')
