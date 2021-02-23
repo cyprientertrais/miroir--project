@@ -17,12 +17,15 @@ export class AdminService {
       }
     )
   }
+
   async getLocation() {
-    const e = await this.adminRepository.find();
-    return e.map((element) => {
-      return { location: element.location };
-    });
+    return await this.adminRepository.findOne(
+      {
+        select: ["location"]
+      }
+    )
   }
+
   async postLocation(body) {
     const newLocation = {
       $set: {

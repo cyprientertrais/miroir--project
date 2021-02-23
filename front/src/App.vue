@@ -43,7 +43,7 @@ export default {
       err => {
         console.error(err);
         widgetResources.getLocation().then(res => {
-          this.setLocation(res.data[0].location);
+          this.setLocation(res.data.location);
         });
       }
     );
