@@ -2,6 +2,7 @@
   
 import RPi.GPIO as GPIO  
 from time import sleep
+import Pin
 
 # Désactive les warnings
 GPIO.setwarnings(False)
@@ -24,15 +25,8 @@ while True :
     try:
         # On attent un front montant
         GPIO.wait_for_edge(pinCapteur, GPIO.RISING)
-        # On appui sur le bouton
-        GPIO.output(pinEcran, GPIO.LOW)
-        sleep(0.5)
-        # On relache le bouton
-        GPIO.output(pinEcran, GPIO.HIGH)
-        # On attend pour être certain que l'utilisateur ne lance pas plusieurs
-        # instances lorsqu'il passe pas sa main plusieurs fois.
-        sleep(2)
-
+        Pin.execute()
+ 
     # En cas d'arrêt par Ctrl+C
     except KeyboardInterrupt:
         # On réinitialise les pins
