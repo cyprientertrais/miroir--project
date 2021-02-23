@@ -112,7 +112,7 @@ export default {
     },
     getOrientation() {
       widgetService.getOrientation().then(res => {
-        this.$store.dispatch("setOrientation", res.data[0].orientation);
+        this.$store.dispatch("setOrientation", res.data.orientation);
       });
     }
   }

@@ -10,8 +10,8 @@ import {
   Post,
   Res,
 } from '@nestjs/common'
-import { Profile } from '../entities/profile.entity'
-import { ProfileService } from '../services/profile.service'
+import { Profile } from './profile.entity'
+import { ProfileService } from './profile.service'
 import { ApiOperation, ApiTags } from '@nestjs/swagger'
 
 @ApiTags('profiles')
