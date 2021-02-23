@@ -52,11 +52,14 @@ export class ProfileController {
   @Patch('/:name')
   async updateProfile(
     @Param('name') name: string,
-    @Body('name') newName: string,
+    @Body() profile: Profile,
     @Res() res,
   ) {
-    const action = await this.profileService.update(name, newName)
-    return res.status(action.status).json(action)
+    const isUpdated = await this.profileService.update(name, profile);
+    if(!isUpdated){
+      return res.sendStatus(500)
+    }
+    return res.sendStatus(200)
   }
 
   @ApiOperation({
