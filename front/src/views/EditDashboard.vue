@@ -3,9 +3,18 @@
     <v-container class="containerContent">
       <v-row
         justify="center"
-        class="primary-color text-lg-h1 text-md-h1 text-h2 text-center pt-8"
+        class="primary-color text-center pt-8"
       >
-        {{ titleValue }}
+        <v-col class="col-2">
+          <div class="arrowBack">
+            <v-icon color="white" @click="redirectSettings()" large>mdi-arrow-left-thick</v-icon>
+          </div>
+        </v-col>
+        <v-col class="col-8 text-lg-h1 text-md-h1 text-h2 font-title">
+          {{ titleValue }}
+        </v-col>
+        <v-col class="col-2">
+        </v-col>
       </v-row>
       <v-row justify="center">
         <v-col v-for="(widget,index) in userWidgets" :key="index" class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 mt-sm-6 mt-md-6 mt-lg-6 mt-xl-6">
@@ -59,17 +68,13 @@ export default {
   },
   methods: {
     getWidgets() {
-      ResourcesServiceWidget.getAllWidgets().then(() => {
-        this.listWidgets = [
-            "Time",
-            "Weather"
-        ];
+      ResourcesServiceWidget.getAllWidgets().then((res) => {
+        this.listWidgets = res.data.widgets;
       });
     },
     getUserWidgets() {
       ResourcesServiceUser.getUserProfile(this.$route.params.username).then((res) => {
-        this.user = JSON.parse(JSON.stringify(res.data));
-        console.log(this.user);
+        this.user = res.data;
         this.userWidgets = ["","","",""];
         this.user.dashboards[0].widgets.forEach(widget => {
           this.userWidgets[widget.position - 1] = widget.name;
@@ -85,8 +90,11 @@ export default {
             position: i+1
           })
         }
-      }this.user.dashboards[0].widgets = userWidgetsUpdated;
-      //ResourcesServiceUser.u
+      }
+      this.user.dashboards[0].widgets = userWidgetsUpdated;
+      ResourcesServiceUser.updateProfile(this.user.pseudo, {pseudo: this.user.pseudo, dashboards: this.user.dashboards}).then(() => {
+        this.getUserWidgets();
+      });
     },
     removeWidget(index){
       this.userWidgets[index] = "";
@@ -95,6 +103,9 @@ export default {
     addWidget(index, name){
       this.userWidgets[index] = name;
       this.updateUserWidgets();
+    },
+    redirectSettings(){
+      window.location="/Settings";
     }
   }
 };
@@ -136,6 +147,11 @@ export default {
   justify-content: center;
 }
 
-@media screen and (max-width: 800px) {
+.arrowBack {
+  border: 4px solid white;
+  padding: 5px;
+  border-radius: 50px;
+  margin-left:1em;
+  width: fit-content;
 }
 </style>

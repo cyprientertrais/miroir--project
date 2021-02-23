@@ -40,7 +40,7 @@ export default class WidgetResources {
   }
 
     getAllWidgets() {
-        const url = `http://${this.hostname}:3000/admin/widgets`;
+        const url = `${this.API()}/admin/widgets`;
         return axios.get(url);
     }
 
