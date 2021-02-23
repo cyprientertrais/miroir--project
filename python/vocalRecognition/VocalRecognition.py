@@ -21,11 +21,11 @@ def SpeakText(command):
 def createJson(info, actionType: ActionType):
 
     if actionType == ActionType.ChangeProfile:
-        return json.dumps({'action': 'changeProfile','name': (info)})
+        return json.dumps({'action': 'changeProfile','info': (info)})
     elif actionType == ActionType.ChangeRadio:
-        return json.dumps({'action': 'changeRadio','name': (info)})
+        return json.dumps({'action': 'changeRadio','info': (info)})
     elif actionType == ActionType.ChangeNews:
-        return json.dumps({'action': 'changeNews','name': (info)})
+        return json.dumps({'action': 'changeNews','info': (info)})
     else:
         return json.dumps({'error': ('error occured')})
 
