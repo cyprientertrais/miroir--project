@@ -1,9 +1,9 @@
-# Python program to translate
-# speech to text and text to speech
 import speech_recognition as sr
 import pyttsx3
 import json
-from ActionWS import ActionWS
+import re
+from ActionType import ActionType
+import websockets
 
 # Initialize the recognizer
 r = sr.Recognizer()
@@ -18,79 +18,111 @@ def SpeakText(command):
     engine.runAndWait()
 
 
-def createJson(info, actionType: ActionWS):
+def createJson(info, actionType: ActionType):
 
-    print(actionType)
-    if actionType == ActionWS.ChangeProfile:
+    if actionType == ActionType.ChangeProfile:
         return json.dumps({'action': ('changeProfile'),'name': (info)})
-    elif actionType == ActionWS.ChangeRadio:
+    elif actionType == ActionType.ChangeRadio:
         return json.dumps({'action': ('changeRadio'),'name': (info)})
-    elif actionType == ActionWS.ChangeNews:
+    elif actionType == ActionType.ChangeNews:
         return json.dumps({'action': ('changeNews'),'name': (info)})
     else:
         return json.dumps({'error': ('error occured')})
 
     #GO BASH miseEnVeille = "{\"action\": changeRadio, \"radio\": {}}"
 
-def vocalTextTreatment(vocalText):
-    array = vocalText.split(" ")
-    if array[0] == "miroir":
-        if vocalText.find("affiche le profil de") != -1 and len(array) == 6 :
-            profileName = array[5]
+def returnVocalInfo(vocalText, actionMirror):
+    res = ""
+    if actionMirror == ActionType.ChangeProfile:
+        #PHRASES TYPES -> Miroir affiche le profile de Toto, Miroir met le profil de Toto
+        x = re.search("profil de [a-zA-Z]*", vocalText)
+        if x:
+            res = x.group(0).split()[2]
+    elif actionMirror == ActionType.ChangeRadio:
+        #PHRASES TYPES -> Miroir met la radio Fun Radio, Miroir met moi la radio RTL2
+        x = re.search("radio [a-zA-Z0-9]*.[a-zA-Z0-9]*", vocalText)
+        if x:
+            if x.group(0).find("rtl2"):
+                res = "rtl2"
+            else:
+                res = x.group(0).split()[1] + x.group(0).split()[2]
+    elif actionMirror == ActionType.MiseEnVeille:
+        #PHRASES TYPES -> Miroir met toi en veille, Miroir mise en veille
+        x = re.search("en veille", vocalText)
+        if x:
+            res = "VEILLE"
+        #TODO
+    else:
+        print("Action non traité")
+    print(res)
+    return res
+
+def vocalTextTreatment(vocalText) -> json:
+
+    profileName = returnVocalInfo(vocalText,ActionType.ChangeProfile)
+    radioName = returnVocalInfo(vocalText,ActionType.ChangeRadio)
+    enVeille = returnVocalInfo(vocalText,ActionType.MiseEnVeille)
+
+    if re.search("^miroir", vocalText):
+        json = str()
+        if profileName != "":
             print("OK PROFILE = {}".format(profileName))
-            print(createJson(profileName, ActionWS.ChangeProfile))
-        elif vocalText.find("mets la radio") != -1 and (len(array) == 5 or len(array) == 6):
-            radioName = vocalText[20:]
+            # print(createJson(profileName, ActionType.ChangeProfile))
+            json = createJson(profileName, ActionType.ChangeProfile)
+            return json
+        elif radioName != "":
             print("OK RADIO = {}".format(radioName))
-            print(createJson(radioName, ActionWS.ChangeRadio))
-            # CHANGE NEWS TODO
-        elif vocalText.find("mise en veille") or vocalText.find("mets-toi en veille") != -1 and (len(array) == 4):
+            json = createJson(radioName, ActionType.ChangeRadio)
+            return json
+        elif enVeille != "":
             print("OK MISE EN VEILLE")
+            # CHANGE NEWS TODO
         else:
-            print("MIROIR BUT NOPE")
+            print("MIROIR EN DEBUT MAIS PAS DE CAS")
     else:
         print("NOPE")
 
-# Loop infinitely for user to
-# speak
 
-while(1):
+async def launchListening(websocket):
+    # Loop infinitely for user to
+    # speak
+    while 1:
 
-    # Exception handling to handle
-    # exceptions at the runtime
-    try:
+        # Exception handling to handle
+        # exceptions at the runtime
+        try:
 
-        # use the microphone as source for input.
-        with sr.Microphone() as source2:
+            # use the microphone as source for input.
+            with sr.Microphone() as source2:
 
-            # wait for a second to let the recognizer
-            # adjust the energy threshold based on
-            # the surrounding noise level
-            print("Surrounding noise level....")
-            r.adjust_for_ambient_noise(source2, duration=0.2)
+                # wait for a second to let the recognizer
+                # adjust the energy threshold based on
+                # the surrounding noise level
+                print("Surrounding noise level....")
+                r.adjust_for_ambient_noise(source2, duration=0.2)
 
-            #listens for the user's input
-            print("Listening....")
-            audio2 = r.listen(source2)
+                #listens for the user's input
+                print("Listening....")
+                audio2 = r.listen(source2)
 
+                print("Treating info....")
+                # Using ggogle to recognize audio
+                myText = r.recognize_google(audio2,language="fr-FR")
+                myText = myText.lower()
 
-            print("Treating info....")
-            # Using ggogle to recognize audio
-            myText = r.recognize_google(audio2,language="fr-FR")
-            myText = myText.lower()
+                print("As tu dis : "+myText + " ?")
+                #SpeakText(myText)
+                json = vocalTextTreatment(myText)
+                print(json)
+                await websocket.send(json)
+                print("Sent")
 
-            print("As tu dis : "+myText + " ?")
-            vocalTextTreatment(myText)
-            SpeakText(myText)
+        except sr.RequestError as e:
+            print("Could not request results; {0}".format(e))
 
-    except sr.RequestError as e:
-        print("Could not request results; {0}".format(e))
+        except sr.UnknownValueError:
+            print("unknown error occured")
 
-    except sr.UnknownValueError:
-        print("unknown error occured")
+if __name__ == "__main__":
 
-
-createJson("Toto","changeProfile")
-vocalTextTreatment("miroir affiche le profil de Toto")
-vocalTextTreatment("miroir mets la radio Virgin radio")
-str = "Fun Radio , RTL2 Europe 1 France Inter Virgin Radio"
+    launchListening()

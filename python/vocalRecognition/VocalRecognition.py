@@ -1,5 +1,4 @@
 # from time import sleep
-from Websocket import Websocket
 import json
 from Recognition import Recognition
 
@@ -7,6 +6,11 @@ from Recognition import Recognition
 class VocalRecognition():
     waker = ["aulnat", "wina", "winner", "lina", "inna", "linda", "diana", "oyonnax", "anna", "amina", "bonjour",
              "miroir"]
+
+    # def __init__(self, pWebsocket, pPath):
+    #     self.websocket = pWebsocket
+    #     self.path = pPath
+
 
     def main(self):
         """
@@ -33,9 +37,11 @@ class VocalRecognition():
             status=status
         )
 
-        Websocket(port=8765).send(data=json.dumps(data))
+        print(data)
+        # await self.send(data)
+        return json.dumps(data)
 
-    def itemInCommon(self, list1: list, list2: list) -> str:
+    def __itemInCommon(self, list1 : list, list2 : list) -> str:
         """
         Compare two strings and return common words
         """
@@ -82,12 +88,17 @@ class VocalRecognition():
                 continue
             except ConnectionError:
                 continue
-
-            value = self.itemInCommon(text, self.waker)
+            
+            value = self.__itemInCommon(text, self.waker)
             if value != None:
                 print("Fin de la veille")
                 return True
 
-if __name__ == "__main__":
-    vr = VocalRecognition()
-    vr.main()
+    # async def send(self, data):
+    #     await self.websocket.send(data)
+
+
+# if __name__=="__main__":
+
+#     vr = VocalRecognition()
+#     vr.main()

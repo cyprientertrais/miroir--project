@@ -1,22 +1,21 @@
+from VocalRecognition import VocalRecognition
+import _thread as thread
 import asyncio
 import websockets
+import json
+from time import sleep
 
-class Websocket():
+from Test import *
 
-    def __init__(self, port):
+async def execute(websocket, path):
 
-        self.port = str(port)
-        self.uri = "ws://localhost:"+self.port
-        print("Listening on" + self.uri)
+    await launchListening(websocket)
+    # data = json.dumps({'action': ('changeNews'),'name': ("info")})
+    # await websocket.send(data)
+    # await jsonTest(websocket)
 
-    def send(self, data):
-        """
-        Send data through websockets
-        """
 
-        asyncio.get_event_loop().run_until_complete(self.sendWS(data))
+start_server = websockets.serve(execute, "localhost", 8765)
 
-    async def sendWS(self, data):
-        async with websockets.connect(self.uri) as websocket:
-
-            await websocket.send(data)
+asyncio.get_event_loop().run_until_complete(start_server)
+asyncio.get_event_loop().run_forever()
