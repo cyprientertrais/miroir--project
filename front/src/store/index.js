@@ -50,12 +50,12 @@ export default new Vuex.Store({
     },
     // mutations for reconnect methods
     SOCKET_RECONNECT(state, count) {
-      
+
       console.log('onReconnect')
       console.info(state, count);
     },
     SOCKET_RECONNECT_ERROR(state) {
-      
+
       console.log('onReconnectError')
       state.socket.reconnectError = true;
     }
@@ -65,7 +65,16 @@ export default new Vuex.Store({
       Vue.prototype.$socket.send(message)
     },
     changeProfile: function(context, message) {
-      Vue.prototype.$socket.send(message)
+      console.log("changeProfile detected : " + JSON.stringify(message))
+      Vue.prototype.$socket.send("changeProfile action well received")
+    },
+    changeRadio: function(context, message) {
+      console.log("changeRadio detected :" + JSON.stringify(message))
+      Vue.prototype.$socket.send("changeRadio action well received")
+    },
+    changeNews: function(context, message) {
+      console.log("changeNews detected :" + JSON.stringify(message))
+      Vue.prototype.$socket.send("changeRadio action well received")
     },
     setLocation(context,location) {
       context.commit('setLocation', location);

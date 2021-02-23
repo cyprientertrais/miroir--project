@@ -1,104 +1,118 @@
-# from time import sleep
 import json
-from Recognition import Recognition
+import re
+import pyttsx3
+import speech_recognition as sr
+from ActionType import ActionType
+from os import system
+
+# Initialize the recognizer
+r = sr.Recognizer()
+
+# Function to convert text to
+# speech
+def SpeakText(command):
+
+    # Initialize the engine
+    engine = pyttsx3.init()
+    engine.say(command)
+    engine.runAndWait()
 
 
-class VocalRecognition():
-    waker = ["aulnat", "wina", "winner", "lina", "inna", "linda", "diana", "oyonnax", "anna", "amina", "bonjour",
-             "miroir"]
+def createJson(info, actionType: ActionType):
 
-    # def __init__(self, pWebsocket, pPath):
-    #     self.websocket = pWebsocket
-    #     self.path = pPath
+    if actionType == ActionType.ChangeProfile:
+        return json.dumps({'action': 'changeProfile','name': (info)})
+    elif actionType == ActionType.ChangeRadio:
+        return json.dumps({'action': 'changeRadio','name': (info)})
+    elif actionType == ActionType.ChangeNews:
+        return json.dumps({'action': 'changeNews','name': (info)})
+    else:
+        return json.dumps({'error': ('error occured')})
 
-
-    def main(self):
-        """
-        Main function that wait for waker word
-        """
-
-        self.waiting()
-
-        words = str()
-        status = int()
-
-        try:
-            words = Recognition().listen()
-            status = 1
-        except ValueError:
-            words = "Noise Issu"
-            status = 2
-        except ConnectionError:
-            words = "Internet Connection Issu"
-            status = 3
-
-        data = dict(
-            text=words,
-            status=status
-        )
-
-        print(data)
-        # await self.send(data)
-        return json.dumps(data)
-
-    def __itemInCommon(self, list1 : list, list2 : list) -> str:
-        """
-        Compare two strings and return common words
-        """
-
-        if type(list1) == list and type(list2) == list:
-            if len(list1) < len(list2):
-                shorter = list1
-                longuer = list2
+def returnVocalInfo(vocalText, actionMirror):
+    res = ""
+    if actionMirror == ActionType.ChangeProfile:
+        #PHRASES TYPES -> Miroir affiche le profile de Toto, Miroir met le profil de Toto
+        x = re.search("profil de [a-zA-Z]*", vocalText)
+        if x:
+            res = x.group(0).split()[2]
+    elif actionMirror == ActionType.ChangeRadio:
+        #PHRASES TYPES -> Miroir met la radio Fun Radio, Miroir met moi la radio RTL2
+        x = re.search("radio [a-zA-Z0-9]*.[a-zA-Z0-9]*", vocalText)
+        if x:
+            if x.group(0).find("rtl2"):
+                res = "rtl2"
             else:
-                shorter = list2
-                longuer = list1
+                res = x.group(0).split()[1] + x.group(0).split()[2]
+    elif actionMirror == ActionType.MiseEnVeille:
+        #PHRASES TYPES -> Miroir met toi en veille, Miroir mise en veille
+        x = re.search("en veille", vocalText)
+        if x:
+            res = "VEILLE"
+        #TODO NEWS
+    else:
+        print("Action non traité")
+    return res
 
-            for elt in shorter:
-                if elt in longuer:
-                    return elt
+def vocalTextTreatment(vocalText) -> json:
 
-            return None
+    json = ""
+    profileName = returnVocalInfo(vocalText,ActionType.ChangeProfile)
+    radioName = returnVocalInfo(vocalText,ActionType.ChangeRadio)
+    enVeille = returnVocalInfo(vocalText,ActionType.MiseEnVeille)
 
+    if re.search("^miroir", vocalText):
+        if profileName != "":
+            json = createJson(profileName, ActionType.ChangeProfile)
+            return json
+        elif radioName != "":
+            json = createJson(radioName, ActionType.ChangeRadio)
+            return json
+        elif enVeille != "":
+            print("** Lancement du script de Démarrage/Extinction du miroir **")
+            system("python3 ../Interrupteur/screen.py")
+        # CHANGE NEWS TODO
         else:
-            if type(list1) == str:
-                if list1 in list2:
-                    return list1
-                else:
-                    return None
-
-            else:
-                if list2 in list1:
-                    return list2
-                else:
-                    return None
-
-        return None
-
-    def waiting(self):
-        """
-        waiting function that waiting waker word
-        """
-
-        while (True):
-            print("Attente de sortie de veille")
-            try:
-                text = Recognition().listen()
-            except ValueError:
-                continue
-            except ConnectionError:
-                continue
-            
-            value = self.__itemInCommon(text, self.waker)
-            if value != None:
-                print("Fin de la veille")
-                return True
-
-    # async def send(self, data):
-    #     await self.websocket.send(data)
+            print("MIROIR EN DEBUT MAIS PAS DE CAS")
+    else:
+        print("NOPE")
+    return json
 
 
-# if __name__=="__main__":
+async def launchVocalRecognition():
+    # Loop infinitely for user to
+    # speak
+    #while 1:
 
-#     vr = VocalRecognition()
-#     vr.main()
+        # Exception handling to handle
+        # exceptions at the runtime
+        try:
+
+            # use the microphone as source for input.
+            with sr.Microphone() as source2:
+
+                # wait for a second to let the recognizer
+                # adjust the energy threshold based on
+                # the surrounding noise level
+                print("Surrounding noise level....")
+                r.adjust_for_ambient_noise(source2, duration=0.2)
+
+                #listens for the user's input
+                print("Listening....")
+                audio2 = r.listen(source2)
+
+                print("Treating info....")
+                # Using google to recognize audio
+                myText = r.recognize_google(audio2,language="fr-FR")
+                myText = myText.lower()
+
+                print("Detected voice : "+myText)
+                #SpeakText(myText)
+                return vocalTextTreatment(myText)
+
+        except sr.RequestError as e:
+            print("Could not request results; {0}".format(e))
+
+        except sr.UnknownValueError:
+            print("Unknown error occured")
+
