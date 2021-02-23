@@ -7,7 +7,6 @@
         </div>
       </v-row>
         <v-list rounded class="liste" height="70vh">
-         <!-- <v-virtual-scroll :items="item" height="80%" item-height="80%">-->
             <v-list-item-group
               v-model="selectItem"
               justify="center"
@@ -20,12 +19,8 @@
                     class="titre"
                   ></v-list-item-title>
                 </v-list-item-content>
-                <!--                <v-list-item-icon>
-                  <v-icon v-text="item.icon"></v-icon>
-                </v-list-item-icon> -->
               </v-list-item>
             </v-list-item-group>
-        <!--  </v-virtual-scroll>-->
         </v-list>
     </v-sheet>
 
@@ -61,7 +56,7 @@ export default {
     return {
       listWifi: null,
       selectItem: null,
-      item: ["toto", "tata", "tut","aymerci","pupute","connasse","biatch","pikachu","wesh","zobi", "lamouche","tete","tyty", "gogol","ertijp","drtijo","zerjizp","drtdljhl" ],
+      item: [],
       popUp: false,
     };
   },
@@ -77,10 +72,6 @@ export default {
       ResourcesService.connectToWifi(name, pass);
     },
   },
-
-  /*created() {
-    this.fetchWifi();
-  },*/
 };
 </script>
 
