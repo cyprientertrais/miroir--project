@@ -106,12 +106,11 @@ export default {
     };
   },
   methods: {
-    profileEdited(causedByProfileDeleted) {
+    profileEdited(needRefresh) {
       this.choosedProfile = null;
       this.editingChoosedProfile = false;
-      if (causedByProfileDeleted) {
-        this.getProfiles(true);
-      }
+      console.log(needRefresh);
+      this.getProfiles(needRefresh);
     },
     editProfile(profile) {
       this.inviteProfil = false;
