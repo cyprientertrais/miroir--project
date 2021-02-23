@@ -4,8 +4,10 @@ export default class WidgetResources {
   axios = require("axios");
   hostname = window.location.hostname;
   API_KEY = "ee95de4f37a7e21b3714e529ea39a2fb";
-  API(){
-    return process.env.NODE_ENV==="production" ? "https://back-miroir.herokuapp.com" :"http://localhost:5000";
+  API() {
+    return process.env.NODE_ENV === "production"
+      ? "https://back-miroir.herokuapp.com"
+      : "http://localhost:5000";
   }
   getPrintedWidgets(params) {
     const url = `${this.API()}`;
