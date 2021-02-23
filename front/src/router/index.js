@@ -33,7 +33,11 @@ const routes = [
     name: "Wifi",
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/WifiChoice.vue")
-  }
+  },
+  {
+    path: "/*",
+    component: () => import("../views/Settings.vue")
+  },
 ];
 
 const router = new VueRouter({

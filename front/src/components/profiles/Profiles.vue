@@ -2,7 +2,9 @@
   <v-container fill-height fluid class="profilesListContainer">
     <v-row justify="center" id="WhoIsThis" class="d-flex align-start">
       <div class="text-lg-h1 text-md-h1 text-sm-h2 text-h3">
-        {{ titleValue }}
+        <div class="font-title">
+          {{ titleValue }}
+        </div>
       </div>
     </v-row>
     <v-row
@@ -44,14 +46,16 @@
       </v-col>
     </v-row>
     <v-row justify="center" id="btnEditProfiles" class="d-flex align-end">
-      <v-btn
-        @click="toogleEdit()"
-        href="#"
-        class="elevation-5"
-        color="accent"
-        x-large
-        >{{ btnValue }}</v-btn
-      >
+      <div class="font-text">
+        <v-btn
+          @click="toogleEdit()"
+          href="#"
+          class="elevation-5"
+          color="accent"
+          x-large
+          >{{ btnValue }}</v-btn
+        >
+      </div>
     </v-row>
 
     <v-row justify="center">
@@ -66,7 +70,9 @@
     </v-row>
 
     <v-dialog v-model="addProfile" width="500px">
-      <AddProfile @profileCreated="getProfiles" />
+      <div class="font-text">
+        <AddProfile @profileCreated="getProfiles" />
+      </div>
     </v-dialog>
     <v-dialog v-model="editingChoosedProfile" width="500px">
       <ChangeProfile
@@ -102,7 +108,7 @@ export default {
       addProfile: false,
       choosedProfile: undefined,
       editingChoosedProfile: false,
-      inviteProfil: false,
+      inviteProfil: false
     };
   },
   methods: {

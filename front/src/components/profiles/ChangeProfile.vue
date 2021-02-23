@@ -13,7 +13,7 @@
         maxlength="20"
         clearable
       ></v-text-field>
-      <div class="buttons">
+      <div class="buttons font-text">
         <v-btn
           color="accent"
           elevation="2"
