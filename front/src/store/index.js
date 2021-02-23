@@ -11,8 +11,13 @@ export default new Vuex.Store({
     location: undefined,
     userProfile: undefined,
     orientation: undefined,
-    wifiList: undefined
-  },
+    wifiList: undefined,
+    socket: {
+      isConnected: false,
+      message: '',
+      reconnectError: false,
+      }
+    },
   mutations: {
     setLocation(state, location) {
       state.location = location;
@@ -57,25 +62,40 @@ export default new Vuex.Store({
   },
   actions: {
     changeProfile: async function(context, message) {
-      let isNotExist = true
+      let isExist = true
       const jsonIntoString =  JSON.stringify(message)
       console.log("changeProfile detected : " + jsonIntoString)
-
-      const obj = JSON.parse(jsonIntoString);
+      const jsonAnswer = JSON.parse(jsonIntoString);
       //TODO CHECK USER EXIST
-      if (!isNotExist) {
-        //Vue.prototype.$socket.send("Le profile" + obj.info + "n'existe pas.")
+      if (isExist) {
+        sendAnswer("profileAnswer", jsonAnswer.info)
       } else {
-        Vue.prototype.$socket.send("Bonjour " + obj.info + " comment allez-vous ? ")
+        sendAnswer("profileUnknown", jsonAnswer.info)
       }
     },
     changeRadio: function(context, message) {
+      let isExist = false
+      const jsonIntoString =  JSON.stringify(message)
       console.log("changeRadio detected :" + JSON.stringify(message))
-      Vue.prototype.$socket.send("changeRadio action well received")
+      const jsonAnswer = JSON.parse(jsonIntoString);
+      //TODO CHECK RADIO EXIST
+      if (isExist) {
+        sendAnswer("radioAnswer", jsonAnswer.info)
+      } else {
+        sendAnswer("radioUnknown", jsonAnswer.info)
+      }
     },
     changeNews: function(context, message) {
+      let isExist = false
+      const jsonIntoString =  JSON.stringify(message)
       console.log("changeNews detected :" + JSON.stringify(message))
-      Vue.prototype.$socket.send("changeNews action well received")
+      const jsonAnswer = JSON.parse(jsonIntoString);
+      //TODO CHECK RADIO EXIST
+      if (isExist) {
+        sendAnswer("newsAnswer", jsonAnswer.info)
+      } else {
+        sendAnswer("categorieUnkown", jsonAnswer.info)
+      }
     },
     setLocation(context,location) {
       context.commit('setLocation', location);
@@ -102,3 +122,7 @@ export default new Vuex.Store({
   },
   modules: {}
 });
+
+function sendAnswer(answerType,info) {
+  Vue.prototype.$socket.send('{"answerType": "' + answerType + '", "info": "' + info + '"}')
+}
