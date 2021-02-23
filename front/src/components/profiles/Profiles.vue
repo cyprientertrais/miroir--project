@@ -109,7 +109,6 @@ export default {
     profileEdited(needRefresh) {
       this.choosedProfile = null;
       this.editingChoosedProfile = false;
-      console.log(needRefresh);
       this.getProfiles(needRefresh);
     },
     editProfile(profile) {
