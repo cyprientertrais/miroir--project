@@ -108,7 +108,7 @@ export default {
         this.errorMessage =
           "Ce nom de profil est déjà utilisé. Veuillez entrer un autre nom.";
       } else {
-        this.$emit("profileChanged");
+        this.$emit("profileChanged", true);
         this.isProfileNameInvalid = false;
       }
     }
