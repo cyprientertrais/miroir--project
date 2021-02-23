@@ -25,7 +25,7 @@ export default class Resources {
   async changeProfileName(oldName, newName) {
     const url = `${this.API()}/profiles/${oldName}`;
     return axios
-      .patch(url, { name: newName })
+      .patch(url, { pseudo: newName })
       .then(response => response.data)
       .catch(error => error);
   }
