@@ -24,8 +24,9 @@
           elevation="2"
           class="butonPassword font-text"
           color="accent"
-          >Connect</v-btn
         >
+          Connect
+        </v-btn>
       </div>
     </v-sheet>
   </v-sheet>
@@ -33,15 +34,15 @@
 
 <script>
 import { sha256 } from "js-sha256";
-import Resources from "@/service/resources/resources";
-const ResourcesService = new Resources();
+import ConnectionResources from "@/service/resources/ConnectionResources";
+const connectionResources = new ConnectionResources();
 export default {
   name: "Connection",
   data() {
     return {
       password: "",
       isPasswordWrong: false,
-      wrongPasswordMessage: "",
+      wrongPasswordMessage: ""
     };
   },
   computed: {},
@@ -50,7 +51,7 @@ export default {
       //hash password
       const hashedPassword = sha256(this.password);
       //askbackif the password is right, recieve 200 or 403
-      const responseCheckPassword = await ResourcesService.checkAdminPassword(
+      const responseCheckPassword = await connectionResources.checkAdminPassword(
         hashedPassword
       );
       //check if call responds 200 or 403
@@ -73,9 +74,9 @@ export default {
         this.isPasswordWrong = false;
         this.wrongPasswordMessage = "";
       }
-    },
+    }
   },
-  mounted: function() {},
+  mounted: function() {}
 };
 </script>
 <style scoped>

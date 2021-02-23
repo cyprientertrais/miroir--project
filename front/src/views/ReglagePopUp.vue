@@ -6,8 +6,8 @@
         <v-col>
           <v-sheet color="primary" class="listButtons font-text">
             <v-row justify="center">
-              <v-btn 
-              v-if="this.$router.history.current.path !== '/settings'"
+              <v-btn
+                v-if="this.$router.history.current.path !== '/settings'"
                 v-on:click="onClickProfils"
                 elevation="2"
                 class="profils ma-2 white--text"
@@ -66,15 +66,15 @@ export default {
       this.$router.push("/settings");
     },
     onClickWifi() {
-      this.$router.push("/wifi")
+      this.$router.push("/wifi");
     },
     onClickUsine() {
       console.log("oncClickUsine");
     },
     onClickRetour() {
       this.$emit("closeDialog");
-    },
-  },
+    }
+  }
 };
 </script>
 <style scoped></style>

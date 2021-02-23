@@ -6,17 +6,22 @@ LAP5US team members are pleased to welcome you :blush:
 
 First you have to install docker and docker-compose
     - Docker installation: https://docs.docker.com/get-docker/
-    - Docker compose installation: https://docs.docker.com/compose/install/
-
+    
 # Run the project
 
- - In the project root run two commands
+ - In the project run commands
 
-     - `docker-compose build`
-     - `docker-compose up`
+     - `docker build -t front -f front/DockerFile`
+     - `docker run -d -p 8080:8080 front`
+
+     or use npm run serve in front directory for local devs
+     - For the BDD you can use our production database 
+     by setting env var MONGO="mongodb+srv://******:********@project.****.****.****"
+     ( Contact admin for details)
 
 
-**Back :** http://localhost:3000
+
+**Back :** http://localhost:5000 or https://back-miroir.herokuapp.com/ if in docker
 **Front :** http://localhost:8080 
 
 ## Database
@@ -35,7 +40,7 @@ Get db id using
 
 If you want to import into the alone running mongodb, do the following:
 - get the container id with `docker ps`
-- `docker exec -it <id> bash`
+- `docker exec -it <id_mongo> bash`
 - `mongorestore /var/dump` inside your container's shell
 
 ### :exclamation:The database can be run without the docker-compose

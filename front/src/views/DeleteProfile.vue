@@ -1,56 +1,69 @@
 <template>
-  <v-sheet color="primary" class="mainDiv">
-    <div align="center" justify="center" class="pageContent">
-      <div class="titre font-title">
-        SUPPRIMER LE PROFIL
-        <span class="nameProfile">{{ this.profileName }}</span> ?
-      </div>
-      <div class="description font-text">
-        <div class="questionConfirmation">
-          Êtes-vous sûr de vouloir supprimer ce profil ?
+  <div class="mainDiv primary-background">
+    <v-sheet
+      align="center"
+      justify="center"
+      class="deleteProfile secondary-background"
+      rounded
+    >
+      <div class="pageContent">
+        <div class="titre font-title">
+          SUPPRIMER LE PROFIL
+          <span class="nameProfile accent-color">{{ this.profileName }}</span> ?
         </div>
-        <div class="descriptionConfirmation">
-          Tous les dashboards associés seront définitivement supprimés, et vous
-          ne pourrez plus y accéder.
+        <div class="description font-text">
+          <div class="questionConfirmation">
+            Êtes-vous sûr de vouloir supprimer ce profil ?
+          </div>
+          <div class="descriptionConfirmation">
+            Tous les dashboards associés seront définitivement supprimés, et
+            vous ne pourrez plus y accéder.
+          </div>
+        </div>
+        <div class="butonDelete">
+          <v-btn
+            v-on:click="deleteProfile"
+            elevation="2"
+            class="butonDelete font-text warning-background"
+            color=""
+            >Supprimer le profil</v-btn
+          >
+        </div>
+        <div class="butonCancel">
+          <v-btn
+            elevation="2"
+            class="butonCancel font-text accent-background"
+            color=""
+            >Annuler</v-btn
+          >
         </div>
       </div>
-      <div class="butonDelete">
-        <v-btn
-          v-on:click="deleteProfile"
-          elevation="2"
-          class="butonDelete font-text"
-          color="error"
-          >Supprimer le profil</v-btn
-        >
-      </div>
-      <div class="butonCancel pb-5">
-        <v-btn
-          elevation="2"
-          class="butonCancel font-text"
-          color="accent"
-          @click="cancelDelete"
-          >Annuler</v-btn
-        >
-      </div>
-    </div>
+    </v-sheet>
     <v-snackbar v-model="snackbar">
       {{ snackbarContent }}
+
       <template v-slot:action="{ attrs }">
-        <v-btn color="#155b73" text v-bind="attrs" @click="snackbar = false">
+        <v-btn
+          class="accent-color"
+          color=""
+          text
+          v-bind="attrs"
+          @click="snackbar = false"
+        >
           Close
         </v-btn>
       </template>
     </v-snackbar>
-  </v-sheet>
+  </div>
 </template>
 
 <script>
 import UserResources from "@/service/resources/UserResources";
 
-const userService = new UserResources();
+const UserService = new UserResources();
 
 export default {
-  name: "DeleteProfile",
+  name: "Connection",
   data() {
     return {
       //if true, the snackbar displays
@@ -58,27 +71,22 @@ export default {
       snackbarContent: ""
     };
   },
-  props: ["profileName"],
+  props: { profileName: String },
   computed: {},
   methods: {
-    cancelDelete() {
-      this.$emit("endDelete", false);
-    },
     deleteProfile: async function() {
       const profileToDelete = this.profileName;
-      const responseDeleteProfile = await userService.deleteProfileByName(
+      const responseDeleteProfile = await UserService.deleteProfileByName(
         profileToDelete
       );
       if (responseDeleteProfile.status === 204) {
         this.snackbarContent = "Le profil a bien été supprimé.";
         this.snackbar = true;
         console.log(`Le profil a bien été supprimé.`);
-        this.$emit("endDelete", true);
       } else {
         this.snackbarContent = "Le profil n'a pas pu être supprimé.";
         this.snackbar = true;
         console.log(`Le profil n'a pas pu être supprimé.`);
-        this.$emit("endDelete", false);
       }
     }
   },
@@ -96,16 +104,12 @@ export default {
   font-weight: bold;
   font-size: 40px;
   color: #ffffff;
-  padding-top: 2%;
-}
-
-.nameProfile {
-  color: var(--v-accent-base);
+  padding-top: 9%;
 }
 
 .description {
   color: #ffffff;
-  width: 90%;
+  width: 35%;
   margin-top: 3%;
 }
 
