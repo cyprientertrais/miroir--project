@@ -4,6 +4,7 @@ import json
 import re
 from ActionType import ActionType
 import websockets
+from os import system
 
 # Initialize the recognizer
 r = sr.Recognizer()
@@ -51,7 +52,6 @@ def returnVocalInfo(vocalText, actionMirror):
         x = re.search("en veille", vocalText)
         if x:
             res = "VEILLE"
-        #TODO
     else:
         print("Action non traité")
     print(res)
@@ -76,7 +76,7 @@ def vocalTextTreatment(vocalText) -> json:
             return json
         elif enVeille != "":
             print("OK MISE EN VEILLE")
-            # CHANGE NEWS TODO
+            system("python3 ../Interrupteur/screen.py")
         else:
             print("MIROIR EN DEBUT MAIS PAS DE CAS")
     else:
