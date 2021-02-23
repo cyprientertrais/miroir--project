@@ -82,10 +82,14 @@ export class ProfileService {
     }
   }
 
-  async update(name: string, profile: Profile) {
+  async update(pseudo: string, profile: Profile) {
     profile.pseudo = profile.pseudo.charAt(0).toUpperCase() + profile.pseudo.slice(1)
-    const actualProfile = await this.getOne(name);
+    const actualProfile = await this.getOne(pseudo);
     if(!actualProfile){
+      return false;
+    }
+
+    if(pseudo !== profile.pseudo && (await this.profileRepository.findOne({pseudo: profile.pseudo}))){
       return false;
     }
     

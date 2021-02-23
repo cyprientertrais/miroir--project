@@ -57,7 +57,7 @@ export class ProfileController {
   ) {
     const isUpdated = await this.profileService.update(name, profile);
     if(!isUpdated){
-      return res.sendStatus(500)
+      return res.sendStatus(403)
     }
     return res.sendStatus(200)
   }

@@ -103,7 +103,7 @@ export default {
           return JSON.stringify(res);
         });
 
-      if (msg.includes("Request failed with status code 404")) {
+      if (msg.includes("Request failed with status code 403")) {
         this.isProfileNameInvalid = true;
         this.errorMessage =
           "Ce nom de profil est déjà utilisé. Veuillez entrer un autre nom.";
