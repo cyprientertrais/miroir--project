@@ -2,7 +2,7 @@
   
 import RPi.GPIO as GPIO  
 from time import sleep
-import Pin
+import screen
 
 # Désactive les warnings
 GPIO.setwarnings(False)
@@ -22,7 +22,7 @@ while True :
     try:
         # On attent un front montant
         GPIO.wait_for_edge(pinCapteur, GPIO.RISING)
-        Pin.execute()
+        screen.execute()
  
     # En cas d'arrêt par Ctrl+C
     except KeyboardInterrupt:
