@@ -7,7 +7,7 @@
       color="secondary"
       rounded
     >
-      <div class="font-title">Oÿna</div>
+      <h1 class="font-title">Oÿna</h1>
       <div class="password">
         <v-text-field
           v-model="password"
@@ -80,6 +80,10 @@ export default {
 };
 </script>
 <style scoped>
+
+h1{
+  font-size: 150px;
+}
 .password {
   margin-top: 6%;
 }
