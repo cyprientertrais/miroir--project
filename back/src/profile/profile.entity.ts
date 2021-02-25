@@ -1,13 +1,13 @@
-import { Dashboard } from '../entities/dashboard.entity'
-import { Column, Entity, Index, ObjectIdColumn, PrimaryColumn } from 'typeorm'
+import { Dashboard } from '../entities/dashboard.entity';
+import { Column, Entity, Index, ObjectIdColumn, PrimaryColumn } from 'typeorm';
 import {
   IsNotEmpty,
   IsOptional,
   IsString,
   ValidateNested,
-} from 'class-validator'
-import { Type } from 'class-transformer'
-import { ApiProperty } from '@nestjs/swagger'
+} from 'class-validator';
+import { Type } from 'class-transformer';
+import { ApiProperty } from '@nestjs/swagger';
 
 @Entity('profile')
 export class Profile {
@@ -42,6 +42,6 @@ export class Profile {
   ];
 
   constructor(profile?: Profile) {
-    Object.assign(this, profile)
+    Object.assign(this, profile);
   }
 }

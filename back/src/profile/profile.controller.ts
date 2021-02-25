@@ -1,4 +1,4 @@
-import { Dashboard } from '../entities/dashboard.entity'
+import { Dashboard } from '../entities/dashboard.entity';
 import {
   BadRequestException,
   Body,
@@ -9,10 +9,10 @@ import {
   Patch,
   Post,
   Res,
-} from '@nestjs/common'
-import { Profile } from './profile.entity'
-import { ProfileService } from './profile.service'
-import { ApiOperation, ApiTags } from '@nestjs/swagger'
+} from '@nestjs/common';
+import { Profile } from './profile.entity';
+import { ProfileService } from './profile.service';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('profiles')
 @Controller('profiles')
@@ -24,7 +24,7 @@ export class ProfileController {
   })
   @Get()
   async getProfiles() {
-    return await this.profileService.getAll()
+    return await this.profileService.getAll();
   }
 
   @ApiOperation({
@@ -32,7 +32,7 @@ export class ProfileController {
   })
   @Get('/:name')
   async getProfile(@Param('name') name: string) {
-    return await this.profileService.getOne(name)
+    return await this.profileService.getOne(name);
   }
 
   @ApiOperation({
@@ -41,9 +41,9 @@ export class ProfileController {
   @Post()
   async postProfile(@Body() profile: Profile): Promise<any> {
     if (!profile) {
-      throw new BadRequestException('Profile have been wrong disable')
+      throw new BadRequestException('Profile have been wrong disable');
     }
-    return await this.profileService.createOne(profile)
+    return await this.profileService.createOne(profile);
   }
 
   @ApiOperation({
@@ -56,10 +56,10 @@ export class ProfileController {
     @Res() res,
   ) {
     const isUpdated = await this.profileService.update(name, profile);
-    if(!isUpdated){
-      return res.sendStatus(403)
+    if (!isUpdated) {
+      return res.sendStatus(403);
     }
-    return res.sendStatus(200)
+    return res.sendStatus(200);
   }
 
   @ApiOperation({
@@ -67,16 +67,16 @@ export class ProfileController {
   })
   @Delete('/:name')
   async deleteProfile(@Param('name') name: string, @Res() res) {
-    const action = await this.profileService.delete(name)
-    return res.status(action.status).json(action)
+    const action = await this.profileService.delete(name);
+    return res.status(action.status).json(action);
   }
 
   @ApiOperation({
-    summary : 'Get all dashboards from a profile ',
+    summary: 'Get all dashboards from a profile ',
   })
   @Get('/dashboards/:name')
   async getAllDashboards(@Param('name') name: string) {
-    return await this.profileService.getAllDashboardsFromProfileService(name)
+    return await this.profileService.getAllDashboardsFromProfileService(name);
   }
 
   @ApiOperation({
@@ -90,7 +90,7 @@ export class ProfileController {
     return await this.profileService.createDashboardFromProfileService(
       dashboard,
       name,
-    )
+    );
   }
 
   //TODO TRASH CODE ?
