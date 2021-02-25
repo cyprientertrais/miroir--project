@@ -19,7 +19,7 @@ jobs:
         name: Checkout
         uses: actions/checkout@v2
       - name: Build, Push and Release a Docker container to Heroku. # Your custom step name
-        uses: akhileshns/heroku-deploy@v3.11.10 # This is the action
+        uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
         with:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
