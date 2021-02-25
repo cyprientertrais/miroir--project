@@ -1,7 +1,7 @@
 <template>
   <div class="changeProfile" align="center" justify="center">
     <v-container v-if="profile">
-      <h1>Modifier le profil</h1>
+      <h1 class="font-title">Modifier le profil</h1>
 
       <v-text-field
         id="newProfileName"
