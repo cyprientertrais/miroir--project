@@ -72,6 +72,9 @@ export default {
       ResourcesService.connectToWifi(name, pass);
     },
   },
+   beforeMount(){
+    this.fetchWifi()
+ },
 };
 </script>
 
