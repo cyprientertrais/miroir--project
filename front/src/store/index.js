@@ -68,7 +68,7 @@ export default new Vuex.Store({
       console.log("changeProfile detected : " + jsonIntoString)
       const jsonAnswer = JSON.parse(jsonIntoString);
       //TODO CHECK USER EXIST
-      await userService.getUserProfile(captitalizeFirstLetter(message.info)).then(res => {
+      await userService.getUserProfile(captitalizeFirstLetter(jsonAnswer.info)).then(res => {
         context.commit("setUserProfile", res.data);
         isExist = true;
       }).catch(err => {
