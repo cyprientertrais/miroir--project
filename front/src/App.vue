@@ -47,10 +47,12 @@ export default {
         });
       }
     );
+
+    this.getFlowRadio();
   },
 
   methods: {
-    ...mapActions(["setLocation", "setUserProfile"])
+    ...mapActions(["setLocation", "setUserProfile", "getFlowRadio"])
   },
 
   mounted() {

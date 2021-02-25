@@ -2,13 +2,13 @@
   <v-carousel
     class="radio"
     dark
-    v-if="flux"
+    v-if="flowRadio"
     v-model="actualFlux"
-    :show-arrows="false"
+    :show-arrows="true"
     hide-delimiters
     @change="navigationHandler"
   >
-    <v-carousel-item width="100%" v-for="(el, i) in flux" :key="i">
+    <v-carousel-item width="100%" v-for="(el, i) in flowRadio" :key="i">
       <v-sheet fill-height fluid>
         <v-card class="mx-auto">
           <v-img width="100%" :src="el.img"></v-img>
@@ -37,6 +37,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   name: "Radio",
 
@@ -45,69 +46,37 @@ export default {
       model: 0,
       audio: null,
       actualFlux: 0,
-      isPlaying: false,
-      flux: [
-        {
-          title: "Fun Radio",
-          audio:
-            "http://icecast.funradio.fr/fun-1-44-128?listen=webCwsBCggNCQgLDQUGBAcGBg",
-          img:
-            "https://dbs.radioline.fr/pictures/radio_14e09f8063392ed7ba7db184f937aa1a/logo200.jpg?size=600"
-        },
-        {
-          title: "RTL2",
-          audio:
-            "http://icecast.rtl2.fr/rtl2-1-44-128?listen=webCwsBCggNCQgLDQUGBAcGBg",
-          img:
-            "https://4.bp.blogspot.com/-DtRsZYXOANo/W_XGIW3IM1I/AAAAAAAAJAE/XmUOUXDllB0ioQeQ58qPKZSDVC8pXz2PgCKgBGAs/s400/RTL2%2B%253B%2B%2528001%2529.jpg"
-        },
-        {
-          title: "Europe 1",
-          audio: "http://stream.europe1.fr/europe1.mp3",
-          img:
-            "https://1.bp.blogspot.com/-BCb2nEMC10A/W_XGycvr5cI/AAAAAAAAJAM/KaAMTK4-mQYHJE10vB4NI_MY7D9fM5DIACKgBGAs/s1600/Europe%2B1%2B%253B%2B%2528001%2529.jpg"
-        },
-        {
-          title: "France Inter",
-          audio: "http://icecast.radiofrance.fr/franceinter-hifi.aac",
-          img:
-            "https://2.bp.blogspot.com/-Qt4K6yrs4HU/W_XHYewJGiI/AAAAAAAAJAc/aqyQdwRhNFwgbaREYYRSNCPcbZIoLXdjACKgBGAs/s1600/France%2BInter%2B%253B%2B%2528001%2529.jpg"
-        },
-        {
-          title: "Virgin Radio",
-          audio: "http://stream.virginradio.fr/virgin.mp3",
-          img:
-            "https://2.bp.blogspot.com/-pZ5TZDiBexw/W_XGybt5zbI/AAAAAAAAJAM/C2Uw74-Dx-cHg7YvggfQorxFYR5XqoeYwCKgBGAs/s400/Virgin%2BRadio%2B%253B%2B%2528001%2529.jpg"
-        }
-      ]
-    };
+      isPlaying: false
+    }
+  },
+  computed: {
+    ...mapGetters(["flowRadio"])
   },
   methods: {
     changeRadioByName(radioName) {
       let indexRadio = -1;
-      this.flux.forEach((element, index) => {
-        if(element.title.toLowerCase().trim() === radioName.toLowerCase().trim()){
+      this.flowRadio.forEach((element, index) => {
+        if(element.title.toLowerCase().replace(/ /g,'') === radioName.toLowerCase().replace(/ /g,'')){
           indexRadio = index;
         }
       });
-      if (indexRadio === -1) return false;
+      if (indexRadio === -1) return;
       this.navigationHandler(indexRadio);
-      return true;
     },
     navigationHandler(direction) {
       this.actualFlux = direction;
       if (this.isPlaying) this.playRadio();
     },
     nextRadio() {
-      this.navigationHandler((this.actualFlux + 1)%this.flux.length);
+      this.navigationHandler((this.actualFlux + 1)%this.flowRadio.length);
     },
     previousRadio() {
-      this.navigationHandler((this.actualFlux === 0) ? this.flux.length-1 : this.actualFlux-1);
+      this.navigationHandler((this.actualFlux === 0) ? this.flowRadio.length-1 : this.actualFlux-1);
     },
     playRadio() {
       this.stopRadio();
       this.isPlaying = true;
-      this.audio = new Audio(this.flux[this.actualFlux].audio);
+      this.audio = new Audio(this.flowRadio[this.actualFlux].audio);
       this.audio.play();
     },
     stopRadio() {

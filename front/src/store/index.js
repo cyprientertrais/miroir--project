@@ -1,17 +1,20 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import UserResources from "@/service/resources/UserResources";
+import WidgetResources from "@/service/resources/WidgetResources";
 
 Vue.use(Vuex);
 
 const userService = new UserResources();
+const widgetService = new WidgetResources();
 
 export default new Vuex.Store({
   state: {
     location: undefined,
     userProfile: undefined,
     orientation: undefined,
-    wifiList: undefined
+    wifiList: undefined,
+    flowRadio: undefined
   },
   mutations: {
     setLocation(state, location) {
@@ -25,6 +28,9 @@ export default new Vuex.Store({
     },
     setWifiList(state, wifiList) {
       state.wifiList = wifiList;
+    },
+    setFlowRadio(state, flowRadio) {
+      state.flowRadio = flowRadio;
     }
   },
   actions: {
@@ -38,6 +44,11 @@ export default new Vuex.Store({
       await userService.getUserProfile(pseudo).then(res => {
         context.commit("setUserProfile", res.data);
       });
+    },
+    async getFlowRadio(context) {
+      await widgetService.getFlowRadio().then(res => {
+        context.commit("setFlowRadio", res.data.flowRadio);
+      });
     }
   },
   getters: {
@@ -49,7 +60,11 @@ export default new Vuex.Store({
     },
     orientation: state => {
       return state.orientation;
+    },
+    flowRadio: state => {
+      return state.flowRadio;
     }
+
   },
   modules: {}
 });
