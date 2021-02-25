@@ -5,9 +5,6 @@ from TextToSpeak import *
 from ActionType import ActionType
 from os import system
 
-# Initialize the recognizer
-r = sr.Recognizer()
-
 def createJson(info, actionType: ActionType):
     if actionType == ActionType.ChangeProfile:
         return json.dumps({'action': 'changeProfile', 'info': (info)},ensure_ascii=False)
@@ -70,6 +67,10 @@ def vocalTextTreatment(vocalText) -> json:
         actionNotTreated()
 
 async def launchVocalRecognition():
+
+    # Initialize the recognizer
+    r = sr.Recognizer()
+
     # Loop infinitely for user to
     # speak
     # while 1:
