@@ -2,7 +2,9 @@
   <v-container fill-height fluid class="profilesListContainer">
     <v-row justify="center" id="WhoIsThis" class="d-flex align-start">
       <div class="text-lg-h1 text-md-h1 text-sm-h2 text-h3">
-        {{ titleValue }}
+        <div class="font-title">
+          {{ titleValue }}
+        </div>
       </div>
     </v-row>
     <v-row
@@ -24,10 +26,10 @@
           @click="editProfile(profile)"
         >
           <v-icon
-            x-large
+            large
             dark
             v-if="profile.pseudo != 'Invité' && editing"
-            class="profil-avatar"
+            class="profil-pencil-edit"
             color="grey"
           >
             mdi-pencil
@@ -44,14 +46,16 @@
       </v-col>
     </v-row>
     <v-row justify="center" id="btnEditProfiles" class="d-flex align-end">
-      <v-btn
-        @click="toogleEdit()"
-        href="#"
-        class="elevation-5"
-        color="accent"
-        x-large
-        >{{ btnValue }}</v-btn
-      >
+      <div class="font-text">
+        <v-btn
+          @click="toogleEdit()"
+          href="#"
+          class="elevation-5"
+          color="accent"
+          x-large
+          >{{ btnValue }}</v-btn
+        >
+      </div>
     </v-row>
 
     <v-row justify="center">
@@ -66,7 +70,9 @@
     </v-row>
 
     <v-dialog v-model="addProfile" width="500px">
-      <AddProfile @profileCreated="getProfiles" />
+      <div class="font-text">
+        <AddProfile @profileCreated="getProfiles" />
+      </div>
     </v-dialog>
     <v-dialog v-model="editingChoosedProfile" width="500px">
       <ChangeProfile
@@ -102,16 +108,14 @@ export default {
       addProfile: false,
       choosedProfile: undefined,
       editingChoosedProfile: false,
-      inviteProfil: false,
+      inviteProfil: false
     };
   },
   methods: {
-    profileEdited(causedByProfileDeleted) {
+    profileEdited(needRefresh) {
       this.choosedProfile = null;
       this.editingChoosedProfile = false;
-      if (causedByProfileDeleted) {
-        this.getProfiles(true);
-      }
+      this.getProfiles(needRefresh);
     },
     editProfile(profile) {
       this.inviteProfil = false;
@@ -150,6 +154,7 @@ export default {
   width: 100%;
   background: #2e2e2e;
 }
+
 #WhoIsThis {
   font-size: 4vh;
   width: 100%;
@@ -177,32 +182,58 @@ export default {
   font-size: 100px;
   background-color: #2e2e2e;
 }
+
 .plus:hover {
   cursor: pointer;
   size: 300;
   background-color: #3c3e41;
   transition: 0.5s ease;
 }
+
 .profile:hover {
   cursor: pointer;
   size: 300;
-  border: 5px white solid;
 }
+
 .paramDiv {
   width: 100%;
   text-align: right;
   margin-top: 20px;
   padding-right: 20px;
 }
+
 .profil-avatar {
   position: absolute;
 }
+
+.profil-pencil-edit {
+  position: absolute;
+  width: fit-content;
+  height: fit-content;
+  top: 15%;
+  right: 15%;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.profile:hover > .profil-pencil-edit {
+  top: 18%;
+  right: 18%;
+  transition: top right 0.2s ease-in-out;
+}
+
 div {
   color: white;
 }
+
 #btnEditProfiles {
   text-align: center;
   top: 55%;
   color: pink;
 }
+
+@keyframes fadeIn {
+    from{opacity: 0.3;}
+    to {opacity: 1;}
+}
+
 </style>

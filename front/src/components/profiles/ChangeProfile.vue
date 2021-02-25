@@ -1,7 +1,7 @@
 <template>
   <div class="changeProfile" align="center" justify="center">
     <v-container v-if="profile">
-      <h1>Modifier le profil</h1>
+      <h1 class="font-title">Modifier le profil</h1>
 
       <v-text-field
         id="newProfileName"
@@ -13,7 +13,7 @@
         maxlength="20"
         clearable
       ></v-text-field>
-      <div class="buttons">
+      <div class="buttons font-text">
         <v-btn
           color="accent"
           elevation="2"
@@ -108,7 +108,7 @@ export default {
         this.errorMessage =
           "Ce nom de profil est déjà utilisé. Veuillez entrer un autre nom.";
       } else {
-        this.$emit("profileChanged");
+        this.$emit("profileChanged", true);
         this.isProfileNameInvalid = false;
       }
     }

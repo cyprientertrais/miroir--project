@@ -1,10 +1,10 @@
 <template>
   <v-container color="primary" align="center" justify="center" class="popup">
     <v-card elevation="22" color="primary" class="white--text">
-      <v-row justify="center"> <h1 class="titre">Réglages</h1> </v-row>
+      <v-row justify="center"> <h1 class="font-title">Réglages</h1> </v-row>
       <v-row>
         <v-col>
-          <v-sheet color="primary" class="listButtons">
+          <v-sheet color="primary" class="listButtons font-text">
             <v-row justify="center">
               <v-btn
                 v-if="this.$router.history.current.path !== '/settings'"
