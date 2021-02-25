@@ -146,7 +146,8 @@ export default {
     },
     redirectEditDashboard(profileName) {
       if(profileName!="Invité"){
-        window.location="/EditDashboard/"+profileName;
+        this.$router.push("/EditDashboard/"+profileName);
+        //window.location="/EditDashboard/"+profileName;
       }
     }
   }

@@ -77,7 +77,7 @@ export default {
         this.user = res.data;
         this.userWidgets = ["","","",""];
         this.user.dashboards[0].widgets.forEach(widget => {
-          this.userWidgets[widget.position - 1] = widget.name;
+          this.userWidgets[widget.position] = widget.name;
         });
       });
     },
@@ -87,7 +87,7 @@ export default {
         if(this.userWidgets[i]!=="") {
           userWidgetsUpdated.push({
             name: this.userWidgets[i],
-            position: i+1
+            position: i
           })
         }
       }
@@ -105,7 +105,7 @@ export default {
       this.updateUserWidgets();
     },
     redirectSettings(){
-      window.location="/Settings";
+      this.$router.push("/Settings");
     }
   }
 };
