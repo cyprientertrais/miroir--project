@@ -45,7 +45,7 @@ export default new Vuex.Store({
         context.commit("setUserProfile", res.data);
       });
     },
-    async getFlowRadio(context) {
+    async fetchFlowRadio(context) {
       await widgetService.getFlowRadio().then(res => {
         context.commit("setFlowRadio", res.data.flowRadio);
       });

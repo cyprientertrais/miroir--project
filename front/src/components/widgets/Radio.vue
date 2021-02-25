@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
   name: "Radio",
 
@@ -49,10 +49,14 @@ export default {
       isPlaying: false
     }
   },
+  created() {
+    this.fetchFlowRadio();
+  },
   computed: {
     ...mapGetters(["flowRadio"])
   },
   methods: {
+    ...mapActions(["fetchFlowRadio"]),
     changeRadioByName(radioName) {
       let indexRadio = -1;
       this.flowRadio.forEach((element, index) => {
