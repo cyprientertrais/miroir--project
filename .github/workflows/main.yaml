@@ -17,6 +17,8 @@ jobs:
           node-version: '12'
       - name: Checkout Repo v2
         uses: actions/checkout@v2
+        
+      - name: fetch
         run: git fetch --prune --unshallow
       - name: Build, Push and Release a Docker container to Heroku. # Your custom step name
         uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
