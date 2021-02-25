@@ -3,7 +3,7 @@
     class="radio"
     dark
     v-if="flux"
-    v-model="model"
+    v-model="actualFlux"
     :show-arrows="true"
     hide-delimiters
     @change="navigationHandler"
@@ -83,9 +83,18 @@ export default {
     };
   },
   methods: {
+    changeRadioByName(radioName) {
+      let indexRadio = -1;
+      this.flux.forEach((element, index) => {
+        if(element.title.toLowerCase().trim() === radioName.toLowerCase().trim()){
+          indexRadio = index;
+        }
+      });
+      if(indexRadio > -1) this.navigationHandler(indexRadio);
+    },
     navigationHandler(direction) {
       this.actualFlux = direction;
-      this.playRadio();
+      if(this.isPlaying) this.playRadio();
     },
     playRadio() {
       this.stopRadio();
