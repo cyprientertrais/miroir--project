@@ -16,7 +16,7 @@ async def server(websocket, path):
                 response = await websocket.recv()
                 print(f"< RECEIVED FROM CLIENT :  {response}")
                 analyseResponse(response)
-                sleep(3)
+                sleep(2)
             else:
                 print("The data is empty")
             #except:

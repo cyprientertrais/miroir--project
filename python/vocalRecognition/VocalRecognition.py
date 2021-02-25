@@ -8,73 +8,66 @@ from os import system
 # Initialize the recognizer
 r = sr.Recognizer()
 
-
 def createJson(info, actionType: ActionType):
     if actionType == ActionType.ChangeProfile:
-        return json.dumps({'action': 'changeProfile', 'info': (info)})
+        return json.dumps({'action': 'changeProfile', 'info': (info)},ensure_ascii=False)
     elif actionType == ActionType.ChangeRadio:
-        return json.dumps({'action': 'changeRadio', 'info': (info)})
+        return json.dumps({'action': 'changeRadio', 'info': (info)},ensure_ascii=False)
+    elif actionType == ActionType.RadioPlay:
+        return json.dumps({'action': 'radioPlay','info': (info)},ensure_ascii=False)
+    elif actionType == ActionType.NextRadio:
+        return json.dumps({'action': 'nextRadio','info': (info)},ensure_ascii=False)
     elif actionType == ActionType.ChangeNews:
-        return json.dumps({'action': 'changeNews', 'info': (info)})
+        return json.dumps({'action': 'changeNews','info': (info)},ensure_ascii=False)
     else:
         print("ActionType not found")
 
-
-def returnVocalInfo(vocalText, actionMirror):
-    res = ""
-    if actionMirror == ActionType.ChangeProfile:
-        # PHRASES TYPES -> Miroir affiche le profile de Toto, Miroir met le profil de Toto
-        x = re.search("profil de [a-zA-Z]*", vocalText)
-        if x:
-            res = x.group(0).split()[2]
-    elif actionMirror == ActionType.ChangeRadio:
-        # PHRASES TYPES -> Miroir met la radio Fun Radio, Miroir met moi la radio RTL2
-        x = re.search("radio [a-zA-Z0-9]*.[a-zA-Z0-9]*", vocalText)
-        print(x)
-        if x:
-            print(len(x.group(0).split()))
-            if len(x.group(0).split()) == 2:
-                res = x.group(0).split()[1]
-            else:
-                res = x.group(0).split()[1] + x.group(0).split()[2]
-    elif actionMirror == ActionType.MiseEnVeille:
-        # PHRASES TYPES -> Miroir met toi en veille, Miroir mise en veille
-        x = re.search("en veille", vocalText)
-        if x:
-            res = "VEILLE"
-        # TODO NEWS
+def getInfo(x):
+    if len(x.group(0).split()) == 2:
+        res = x.group(0).split()[1]
     else:
-        print("Action non traité")
+        res = x.group(0).split()[1] + " " + x.group(0).split()[2]
     return res
 
+def radioTreatment(radioInfo):
+    if re.search("en marche", radioInfo):
+        return createJson(True, ActionType.RadioPlay)
+    elif re.search("en pause", radioInfo):
+        return createJson(False, ActionType.RadioPlay)
+    elif re.search("suivante", radioInfo):
+        return createJson(True, ActionType.NextRadio)
+    elif re.search("précédente", radioInfo):
+        return createJson(False, ActionType.NextRadio)
+    else:
+        return createJson(radioInfo, ActionType.ChangeRadio)
 
 def vocalTextTreatment(vocalText) -> json:
 
-    json = ""
-    profileName = returnVocalInfo(vocalText, ActionType.ChangeProfile)
-    radioName = returnVocalInfo(vocalText, ActionType.ChangeRadio)
-    enVeille = returnVocalInfo(vocalText, ActionType.MiseEnVeille)
-
     if re.search("^miroir", vocalText):
-        if profileName != "":
-            json = createJson(profileName, ActionType.ChangeProfile)
-            return json
-        elif radioName != "":
-            json = createJson(radioName, ActionType.ChangeRadio)
-            return json
-        elif enVeille != "":
+        # PHRASES TYPES -> Miroir affiche le profile de Toto, Miroir met le profil de Toto
+        if x := re.search("profil de [a-zA-Zéèàê]*", vocalText):
+            res = x.group(0).split()[2]
+            return createJson(res, ActionType.ChangeProfile)
+        elif x := re.search("radio [a-zA-Zéèàê0-9]*.[a-zA-Zéèàê0-9]*", vocalText):
+            # PHRASES TYPES -> Miroir met la radio Fun Radio, Miroir met moi la radio RTL2
+            # Miroir met la radio en pause, Miroir met la radio en marche
+            # Baisser/monter le son
+            res = getInfo(x)
+            return radioTreatment(res)
+        elif x := re.search("journal [a-zA-Zéèàê0-9]*.[a-zA-Zéèàê0-9]*", vocalText):
+            # PHRASES TYPES -> Miroir met le journal LeMonde, Miroir affiche le jounal Figaro
+            res = getInfo(x)
+            return createJson(res, ActionType.ChangeNews)
+        elif re.search("en veille", vocalText):
+            # PHRASES TYPES -> Miroir met toi en veille, Miroir mise en veille
             print("** Lancement du script de Démarrage/Extinction du miroir **")
             system("python3 ../Interrupteur/screen.py")
             return ""
-        # CHANGE NEWS TODO
         else:
             speakText("Cette action n'a pas été reconnu, veuillez réessayer")
-            print("MIROIR EN DEBUT MAIS PAS DE CAS")
+            print("** MIROIR EN DEBUT MAIS PAS DE CAS **")
     else:
         actionNotTreated()
-        print("NOPE")
-    return json
-
 
 async def launchVocalRecognition():
     # Loop infinitely for user to

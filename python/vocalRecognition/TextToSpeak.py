@@ -28,12 +28,14 @@ def analyseResponse(response : str):
         elif response.answerType == "radioUnknown":
             speakText("La radio {} n'existe pas.".format(response.info))
         elif response.answerType == "categorieUnknown":
-            speakText("La catégorie {} n'existe pas.".format(response.info))
+            speakText("Le journal {} n'existe pas.".format(response.info))
         elif response.answerType == "profileAnswer":
             speakText("Voici le profil de {} ".format(response.info))
         elif response.answerType == "radioAnswer":
             print("Non traité pour le moment")
+        elif response.answerType == "commonError":
+            speakText("Il y a eu une erreur lors de votre demande")
         else:
-            print("Cas inconnu")
+            print("Cas non traité")
     else:
         print("Problème lors du traitement de la réponse")

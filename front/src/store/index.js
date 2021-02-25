@@ -67,6 +67,9 @@ export default new Vuex.Store({
       console.log("changeProfile detected : " + jsonIntoString)
       const jsonAnswer = JSON.parse(jsonIntoString);
       //TODO CHECK USER EXIST
+      await userService.getUserProfile(captitalizeFirstLetter(message.info)).then(res => {
+        context.commit("setUserProfile", res.data);
+      });
       if (isExist) {
         sendAnswer("profileAnswer", jsonAnswer.info)
       } else {
@@ -85,6 +88,21 @@ export default new Vuex.Store({
         sendAnswer("radioUnknown", jsonAnswer.info)
       }
     },
+    radioPlay: function(context, message) {
+      //TODO CHECK IS TRUE OR FALSE
+
+
+      // SEND THIS IF ERROR
+      //sendAnswer("commonError", jsonAnswer.info)
+
+    },
+    nextRadio: function(context, message) {
+      //TODO CHECK IS TRUE OR FALSE
+
+
+      // SEND THIS IF ERROR
+      //sendAnswer("commonError", jsonAnswer.info)
+    },
     changeNews: function(context, message) {
       let isExist = false
       const jsonIntoString =  JSON.stringify(message)
@@ -94,7 +112,7 @@ export default new Vuex.Store({
       if (isExist) {
         sendAnswer("newsAnswer", jsonAnswer.info)
       } else {
-        sendAnswer("categorieUnkown", jsonAnswer.info)
+        sendAnswer("newsUnkown", jsonAnswer.info)
       }
     },
     setLocation(context,location) {
@@ -125,4 +143,8 @@ export default new Vuex.Store({
 
 function sendAnswer(answerType,info) {
   Vue.prototype.$socket.send('{"answerType": "' + answerType + '", "info": "' + info + '"}')
+}
+
+function captitalizeFirstLetter(name) {
+  return name.charAt(0).toUpperCase() + name.slice(1);
 }
