@@ -23,7 +23,7 @@
           color="primary"
           class="profile elevation-5"
           size="20vh"
-          @click="editProfile(profile)"
+          @click="(editing) ? editProfile(profile):redirectEditDashboard(profile.pseudo)"
         >
           <v-icon
             large
@@ -143,6 +143,11 @@ export default {
         ? (this.titleValue = "Éditer les profils")
         : (this.titleValue = "Qui est-ce ?");
       this.editing = !this.editing;
+    },
+    redirectEditDashboard(profileName) {
+      if(profileName!="Invité"){
+        this.$router.push("/EditDashboard/"+profileName);
+      }
     }
   }
 };
