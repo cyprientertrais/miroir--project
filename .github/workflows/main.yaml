@@ -52,4 +52,15 @@ jobs:
           tags: |
             cypnose/front:latest
             cypnose/front:${{ env.VERSION }}
+      -
+        name: Build and push BACK ....
+        uses: docker/build-push-action@v2
+        with:
+          context: ./back-rasp
+          file: ./back-rasp/Dockerfile
+          platforms: linux/arm/v7
+          push: true
+          tags: |
+            cypnose/back:latest
+            cypnose/back:${{ env.VERSION }}
       
