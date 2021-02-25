@@ -4,7 +4,7 @@
     dark
     v-if="flux"
     v-model="actualFlux"
-    :show-arrows="true"
+    :show-arrows="false"
     hide-delimiters
     @change="navigationHandler"
   >
@@ -90,11 +90,19 @@ export default {
           indexRadio = index;
         }
       });
-      if(indexRadio > -1) this.navigationHandler(indexRadio);
+      if (indexRadio === -1) return false;
+      this.navigationHandler(indexRadio);
+      return true;
     },
     navigationHandler(direction) {
       this.actualFlux = direction;
-      if(this.isPlaying) this.playRadio();
+      if (this.isPlaying) this.playRadio();
+    },
+    nextRadio() {
+      this.navigationHandler((this.actualFlux + 1)%this.flux.length);
+    },
+    previousRadio() {
+      this.navigationHandler((this.actualFlux === 0) ? this.flux.length-1 : this.actualFlux-1);
     },
     playRadio() {
       this.stopRadio();
