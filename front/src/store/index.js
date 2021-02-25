@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import UserResources from "@/service/resources/UserResources";
+import captitalizeFirstLetter from "../service/utils";
 
 Vue.use(Vuex);
 
@@ -74,7 +75,7 @@ export default new Vuex.Store({
         console.err(err);
         isExist = false;
       });
-      
+
       if (isExist) {
         sendAnswer("profileAnswer", jsonAnswer.info)
       } else {
@@ -148,8 +149,4 @@ export default new Vuex.Store({
 
 function sendAnswer(answerType,info) {
   Vue.prototype.$socket.send('{"answerType": "' + answerType + '", "info": "' + info + '"}')
-}
-
-function captitalizeFirstLetter(name) {
-  return name.charAt(0).toUpperCase() + name.slice(1);
 }
