@@ -10,8 +10,10 @@
             <v-icon color="white" @click="redirectSettings()" large>mdi-arrow-left-thick</v-icon>
           </div>
         </v-col>
-        <v-col class="col-8 text-lg-h1 text-md-h1 text-h2 font-title">
-          {{ titleValue }}
+        <v-col class="col-8 text-lg-h1 text-md-h1 text-h2">
+          <div class="font-title">
+            {{ titleValue }}
+          </div>
         </v-col>
         <v-col class="col-2">
         </v-col>
@@ -35,7 +37,7 @@
           </v-card>
           <v-card height="9em" width="9em" class="primary-background mx-auto" v-else>
             <v-icon class="removeWidget" color="red" large @click="removeWidget(index)">mdi-close-thick</v-icon>
-            <div class="widgetNameCards primary-color"><span>{{widget}}</span></div>
+            <div class="widgetNameCards primary-color"><span><div class="font-text">{{widget}}</div></span></div>
           </v-card>
         </v-col>
       </v-row>
@@ -146,6 +148,7 @@ export default {
   align-items: center;
   justify-content: center;
 }
+
 
 .arrowBack {
   border: 4px solid white;
