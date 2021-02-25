@@ -88,21 +88,21 @@ export default new Vuex.Store({
         sendAnswer("radioUnknown", jsonAnswer.info)
       }
     },
-    radioPlay: function(context, message) {
+   // radioPlay: function(context, message) {
       //TODO CHECK IS TRUE OR FALSE
 
 
       // SEND THIS IF ERROR
       //sendAnswer("commonError", jsonAnswer.info)
 
-    },
-    nextRadio: function(context, message) {
+   // },
+    // nextRadio: function(context, message) {
       //TODO CHECK IS TRUE OR FALSE
 
 
       // SEND THIS IF ERROR
       //sendAnswer("commonError", jsonAnswer.info)
-    },
+    //},
     changeNews: function(context, message) {
       let isExist = false
       const jsonIntoString =  JSON.stringify(message)
