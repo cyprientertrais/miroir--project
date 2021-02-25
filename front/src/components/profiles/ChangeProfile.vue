@@ -1,7 +1,7 @@
 <template>
   <div class="changeProfile" align="center" justify="center">
     <v-container v-if="profile">
-      <h1>Modifier le profil</h1>
+      <h1 class="font-title">Modifier le profil</h1>
 
       <v-text-field
         id="newProfileName"
@@ -103,7 +103,7 @@ export default {
           return JSON.stringify(res);
         });
 
-      if (msg.includes("Request failed with status code 404")) {
+      if (msg.includes("Request failed with status code 403")) {
         this.isProfileNameInvalid = true;
         this.errorMessage =
           "Ce nom de profil est déjà utilisé. Veuillez entrer un autre nom.";
