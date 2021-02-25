@@ -36,6 +36,14 @@ export class AdminService {
     
   }
 
+  async getFlowRadio() {
+    return await this.adminRepository.findOne(
+      {
+        select: ["flowRadio"]
+      }
+    )
+  }
+
   async getAvailableWidgets() {
     return await this.adminRepository.findOne(
       {
