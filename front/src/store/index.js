@@ -69,7 +69,12 @@ export default new Vuex.Store({
       //TODO CHECK USER EXIST
       await userService.getUserProfile(captitalizeFirstLetter(message.info)).then(res => {
         context.commit("setUserProfile", res.data);
+        isExist = true;
+      }).catch(err => {
+        console.err(err);
+        isExist = false;
       });
+      
       if (isExist) {
         sendAnswer("profileAnswer", jsonAnswer.info)
       } else {
