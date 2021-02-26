@@ -77,7 +77,6 @@ export default {
     getUserWidgets() {
       ResourcesServiceUser.getUserProfile(this.$route.params.username).then((res) => {
         this.user = res.data;
-        console.log(res.data);
         this.userWidgets = ["","","",""];
         this.user.dashboards[0].widgets.forEach(widget => {
           this.userWidgets[widget.position] = widget.name;
@@ -94,8 +93,6 @@ export default {
           })
         }
       }
-      console.log(this.user);
-      console.log(this.user.dashboards);
       this.user.dashboards[0].widgets = userWidgetsUpdated;
       ResourcesServiceUser.updateProfile(this.user.pseudo, {pseudo: this.user.pseudo, dashboards: this.user.dashboards}).then(() => {
         this.getUserWidgets();
