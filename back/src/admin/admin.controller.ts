@@ -55,9 +55,14 @@ export class AdminController {
     return this.adminService.postLocation(body);
   }
 
+  @Get('/flowRadio')
+  async getFlowRadio() {
+    return this.adminService.getFlowRadio()
+  }
+
   @Get('/widgets')
-  async fetWidgets() {
-    return this.adminService.getAvailableWidgets();
+  async getWidgets() {
+    return this.adminService.getAvailableWidgets()
   }
 
   @Post('/sendWifi')
