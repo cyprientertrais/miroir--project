@@ -21,7 +21,6 @@ export default new Vuex.Store({
     isConnected: false,
     message: '',
     reconnectError: false,
-    }
   },
   mutations: {
     setLocation(state, location) {
@@ -35,8 +34,9 @@ export default new Vuex.Store({
     },
     setFlowRadio(state, flowRadio) {
       state.flowRadio = flowRadio;
+    },
     setWifiList(state, wifiList){
-      state.wifiList = wifiList
+      state.wifiList = wifiList;
     },
     SOCKET_ONOPEN(state, event) {
       console.log('onOpen')
