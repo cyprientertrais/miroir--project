@@ -6,6 +6,7 @@
     v-model="actualFlux"
     :show-arrows="true"
     hide-delimiters
+    height = "auto"
     @change="navigationHandler"
   >
     <v-carousel-item width="100%" v-for="(el, i) in flowRadio" :key="i">
