@@ -2,6 +2,7 @@
 import RPi.GPIO as GPIO
 from time import sleep
 from os import environ
+from sys import argv
 
 __initVariable()
 
@@ -20,7 +21,14 @@ def __changeVariable():
 def __initVariable():
     environ['SCREEN'] = 'OFF'
 
-def execute():
+def getState() -> str:
+    return environ['SCREEN']
+
+def execute(state = None):
+
+    if state == getState():
+        return False
+
     # Désactive les warnings
     GPIO.setwarnings(False)
 
@@ -43,4 +51,4 @@ def execute():
     sleep(2)
 
 if __name__ == "__main__":
-    execute()
+    execute(state = argv[1])
