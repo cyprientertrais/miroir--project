@@ -64,7 +64,7 @@ def vocalTextTreatment(vocalText) -> json:
             speakText("Cette action n'a pas été reconnu, veuillez réessayer")
             print("** MIROIR EN DEBUT MAIS PAS DE CAS **")
     else:
-        actionNotTreated()
+        print("Action du miroir non trouvé !")
 
 async def launchVocalRecognition():
 

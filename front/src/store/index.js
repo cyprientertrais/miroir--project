@@ -72,7 +72,7 @@ export default new Vuex.Store({
         context.commit("setUserProfile", res.data);
         isExist = true;
       }).catch(err => {
-        console.err(err);
+        console.log(err);
         isExist = false;
       });
 

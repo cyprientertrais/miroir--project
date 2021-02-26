@@ -8,7 +8,6 @@ from VocalRecognition import *
 async def server(websocket, path):
         while 1:
             data = await launchVocalRecognition()
-            #try:
             if data:
                 print(f"> SENDING JSON : {data}")
                 await websocket.send(data)
@@ -16,13 +15,8 @@ async def server(websocket, path):
                 response = await websocket.recv()
                 print(f"< RECEIVED FROM CLIENT :  {response}")
                 analyseResponse(response)
-                sleep(2)
             else:
                 print("The data is empty")
-            #except:
-            #    print("Connection error")
-            #    speakText("Erreur de connexion")
-
 
 # Create websocket server
 port = 1234

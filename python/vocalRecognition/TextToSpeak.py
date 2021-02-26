@@ -30,7 +30,7 @@ def analyseResponse(response : str):
         elif response.answerType == "categorieUnknown":
             speakText("Le journal {} n'existe pas.".format(response.info))
         elif response.answerType == "profileAnswer":
-            speakText("Voici le profil de {} ".format(response.info))
+            speakText("Voici le profil de {} mais sachez que j'aurai préféré afficher le profil de Alban.".format(response.info))
         elif response.answerType == "radioAnswer":
             print("Non traité pour le moment")
         elif response.answerType == "commonError":
@@ -39,3 +39,4 @@ def analyseResponse(response : str):
             print("Cas non traité")
     else:
         print("Problème lors du traitement de la réponse")
+
