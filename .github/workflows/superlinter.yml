@@ -26,3 +26,6 @@ jobs:
           VALIDATE_BASH: false
           VALIDATE_PYTHON: false
           VALIDATE_DOCKERFILE: false
+          DOCKERFILE_HADOLINT: false
+          PYTHON_FLAKE8: false
+          PYTHON_BLACK: false
