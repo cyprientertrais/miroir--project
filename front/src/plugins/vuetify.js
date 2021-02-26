@@ -1,6 +1,16 @@
 import Vue from "vue";
 import Vuetify from "vuetify/lib";
+import store from '../store'
+import VueNativeSock from 'vue-native-websocket'
 
+Vue.use(VueNativeSock, `ws://localhost:1234`,
+    {
+        reconnection: true, // (Boolean) whether to reconnect automatically (false)
+        reconnectionAttempts: 5, // (Number) number of reconnection attempts before giving up (Infinity),
+        reconnectionDelay: 3000,
+        store: store,
+        format: 'json'
+    })
 Vue.use(Vuetify);
 
 export default new Vuetify({

@@ -31,6 +31,14 @@ export class AdminService {
     return await this.adminRepository.updateOne({}, newLocation);
   }
 
+  async getFlowRadio() {
+    return await this.adminRepository.findOne(
+      {
+        select: ["flowRadio"]
+      }
+    )
+  }
+
   async getAvailableWidgets() {
     return await this.adminRepository.findOne({
       select: ['widgets'],
