@@ -6,6 +6,7 @@
     :show-arrows="false"
     cycle
     hide-delimiters
+    height = "auto"
     interval="9000"
   >
     <v-carousel-item

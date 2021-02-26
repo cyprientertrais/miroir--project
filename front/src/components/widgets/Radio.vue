@@ -6,6 +6,7 @@
     v-model="model"
     :show-arrows="true"
     hide-delimiters
+    height = "auto"
     @change="navigationHandler"
   >
     <v-carousel-item width="100%" v-for="(el, i) in flux" :key="i">
