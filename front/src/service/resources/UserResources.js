@@ -30,6 +30,14 @@ export default class Resources {
       .catch(error => error);
   }
 
+  async updateProfile(pseudo, user) {
+    const url = `${this.API()}/profiles/${pseudo}`;
+    return axios
+        .patch(url, user)
+        .then(response => response.data)
+        .catch(error => error);
+  }
+
   async getUserProfile(profileName) {
     const url = `${this.API()}/profiles/${profileName}`;
     return axios.get(url);

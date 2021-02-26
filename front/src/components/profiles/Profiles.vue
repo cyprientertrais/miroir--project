@@ -23,13 +23,13 @@
           color="primary"
           class="profile elevation-5"
           size="20vh"
-          @click="editProfile(profile)"
+          @click="(editing) ? editProfile(profile):redirectEditDashboard(profile.pseudo)"
         >
           <v-icon
-            x-large
+            large
             dark
             v-if="profile.pseudo != 'Invité' && editing"
-            class="profil-avatar"
+            class="profil-pencil-edit"
             color="grey"
           >
             mdi-pencil
@@ -143,6 +143,11 @@ export default {
         ? (this.titleValue = "Éditer les profils")
         : (this.titleValue = "Qui est-ce ?");
       this.editing = !this.editing;
+    },
+    redirectEditDashboard(profileName) {
+      if(profileName!="Invité"){
+        this.$router.push("/EditDashboard/"+profileName);
+      }
     }
   }
 };
@@ -154,6 +159,7 @@ export default {
   width: 100%;
   background: #2e2e2e;
 }
+
 #WhoIsThis {
   font-size: 4vh;
   width: 100%;
@@ -181,32 +187,58 @@ export default {
   font-size: 100px;
   background-color: #2e2e2e;
 }
+
 .plus:hover {
   cursor: pointer;
   size: 300;
   background-color: #3c3e41;
   transition: 0.5s ease;
 }
+
 .profile:hover {
   cursor: pointer;
   size: 300;
-  border: 5px white solid;
 }
+
 .paramDiv {
   width: 100%;
   text-align: right;
   margin-top: 20px;
   padding-right: 20px;
 }
+
 .profil-avatar {
   position: absolute;
 }
+
+.profil-pencil-edit {
+  position: absolute;
+  width: fit-content;
+  height: fit-content;
+  top: 15%;
+  right: 15%;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.profile:hover > .profil-pencil-edit {
+  top: 18%;
+  right: 18%;
+  transition: top right 0.2s ease-in-out;
+}
+
 div {
   color: white;
 }
+
 #btnEditProfiles {
   text-align: center;
   top: 55%;
   color: pink;
 }
+
+@keyframes fadeIn {
+    from{opacity: 0.3;}
+    to {opacity: 1;}
+}
+
 </style>

@@ -44,6 +44,11 @@ export default class WidgetResources {
     return axios.get(url);
   }
 
+  getAllWidgets() {
+      const url = `${this.API()}/admin/widgets`;
+      return axios.get(url);
+  }
+
   getNews() {
     const url = `${this.API()}/parse/`;
     return axios
