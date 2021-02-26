@@ -1,15 +1,35 @@
 #!/usr/bin/env python3
-import RPi.GPIO as GPIO  
+import RPi.GPIO as GPIO
 from time import sleep
+from os import environ
+
+__initVariable()
+
+def __changeVariable():
+    """
+    Changement de l'état de la variable d'environnement.
+    La variable correspond à l'état de l'écran. 
+    """
+
+    if environ['SCREEN']=='OFF':
+        environ['SCREEN'] = 'ON'
+        # print(environ['SCREEN'])
+    else:
+        environ['SCREEN'] = 'OFF'
+
+def __initVariable():
+    environ['SCREEN'] = 'OFF'
 
 def execute():
     # Désactive les warnings
     GPIO.setwarnings(False)
 
     # Mode BCM de la Pi
-    GPIO.setmode(GPIO.BCM)  
+    GPIO.setmode(GPIO.BCM)
 
     pinEcran = 19
+
+    __changeVariable()
 
     # On envoie le signal à l'écran et son état initial est haut
     GPIO.setup(pinEcran, GPIO.OUT, initial=GPIO.HIGH)
