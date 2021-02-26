@@ -3,7 +3,7 @@ import re
 import speech_recognition as sr
 from TextToSpeak import *
 from ActionType import ActionType
-from os import system
+from os import system, environ
 
 def createJson(info, actionType: ActionType):
     if actionType == ActionType.ChangeProfile:
@@ -38,27 +38,36 @@ def radioTreatment(radioInfo):
     else:
         return createJson(radioInfo, ActionType.ChangeRadio)
 
+# Reduce to Python 3.7 cause to -> x:
 def vocalTextTreatment(vocalText) -> json:
 
     if re.search("^miroir", vocalText):
         # PHRASES TYPES -> Miroir affiche le profile de Toto, Miroir met le profil de Toto
-        if x := re.search("profil de [a-zA-Zéèàê]*", vocalText):
+        if re.search("profil de [a-zA-Zéèàê]*", vocalText):
+            x = re.search("profil de [a-zA-Zéèàê]*", vocalText)
             res = x.group(0).split()[2]
             return createJson(res, ActionType.ChangeProfile)
-        elif x := re.search("radio [a-zA-Zéèàê0-9]*.[a-zA-Zéèàê0-9]*", vocalText):
+        elif re.search("radio [a-zA-Zéèàê0-9]*.[a-zA-Zéèàê0-9]*", vocalText):
+            x = re.search("radio [a-zA-Zéèàê0-9]*.[a-zA-Zéèàê0-9]*", vocalText)
             # PHRASES TYPES -> Miroir met la radio Fun Radio, Miroir met moi la radio RTL2
             # Miroir met la radio en pause, Miroir met la radio en marche
             # Baisser/monter le son
             res = getInfo(x)
             return radioTreatment(res)
-        elif x := re.search("journal [a-zA-Zéèàê0-9]*.[a-zA-Zéèàê0-9]*", vocalText):
+        elif re.search("journal [a-zA-Zéèàê0-9]*.[a-zA-Zéèàê0-9]*", vocalText):
+            x = re.search("journal [a-zA-Zéèàê0-9]*.[a-zA-Zéèàê0-9]*", vocalText)
             # PHRASES TYPES -> Miroir met le journal LeMonde, Miroir affiche le jounal Figaro
             res = getInfo(x)
             return createJson(res, ActionType.ChangeNews)
         elif re.search("en veille", vocalText):
             # PHRASES TYPES -> Miroir met toi en veille, Miroir mise en veille
-            print("** Lancement du script de Démarrage/Extinction du miroir **")
-            system("python3 ../Interrupteur/screen.py")
+            print("** Mise en veille de l'écran **")
+            system("python3 ../Interrupteur/screen.py OFF")
+            return ""
+        elif re.search("en marche", vocalText):
+            # PHRASES TYPES -> Miroir met toi en marche, Miroir mise en marche
+            print("** Mise en marche de l'écran **")
+            system("python3 ../Interrupteur/screen.py ON")
             return ""
         else:
             speakText("Cette action n'a pas été reconnu, veuillez réessayer")
