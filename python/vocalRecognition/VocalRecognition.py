@@ -3,7 +3,7 @@ import re
 import speech_recognition as sr
 from TextToSpeak import *
 from ActionType import ActionType
-from os import system, environ
+from os import system
 
 def createJson(info, actionType: ActionType):
     if actionType == ActionType.ChangeProfile:
