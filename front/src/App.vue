@@ -77,6 +77,11 @@ export default {
   src: local("PoppinsBold"),
     url(fonts/Poppins/Poppins-SemiBold.ttf) format("truetype");
 }
+h1 {
+  color: white;
+  font-size: 30px;
+  font-weight: bold;
+}
 
 .font-title {
   font-family: "Amatic" !important;
