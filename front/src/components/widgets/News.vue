@@ -19,7 +19,8 @@
         fluid
       >
         <v-card class="mx-auto">
-          <v-img :src="el.enclosure.url"></v-img>
+          <v-img v-if="el.enclosure" :src="el.enclosure.url"></v-img>
+          <v-img v-else :src="news.image.url"></v-img>
 
           <v-card-title >
             {{ el.title }}
@@ -44,7 +45,7 @@ export default {
   name: "News",
 
   created() {
-    WidgetService.getNews().then((res) => {
+    WidgetService.getNews("France 24").then((res) => {
       this.news = res.items.sort(function(a, b) {
         return new Date(b.isoDate) - new Date(a.isoDate);
       });

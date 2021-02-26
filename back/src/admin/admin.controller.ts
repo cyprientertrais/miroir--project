@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Res } from '@nestjs/common';
+import {Body, Controller, Get, Param, Post, Res} from '@nestjs/common';
 import { AdminService } from './admin.service';
 import SSH2Promise = require('ssh2-promise');
 import { ApiTags } from '@nestjs/swagger';
@@ -58,6 +58,17 @@ export class AdminController {
   @Get('/flowRadio')
   async getFlowRadio() {
     return this.adminService.getFlowRadio()
+  }
+
+  @Get('/getNews/:name')
+  async getFlowNews(@Param('name') name, @Res() res) {
+    if (name) {
+      const flow = await this.adminService.getFlowNews(name);
+      if(flow === ""){return res.sendStatus(404);}
+      return res.json(flow);
+    } else {
+      return res.sendStatus(400);
+    }
   }
 
   @Get('/widgets')

@@ -18,6 +18,9 @@ export class Admin {
   @Column()
   flowRadio: Object[];
 
+  @Column()
+  flowNews: Object[];
+
   constructor(admin?: Partial<Admin>) {
     Object.assign(this, admin);
   }

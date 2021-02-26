@@ -49,10 +49,11 @@ export default class WidgetResources {
       return axios.get(url);
   }
 
-  getNews() {
-    const url = `${this.API()}/parse/`;
+  getNews(name) {
+    if(name===""){name="lemonde";}
+    const url = `${this.API()}/admin/getNews/${name.toLocaleLowerCase(/ /g, '')}`;
     return axios
-      .post(url, { url: "https://www.france24.com/fr/rss" })
+      .get(url)
       .then(response => response.data)
       .catch(error => error);
   }
