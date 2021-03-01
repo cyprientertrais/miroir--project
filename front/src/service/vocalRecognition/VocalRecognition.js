@@ -24,6 +24,9 @@ export default class VocalRecognition {
         event.results[event.results.length - 1][0].transcript
       );
     };
+    recognition.onerror = function(err){
+      console.log(err);
+    }
     recognition.onend = function() {
       recognition.start();
 
@@ -38,8 +41,11 @@ export default class VocalRecognition {
     let foundInfo = "";
     if (vocalText.match(/^miroir/g)) {
       switch (vocalText) {
+        
+
         // PHRASES TYPES -> Miroir affiche le profile de Toto, Miroir met le profil de Toto
-        case vocalText.match(/profil de [a-zA-Zéèàê]*/g):
+        case (vocalText.match(/profil de [a-zA-Zéèàê]*/g) != null):
+
           foundInfo = vocalText.match(/profil de [a-zA-Zéèàê]*/g);
           store.dispatch("changeProfile", this.getInfo(foundInfo));
           break;
@@ -66,11 +72,11 @@ export default class VocalRecognition {
           // this.$store.dispatch("awakeMode");
           break;
         default:
-          console.log("Action du miroir non trouvé !");
+          console.log("** MIROIR EN DEBUT MAIS PAS DE CAS **");
       }
     } else {
       // speakText("Cette action n'a pas été reconnu, veuillez réessayer")
-      console.log("** MIROIR EN DEBUT MAIS PAS DE CAS **");
+      console.log("Action non trouvée");
     }
   }
 

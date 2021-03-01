@@ -3,11 +3,11 @@ import Vuex from "vuex";
 import UserResources from "@/service/resources/UserResources";
 import WidgetResources from "@/service/resources/WidgetResources";
 import captitalizeFirstLetter from "../service/utils";
-
 Vue.use(Vuex);
 
 const userService = new UserResources();
 const widgetService = new WidgetResources();
+
 
 export default new Vuex.Store({
   state: {
