@@ -45,6 +45,7 @@ export default class VocalRecognition {
       if (vocalTextTreat.match(/profil de [a-zA-Zéèàê]*/g)) {
         let foundInfo = vocalTextTreat.match(/profil de [a-zA-Zéèàê]*/g) + " ";
         let tab = foundInfo.split(' ');
+        this.speakText("ok je change le profil")
         store.dispatch("changeProfile", tab[2]);
         return 0
       // PHRASES TYPES -> Miroir met la radio Fun Radio, Miroir met moi la radio RTL2
@@ -109,4 +110,9 @@ export default class VocalRecognition {
       // this.$store.dispatch("changeRadio", getInfo);
     }
   }
+
+  speakText(text){
+  document.getElementById('vocal-text').innerHTML = text;
+  document.getElementById("play").click();
+}
 }

@@ -1,6 +1,13 @@
 <template>
   <v-app>
     <v-main>
+     <v-btn
+  elevation="2"
+  id="play"
+  style="display:none"
+  @click=" speak()"
+></v-btn>
+<p id="vocal-text" style="display:none"></p>
       <router-view></router-view>
     </v-main>
   </v-app>
@@ -52,18 +59,40 @@ export default {
 
   methods: {
     ...mapActions(["setLocation", "setUserProfile"]),
-    startTxtToSpeech() {
-      let vocal = new VocalRecognition();
-
-      vocal.vocalProcess();
+  
+    speak(text){
+     
+      text =   document.getElementById('vocal-text').innerHTML
+       if('speechSynthesis' in window) { // Chrome only !!
+        var timer = setInterval(function() {
+    var voices = speechSynthesis.getVoices();
+    console.log(voices);
+    if (voices.length !== 0) {
+      var msg = new SpeechSynthesisUtterance(text);
+      msg.voice = voices[40];
+      msg.lang="en-US"
+      speechSynthesis.speak(msg);
+      clearInterval(timer);
     }
+}, 200);
+
+    
+
+  } else { // Other browsers !!
+
+     // Use AJAX (with GET) to a .php to file_get_contents
+     // generate the <100 by <100 charaters audio files, and nest in callbacks
+
+  }
+
+    },
+   
   },
 
   mounted() {
     this.setUserProfile("Invité");
     let vocal = new VocalRecognition();
     vocal.vocalProcess();
-    //this.startTxtToSpeech();
   }
 };
 </script>
