@@ -7,7 +7,7 @@
       color="secondary"
       rounded
     >
-      <div class="titre font-title">Oÿna</div>
+      <h1 class="font-title">Oÿna</h1>
       <div class="password">
         <v-text-field
           v-model="password"
@@ -24,8 +24,9 @@
           elevation="2"
           class="butonPassword font-text"
           color="accent"
-          >Connect</v-btn
         >
+          Connect
+        </v-btn>
       </div>
     </v-sheet>
   </v-sheet>
@@ -33,18 +34,15 @@
 
 <script>
 import { sha256 } from "js-sha256";
-import Resources from "@/service/resources/resources";
-const ResourcesService = new Resources();
+import ConnectionResources from "@/service/resources/ConnectionResources";
+const connectionResources = new ConnectionResources();
 export default {
   name: "Connection",
   data() {
     return {
       password: "",
       isPasswordWrong: false,
-      wrongPasswordMessage: "",
-      absolute: true,
-      opacity: 1,
-      overlay: false,
+      wrongPasswordMessage: ""
     };
   },
   computed: {},
@@ -53,14 +51,14 @@ export default {
       //hash password
       const hashedPassword = sha256(this.password);
       //askbackif the password is right, recieve 200 or 403
-      const responseCheckPassword = await ResourcesService.checkAdminPassword(
+      const responseCheckPassword = await connectionResources.checkAdminPassword(
         hashedPassword
       );
       //check if call responds 200 or 403
       if (responseCheckPassword.status === 200) {
         //if yes, modification global variable to say user is connected and redirect
         sessionStorage.setItem("isAuthenticated", true);
-        this.$router.push(this.$route.query.from || "/");
+        this.$router.push(this.$route.query.from || "/settings");
       } else {
         //if no, display error
         this.isPasswordWrong = true;
@@ -76,17 +74,14 @@ export default {
         this.isPasswordWrong = false;
         this.wrongPasswordMessage = "";
       }
-    },
+    }
   },
-  mounted: function() {},
+  mounted: function() {}
 };
 </script>
 <style scoped>
-.titre {
-  font-weight: bold;
-  font-size: 70px;
-  color: #ffffff;
-  padding-top: 7%;
+h1 {
+  font-size: 150px;
 }
 .password {
   margin-top: 6%;
@@ -107,7 +102,7 @@ export default {
   padding: 5% 12% 5% 12%;
 }
 @media screen and (max-width: 540px) {
-  .titre {
+  .title {
     padding-top: 40%;
   }
   .mainDiv {

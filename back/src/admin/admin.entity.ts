@@ -6,12 +6,17 @@ export class Admin {
   @IsNotEmpty()
   @IsString()
   orientation: string;
+  @Column()
+  location: string;
 
   @Column()
   adminPassword: string;
 
   @Column()
   widgets: string[];
+
+  @Column()
+  flowRadio: Object[];
 
   constructor(admin?: Partial<Admin>) {
     Object.assign(this, admin);

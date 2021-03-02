@@ -1,18 +1,19 @@
 <template>
   <div class="changeProfile" align="center" justify="center">
     <v-container v-if="profile">
-      <h1>Modifier le profil</h1>
+      <h1 class="font-title">Modifier le profil</h1>
 
       <v-text-field
         id="newProfileName"
         label="Nom d'utilisateur"
-        v-model="profile.pseudo"
+        v-model="newPseudo"
         dark
         :error="isProfileNameInvalid"
         :error-messages="errorMessage"
+        maxlength="20"
         clearable
       ></v-text-field>
-      <div class="buttons">
+      <div class="buttons font-text">
         <v-btn
           color="accent"
           elevation="2"
@@ -21,7 +22,12 @@
           light
           >Enregistrer</v-btn
         >
-        <v-btn color="accent" elevation="2" class="buttonAnnul" light @click="cancelEdit"
+        <v-btn
+          color="accent"
+          elevation="2"
+          class="buttonAnnul"
+          light
+          @click="cancelEdit"
           >Annuler</v-btn
         >
         <v-btn
@@ -46,74 +52,67 @@
 </template>
 
 <script>
-import Resources from "@/service/resources/resources";
+import UserResources from "@/service/resources/UserResources";
 import DeleteProfile from "@/components/profiles/DeleteProfile";
 
-const ResourcesService = new Resources();
+const userService = new UserResources();
 
 export default {
   name: "ChangeProfile",
   props: ["profile"],
   components: {
-    DeleteProfile,
+    DeleteProfile
   },
   created() {
-    this.oldPseudo = this.profile.pseudo;
+    this.newPseudo = this.profile.pseudo;
   },
-  mounted() {
-    console.log("mounted");
-  },
+  mounted() {},
   data() {
     return {
       isProfileNameInvalid: false,
       errorMessage: "",
-      oldPseudo: "",
-      deleteProfile: false,
+      newPseudo: "",
+      deleteProfile: false
     };
   },
   methods: {
     profilDeleted(deleted) {
       if (deleted) {
-        this.deleteProfile = false;
         this.$emit("profileChanged", true);
-      } else {
-        this.deleteProfile = false;
       }
+      this.deleteProfile = false;
     },
     cancelEdit() {
-      this.$emit("profileChanged");
+      this.$emit("profileChanged", false);
     },
     async changeProfileName() {
-      const PATCHRequest = ResourcesService.changeProfileName(
-        this.oldPseudo,
-        this.profile.pseudo
-      );
+      if (this.newPseudo.length === 0) {
+        this.isProfileNameInvalid = true;
+        this.errorMessage = "Veuillez entrer un nom de profil valide.";
+        return;
+      } else if (this.newPseudo.length > 20) {
+        this.isProfileNameInvalid = true;
+        this.errorMessage =
+          "La taille du nom ne doit pas dépasser 20 caractères. Veuillez entrer un nom de profil valide.";
+        return;
+      }
 
-      function getPATCHRequestResponse(PATCHRequest) {
-        return PATCHRequest.then(function(res) {
+      const msg = await userService
+        .changeProfileName(this.profile.pseudo, this.newPseudo)
+        .then(function(res) {
           return JSON.stringify(res);
         });
-      }
 
-      const msg = await getPATCHRequestResponse(PATCHRequest);
-
-      if (msg.includes("Request failed with status code 404")) {
+      if (msg.includes("Request failed with status code 403")) {
         this.isProfileNameInvalid = true;
-        if (this.newProfileName.length == 0) {
-          this.errorMessage = "Veuillez entrer un nom de profil valide.";
-        } else if (this.newProfileName.length > 15) {
-          this.errorMessage =
-            "La taille du nom ne doit pas dépassé 15 caractères. Veuillez entrer un nom de profil valide.";
-        } else {
-          this.errorMessage =
-            "Ce nom de profil est déjà utilisé. Veuillez entrer un autre nom.";
-        }
+        this.errorMessage =
+          "Ce nom de profil est déjà utilisé. Veuillez entrer un autre nom.";
       } else {
-        this.$emit("profileChanged");
+        this.$emit("profileChanged", true);
         this.isProfileNameInvalid = false;
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -125,10 +124,7 @@ export default {
 }
 
 h1 {
-  color: white;
-  font-size: 30px;
   padding-top: 20%;
-  font-weight: bold;
 }
 
 .v-text-field {

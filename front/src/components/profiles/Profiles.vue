@@ -2,7 +2,9 @@
   <v-container fill-height fluid class="profilesListContainer">
     <v-row justify="center" id="WhoIsThis" class="d-flex align-start">
       <div class="text-lg-h1 text-md-h1 text-sm-h2 text-h3">
-        {{ titleValue }}
+        <div class="font-title">
+          {{ titleValue }}
+        </div>
       </div>
     </v-row>
     <v-row
@@ -17,22 +19,27 @@
         v-for="profile in profilesArray"
         :key="profile.id"
       >
-        <v-badge
-          icon="mdi-pencil"
-          color="green"
-          overlap
-          offset-x="25"
-          offset-y="25"
-          v-model="editing"
+        <v-avatar
+          color="primary"
+          class="profile elevation-5"
+          size="20vh"
+          @click="
+            editing
+              ? editProfile(profile)
+              : redirectEditDashboard(profile.pseudo)
+          "
         >
-          <v-avatar
-            color="primary"
-            class="profile elevation-5"
-            size="20vh"
-            @click="editProfile(profile)"
-            >{{ profile.pseudo }}</v-avatar
+          <v-icon
+            large
+            dark
+            v-if="profile.pseudo != 'Invité' && editing"
+            class="profil-pencil-edit"
+            color="grey"
           >
-        </v-badge>
+            mdi-pencil
+          </v-icon>
+          <span class="profil-avatar">{{ profile.pseudo }}</span>
+        </v-avatar>
       </v-col>
       <v-col v-if="profilesArray.length < 6" cols="6" md="2" sm="4" xs="6">
         <v-avatar class="plus" size="20vh" @click="addProfile = true">
@@ -43,20 +50,34 @@
       </v-col>
     </v-row>
     <v-row justify="center" id="btnEditProfiles" class="d-flex align-end">
-      <v-btn
-        @click="toogleEdit()"
-        href="#"
-        class="elevation-5"
-        color="accent"
-        x-large
-        >{{ btnValue }}</v-btn
+      <div class="font-text">
+        <v-btn
+          @click="toogleEdit()"
+          href="#"
+          class="elevation-5"
+          color="accent"
+          x-large
+          >{{ btnValue }}</v-btn
+        >
+      </div>
+    </v-row>
+
+    <v-row justify="center">
+      <v-alert
+        dense
+        outlined
+        type="error"
+        v-if="inviteProfil === true && editing"
       >
+        Impossible de supprimer le profil <strong>invité</strong>
+      </v-alert>
     </v-row>
 
     <v-dialog v-model="addProfile" width="500px">
-      <AddProfile @profileCreated="getProfiles" />
+      <div class="font-text">
+        <AddProfile @profileCreated="getProfiles" />
+      </div>
     </v-dialog>
-
     <v-dialog v-model="editingChoosedProfile" width="500px">
       <ChangeProfile
         v-if="editingChoosedProfile"
@@ -70,13 +91,13 @@
 <script>
 import AddProfile from "@/components/profiles/AddProfile";
 import ChangeProfile from "@/components/profiles/ChangeProfile";
-import Resources from "@/service/resources/resources";
-const ResourcesService = new Resources();
+import UserResources from "@/service/resources/UserResources";
+const userService = new UserResources();
 export default {
   name: "ProfilesLists",
   components: {
     AddProfile,
-    ChangeProfile,
+    ChangeProfile
   },
   created() {
     this.getProfiles(true);
@@ -91,31 +112,34 @@ export default {
       addProfile: false,
       choosedProfile: undefined,
       editingChoosedProfile: false,
+      inviteProfil: false
     };
   },
   methods: {
-    profileEdited(causedByProfileDeleted) {
+    profileEdited(needRefresh) {
       this.choosedProfile = null;
       this.editingChoosedProfile = false;
-      if (causedByProfileDeleted) {
-        this.getProfiles(true);
-      }
+      this.getProfiles(needRefresh);
     },
     editProfile(profile) {
-      if (this.editing) {
+      this.inviteProfil = false;
+      if (this.editing && profile.pseudo != "Invité") {
         this.choosedProfile = profile;
         this.editingChoosedProfile = true;
+      } else if (this.editing && profile.pseudo === "Invité") {
+        this.inviteProfil = true;
       }
     },
     getProfiles(value) {
       if (value) {
-        ResourcesService.getAllUserProfile().then((res) => {
+        userService.getAllUserProfile().then(res => {
           this.profilesArray = res.data;
         });
       }
       this.addProfile = false;
     },
     toogleEdit() {
+      this.inviteProfil = false;
       this.btnValue == "Éditer les profils"
         ? (this.btnValue = "Terminé")
         : (this.btnValue = "Éditer les profils");
@@ -124,7 +148,12 @@ export default {
         : (this.titleValue = "Qui est-ce ?");
       this.editing = !this.editing;
     },
-  },
+    redirectEditDashboard(profileName) {
+      if (profileName != "Invité") {
+        this.$router.push("/EditDashboard/" + profileName);
+      }
+    }
+  }
 };
 </script>
 
@@ -134,6 +163,7 @@ export default {
   width: 100%;
   background: #2e2e2e;
 }
+
 #WhoIsThis {
   font-size: 4vh;
   width: 100%;
@@ -161,29 +191,61 @@ export default {
   font-size: 100px;
   background-color: #2e2e2e;
 }
+
 .plus:hover {
   cursor: pointer;
   size: 300;
   background-color: #3c3e41;
   transition: 0.5s ease;
 }
+
 .profile:hover {
   cursor: pointer;
   size: 300;
-  border: 5px white solid;
 }
+
 .paramDiv {
   width: 100%;
   text-align: right;
   margin-top: 20px;
   padding-right: 20px;
 }
+
+.profil-avatar {
+  position: absolute;
+}
+
+.profil-pencil-edit {
+  position: absolute;
+  width: fit-content;
+  height: fit-content;
+  top: 15%;
+  right: 15%;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.profile:hover > .profil-pencil-edit {
+  top: 18%;
+  right: 18%;
+  transition: top right 0.2s ease-in-out;
+}
+
 div {
   color: white;
 }
+
 #btnEditProfiles {
   text-align: center;
   top: 55%;
   color: pink;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0.3;
+  }
+  to {
+    opacity: 1;
+  }
 }
 </style>

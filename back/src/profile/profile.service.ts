@@ -4,7 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Profile } from '../entities/profile.entity';
+import { Profile } from './profile.entity';
 import { MongoRepository } from 'typeorm';
 import { Dashboard } from '../entities/dashboard.entity';
 
@@ -16,16 +16,16 @@ export class ProfileService {
   ) {}
 
   async getAll() {
-    const e = await this.profileRepository.find();
-    return e;
+    return await this.profileRepository.find();
   }
 
   async getOne(name: string): Promise<Profile> {
     const e = await this.profileRepository.findOne({ pseudo: name });
-    if (e === null) {
-      throw new NotFoundException();
+    if (e === undefined) {
+      throw new NotFoundException('User ' + name + ' not found');
+    } else {
+      return e;
     }
-    return e;
   }
 
   async createOne(profile: Profile) {
@@ -37,8 +37,12 @@ export class ProfileService {
   }
 
   async getAllDashboardsFromProfileService(name: string) {
-    const e = await this.getOne(name);
-    return e.dashboards;
+    return await this.profileRepository.findOne({
+      select: ['dashboards'],
+      where: {
+        pseudo: name,
+      },
+    });
   }
 
   async createDashboardFromProfileService(
@@ -65,6 +69,7 @@ export class ProfileService {
       return { status: 401, message: "Can't delete guest profile" };
     }
     const res = await this.profileRepository.deleteOne({ pseudo: name });
+
     if (res.result.ok === 1 && res.result.n === 1) {
       return { status: 204, message: 'User ' + name + ' successfully deleted' };
     }
@@ -74,23 +79,26 @@ export class ProfileService {
     };
   }
 
-  async update(name: string, newName: string) {
-    newName = newName.charAt(0).toUpperCase() + newName.slice(1);
-    const newvalues = { $set: { pseudo: newName } };
-    const res = await this.profileRepository.updateOne(
-      { pseudo: name },
-      newvalues,
-    );
-    if (res.result.ok === 1 && res.result.n === 1) {
-      return {
-        status: 204,
-        message: 'User ' + name + ' was successfully updated into ' + newName,
-      };
+  async update(pseudo: string, profile: Profile) {
+    profile.pseudo =
+      profile.pseudo.charAt(0).toUpperCase() + profile.pseudo.slice(1);
+    const actualProfile = await this.getOne(pseudo);
+    if (!actualProfile) {
+      return false;
     }
-    return {
-      status: 404,
-      message: 'An error occured when trying to update ' + name,
-    };
+
+    if (
+      pseudo !== profile.pseudo &&
+      (await this.profileRepository.findOne({ pseudo: profile.pseudo }))
+    ) {
+      return false;
+    }
+
+    this.profileRepository.update(actualProfile, profile).catch((err) => {
+      return false;
+    });
+
+    return true;
   }
 
   doesDashboardNameAlreadyExists(

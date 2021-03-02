@@ -1,43 +1,53 @@
 import axios from "axios";
 
 export default class Resources {
-    axios = require("axios");
-    hostname = window.location.hostname;
-    API_KEY = "ee95de4f37a7e21b3714e529ea39a2fb";
+  axios = require("axios");
+  hostname = window.location.hostname;
+  API() {
+    return process.env.NODE_ENV === "production"
+      ? "https://back-miroir.herokuapp.com"
+      : "http://localhost:5000";
+  }
 
-    getAllUserProfile() {
-        const url = `http://${this.hostname}:3000/profiles/`;
-        return axios.get(url);
-    }
+  async getAllUserProfile() {
+    const url = `${this.API()}/profiles/`;
+    return axios.get(url);
+  }
 
-    addProfile(data) {
-        const url = `http://${this.hostname}:3000/profiles/`;
-        return axios
-            .post(url, data)
-            .then((response) => response.data)
-            .catch((error) => error);
-    }
+  async addProfile(data) {
+    const url = `${this.API()}/profiles/`;
+    return axios
+      .post(url, data)
+      .then(response => response.data)
+      .catch(error => error);
+  }
 
-    changeProfileName(oldName, newName) {
-        const url = `http://${this.hostname}:3000/profiles/${oldName}`;
-        console.log("info", url);
-        return axios
-            .patch(url, {name: newName})
-            .then((response) => response.data)
-            .catch((error) => error);
-    }
+  async changeProfileName(oldName, newName) {
+    const url = `${this.API()}/profiles/${oldName}`;
+    return axios
+      .patch(url, { pseudo: newName })
+      .then(response => response.data)
+      .catch(error => error);
+  }
 
-    getUserProfile(profileName) {
-        const url = `http://${this.hostname}:3000/profiles/${profileName}`;
-        return axios.get(url);
-    }
+  async updateProfile(pseudo, user) {
+    const url = `${this.API()}/profiles/${pseudo}`;
+    return axios
+      .patch(url, user)
+      .then(response => response.data)
+      .catch(error => error);
+  }
 
-    async deleteProfileByName(profileName) {
-        const url = `http://${this.hostname}:3000/profiles/${profileName}`;
-        let t = await axios.delete(url).catch(() => {
-            return {status: 404};
-        });
-        return t;
-    }
+  async getUserProfile(profileName) {
+    const url = `${this.API()}/profiles/${profileName}`;
+    return axios.get(url);
+  }
 
+  async deleteProfileByName(profileName) {
+    const url = `${this.API()}/profiles/${profileName}`;
+    let t = await axios.delete(url).catch(() => {
+      return { status: 404 };
+    });
+    return t;
+  }
 }

@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Post, Res } from '@nestjs/common';
-import { AdminService } from '../services/admin.service';
+import { AdminService } from './admin.service';
 import SSH2Promise = require('ssh2-promise');
+import { ApiTags } from '@nestjs/swagger';
 
 const sshconfig2 = {
   host: '10.3.141.1',
@@ -8,7 +9,8 @@ const sshconfig2 = {
   password: 'ssh_miroir',
 };
 
-@Controller('/admin')
+@ApiTags('admin')
+@Controller('admin')
 // TODO REFACT ADMIN / WIDGETS / WIFI
 export class AdminController {
   constructor(private readonly adminService: AdminService) {}
@@ -30,7 +32,12 @@ export class AdminController {
 
   @Post('/checkAdminPassword')
   async checkAdminPassword(@Body() body, @Res() res) {
-    return this.adminService.checkAdminPassword(body);
+    const isValid = await this.adminService.checkAdminPassword(body);
+
+    if (!isValid) {
+      return res.sendStatus(403);
+    }
+    return res.sendStatus(200);
   }
 
   @Get('/orientation')
@@ -38,9 +45,24 @@ export class AdminController {
     return this.adminService.getOrientation();
   }
 
+  @Get('/location')
+  async getLocation() {
+    return this.adminService.getLocation();
+  }
+
+  @Post('/location')
+  async postLocation(@Body() body) {
+    return this.adminService.postLocation(body);
+  }
+
+  @Get('/flowRadio')
+  async getFlowRadio() {
+    return this.adminService.getFlowRadio()
+  }
+
   @Get('/widgets')
-  async fetWidgets() {
-    return this.adminService.getAvailableWidgets();
+  async getWidgets() {
+    return this.adminService.getAvailableWidgets()
   }
 
   @Post('/sendWifi')

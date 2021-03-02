@@ -17,22 +17,21 @@ export default {
   name: "settings",
   components: {
     Profiles,
-    Reglage,
+    Reglage
   },
   data() {
     return {
-      settingsPopup: false,
+      settingsPopup: false
     };
   },
   methods: {
     openDialog() {
-      console.log("click");
       this.settingsPopup = true;
     },
     closeDialog() {
       this.settingsPopup = false;
-    },
-  },
+    }
+  }
 };
 </script>
 

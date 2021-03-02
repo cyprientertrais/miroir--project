@@ -1,12 +1,13 @@
 <template>
   <v-container color="primary" align="center" justify="center" class="popup">
     <v-card elevation="22" color="primary" class="white--text">
-      <v-row justify="center"> <h1 class="titre">Réglages</h1> </v-row>
+      <v-row justify="center"> <h1 class="font-title">Réglages</h1> </v-row>
       <v-row>
         <v-col>
-          <v-sheet color="primary" class="listButtons">
+          <v-sheet color="primary" class="listButtons font-text">
             <v-row justify="center">
               <v-btn
+                v-if="this.$router.history.current.path !== '/settings'"
                 v-on:click="onClickProfils"
                 elevation="2"
                 class="profils ma-2 white--text"
@@ -17,6 +18,7 @@
             </v-row>
             <v-row justify="center">
               <v-btn
+                v-if="this.$router.history.current.path !== '/wifi'"
                 v-on:click="onClickWifi"
                 elevation="2"
                 class="wifi ma-2 white--text"
@@ -61,18 +63,18 @@ export default {
   computed: {},
   methods: {
     onClickProfils() {
-      console.log("onClickProfils");
+      this.$router.push("/settings");
     },
     onClickWifi() {
-      console.log("onClickWifi");
+      this.$router.push("/wifi");
     },
     onClickUsine() {
       console.log("oncClickUsine");
     },
     onClickRetour() {
       this.$emit("closeDialog");
-    },
-  },
+    }
+  }
 };
 </script>
 <style scoped></style>

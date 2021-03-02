@@ -1,47 +1,51 @@
 <template>
-  <v-carousel  dark v-if="news" v-model="model" :show-arrows="false" cycle hide-delimiters>
+  <v-carousel
+    dark
+    v-if="news"
+    v-model="model"
+    :show-arrows="false"
+    cycle
+    transition="scroll-y-transition"
+    reverse-transition="scroll-y-transition"
+    height="40vh"
+    hide-delimiters
+    interval="9000"
+  >
     <v-carousel-item
-      
-      v-for="(el,i) in news"
+      leave-absolute="true"
+      hide-on-leave="false"
+      v-for="(el, i) in news"
       :key="i"
     >
-      <v-sheet
-        height="100%"
-        fill-height fluid
- 
-      >
-         <v-card class="mx-auto">
-      <v-img
-        :src="el.enclosure.url"
-       
-      ></v-img>
-  
-      <v-card-title>
-        {{el.title}}
-      </v-card-title>
-  
-      <v-card-subtitle>
-       {{moment(el.isoDate).fromNow()}}
-      </v-card-subtitle>
-         </v-card>
+      <v-sheet fill-height fluid>
+        <v-card class="mx-auto">
+          <v-img :src="el.enclosure.url"></v-img>
 
+          <v-card-title class="textNews">
+            {{ el.title }}
+          </v-card-title>
+
+          <v-card-subtitle>
+            {{ el.creator }}
+            {{ moment(el.isoDate).fromNow() }}
+          </v-card-subtitle>
+        </v-card>
       </v-sheet>
     </v-carousel-item>
   </v-carousel>
 </template>
 
 <script>
-import Resources from "@/service/resources/resources";
+import WidgetResources from "@/service/resources/WidgetResources";
 var moment = require("moment");
-const ResourcesService = new Resources();
+const WidgetService = new WidgetResources();
 
 export default {
   name: "News",
 
   created() {
-    ResourcesService.getNews().then(res=>{
-        this.news=res.items.sort(function(a, b) {
-          console.log (a)
+    WidgetService.getNews().then(res => {
+      this.news = res.items.sort(function(a, b) {
         return new Date(b.isoDate) - new Date(a.isoDate);
       });
     });
@@ -49,15 +53,22 @@ export default {
 
   data() {
     return {
-    model:0,
-    news:null
+      model: 0,
+      news: null
     };
   },
   methods: {
-    moment(d){
+    moment(d) {
       return moment(d);
     }
-   
-  },
+  }
 };
 </script>
+
+<style scoped>
+
+  .textNews{
+    word-break: normal;
+  }
+
+</style>
