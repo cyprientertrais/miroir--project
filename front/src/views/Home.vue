@@ -10,24 +10,24 @@
       <strong v-if="userProfile">{{ userProfile.pseudo }}</strong>
     </v-card>
     <div class=" ma-2 widgetHolder" v-if="widgets">
-        <v-row
-          v-for="(xWidgets, index) in widgets"
-          :key="index"
-          justify="space-between"
+      <v-row
+        v-for="(xWidgets, index) in widgets"
+        :key="index"
+        justify="space-between"
+      >
+        <v-col
+          v-for="yWidgets in xWidgets"
+          :key="yWidgets"
+          cols="12"
+          sm="12"
+          md="3"
+          lg="3"
+          xl="3"
         >
-          <v-col
-            v-for="yWidgets in xWidgets"
-            :key="yWidgets"
-            cols="12"
-            sm="12"
-            md="3"
-            lg="3"
-            xl="3"
-          >
-            <component :is="yWidgets"></component>
-          </v-col>
-        </v-row>
-      </div>
+          <component :is="yWidgets"></component>
+        </v-col>
+      </v-row>
+    </div>
   </div>
 </template>
 
@@ -63,18 +63,18 @@ export default {
   methods: {
     setWidgets() {
       if (this.userProfile) {
-          this.userProfile.dashboards
-            .filter(element => element.name === "default")[0]
-            .widgets.forEach(widget => {
-              let quotient = Math.floor(widget.position / 2);
-              let reste = widget.position % 2;
-              if (this.widgets && !this.widgets[quotient]) {
-                this.widgets[quotient] = [];
-              }
-              this.widgets[quotient][reste] = widget.name;
-              this.$options.components[widget.name] = () =>
-                import("../components/widgets/" + widget.name + ".vue");
-            });
+        this.userProfile.dashboards
+          .filter(element => element.name === "default")[0]
+          .widgets.forEach(widget => {
+            let quotient = Math.floor(widget.position / 2);
+            let reste = widget.position % 2;
+            if (this.widgets && !this.widgets[quotient]) {
+              this.widgets[quotient] = [];
+            }
+            this.widgets[quotient][reste] = widget.name;
+            this.$options.components[widget.name] = () =>
+              import("../components/widgets/" + widget.name + ".vue");
+          });
       }
     },
     getOrientation() {

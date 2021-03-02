@@ -2,8 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import UserResources from "@/service/resources/UserResources";
 import WidgetResources from "@/service/resources/WidgetResources";
-import captitalizeFirstLetter from "../service/utils";
-
+import { captitalizeFirstLetter, answerToVocal } from "../utils/utils";
 Vue.use(Vuex);
 
 const userService = new UserResources();
@@ -35,30 +34,27 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    changeProfile: async function(context, message) {
-      // let isExist = true
-      const jsonIntoString = JSON.stringify(message);
-      console.log("changeProfile detected : " + jsonIntoString);
-      const jsonAnswer = JSON.parse(jsonIntoString);
-      //TODO CHECK USER EXIST
+    changeProfile: async function(context, profileName) {
       await userService
-        .getUserProfile(captitalizeFirstLetter(jsonAnswer.info))
+        .getUserProfile(captitalizeFirstLetter(profileName))
         .then(res => {
           context.commit("setUserProfile", res.data);
-          // isExist = true;
+          answerToVocal("profileAnswer", profileName);
         })
         .catch(err => {
+          answerToVocal("profileUnknown", profileName);
           console.log(err);
-          // isExist = false;
         });
     },
-    changeRadio: function(context, message) {
-      // let isExist = false
-      const jsonIntoString = JSON.stringify(message);
-      console.log("changeRadio detected :" + JSON.stringify(message));
-      const jsonAnswer = JSON.parse(jsonIntoString);
-      console.log("changeRadio:", jsonAnswer);
+    changeRadio: function(context, radioName) {
+      let isExist = false;
+      console.log("changeRadio detected :" + radioName);
       //TODO CHECK RADIO EXIST
+      if (isExist) {
+        answerToVocal("radioAnswer", radioName);
+      } else {
+        answerToVocal("radioUnknown", radioName);
+      }
     },
     // radioPlay: function(context, message) {
     //TODO CHECK IS TRUE OR FALSE
@@ -73,14 +69,19 @@ export default new Vuex.Store({
     // SEND THIS IF ERROR
     //sendAnswer("commonError", jsonAnswer.info)
     //},
-    changeNews: function(context, message) {
-      // let isExist = false
+    /*  changeNews: function(context, message) {
+      let isExist = false;
       const jsonIntoString = JSON.stringify(message);
       console.log("changeNews detected :" + JSON.stringify(message));
       const jsonAnswer = JSON.parse(jsonIntoString);
       console.log("changeNews:", jsonAnswer);
       //TODO CHECK RADIO EXIST
-    },
+      if (isExist) {
+        answerToVocal("newsAnswer", jsonAnswer.info);
+      } else {
+        answerToVocal("newsUnkown", jsonAnswer.info);
+      }
+    },*/
     setLocation(context, location) {
       context.commit("setLocation", location);
     },

@@ -94,8 +94,8 @@ export default {
         this.audio.pause();
       }
       this.isPlaying = false;
-    },
-  },
+    }
+  }
 };
 </script>
 

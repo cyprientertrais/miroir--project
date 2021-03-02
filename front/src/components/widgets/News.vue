@@ -66,9 +66,7 @@ export default {
 </script>
 
 <style scoped>
-
-  .textNews{
-    word-break: normal;
-  }
-
+.textNews {
+  word-break: normal;
+}
 </style>
