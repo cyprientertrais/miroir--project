@@ -47,14 +47,21 @@ export default {
       model: 0,
       audio: null,
       actualFlux: 0,
-      isPlaying: false
     };
   },
   created() {
     this.fetchFlowRadio();
   },
   computed: {
-    ...mapGetters(["flowRadio"])
+    ...mapGetters(["flowRadio", "selectedRadio", "nextRadio", "previousRadio"]),
+    isPlaying: {
+      get() {
+        return this.$store.state.isPlaying;
+      },
+      set(value) {
+        this.$store.commit("updateIsPlaying", value);
+      },
+    },
   },
   methods: {
     ...mapActions(["fetchFlowRadio"]),
@@ -75,10 +82,10 @@ export default {
       this.actualFlux = direction;
       if (this.isPlaying) this.playRadio();
     },
-    nextRadio() {
+    setNextRadio() {
       this.navigationHandler((this.actualFlux + 1) % this.flowRadio.length);
     },
-    previousRadio() {
+    setPreviousRadio() {
       this.navigationHandler(
         this.actualFlux === 0 ? this.flowRadio.length - 1 : this.actualFlux - 1
       );
@@ -94,8 +101,26 @@ export default {
         this.audio.pause();
       }
       this.isPlaying = false;
-    }
-  }
+    },
+  },
+  watch: {
+    nextRadio: function() {
+      this.setNextRadio();
+    },
+    previousRadio: function() {
+      this.setPreviousRadio();
+    },
+    isPlaying: function(val) {
+      if (val) {
+        this.playRadio();
+      } else {
+        this.stopRadio();
+      }
+    },
+    selectedRadio: function(val) {
+      this.changeRadioByName(val);
+    },
+  },
 };
 </script>
 

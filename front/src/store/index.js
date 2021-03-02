@@ -14,7 +14,11 @@ export default new Vuex.Store({
     userProfile: undefined,
     orientation: undefined,
     wifiList: undefined,
-    flowRadio: undefined
+    flowRadio: undefined,
+    isPlaying: false,
+    selectedRadio: undefined,
+    nextRadio: 0,
+    previousRadio: 0,
   },
   mutations: {
     setLocation(state, location) {
@@ -31,87 +35,102 @@ export default new Vuex.Store({
     },
     setWifiList(state, wifiList) {
       state.wifiList = wifiList;
-    }
+    },
+    updateIsPlaying(state, value) {
+      state.isPlaying = value;
+    },
+    selectedRadio(state, value) {
+      state.selectedRadio = value;
+    },
+    nextRadio(state) {
+      ++state.nextRadio;
+    },
+    previousRadio(state) {
+      ++state.previousRadio;
+    },
   },
   actions: {
     changeProfile: async function(context, profileName) {
       await userService
         .getUserProfile(captitalizeFirstLetter(profileName))
-        .then(res => {
+        .then((res) => {
           context.commit("setUserProfile", res.data);
           answerToVocal("profileAnswer", profileName);
         })
-        .catch(err => {
+        .catch((err) => {
           answerToVocal("profileUnknown", profileName);
           console.log(err);
         });
     },
-    changeRadio: function(context, radioName) {
-      let isExist = false;
+    changeRadio: async function(context, radioName) {
       console.log("changeRadio detected :" + radioName);
-      //TODO CHECK RADIO EXIST
-      if (isExist) {
-        answerToVocal("radioAnswer", radioName);
+
+      const radios = await widgetService.getFlowRadio();
+      context.commit("setFlowRadio", radios.data.flowRadio);
+
+      const filteredRadios = radios.data.flowRadio.filter(
+        (radio) => radio.title === radioName
+      );
+      if (filteredRadios.length === 1) {
+        context.commit("selectedRadio", radioName);
       } else {
         answerToVocal("radioUnknown", radioName);
       }
     },
-    // radioPlay: function(context, message) {
-    //TODO CHECK IS TRUE OR FALSE
 
-    // SEND THIS IF ERROR
-    //sendAnswer("commonError", jsonAnswer.info)
+    playRadio: function(context) {
+      context.commit("updateIsPlaying", true);
+    },
 
-    // },
-    // nextRadio: function(context, message) {
-    //TODO CHECK IS TRUE OR FALSE
+    stopRadio: function(context) {
+      context.commit("updateIsPlaying", false);
+    },
 
-    // SEND THIS IF ERROR
-    //sendAnswer("commonError", jsonAnswer.info)
-    //},
-    /*  changeNews: function(context, message) {
-      let isExist = false;
-      const jsonIntoString = JSON.stringify(message);
-      console.log("changeNews detected :" + JSON.stringify(message));
-      const jsonAnswer = JSON.parse(jsonIntoString);
-      console.log("changeNews:", jsonAnswer);
-      //TODO CHECK RADIO EXIST
-      if (isExist) {
-        answerToVocal("newsAnswer", jsonAnswer.info);
-      } else {
-        answerToVocal("newsUnkown", jsonAnswer.info);
-      }
-    },*/
     setLocation(context, location) {
       context.commit("setLocation", location);
     },
+
     setOrientation(context, orientation) {
       context.commit("setOrientation", orientation);
     },
-    async setUserProfile(context, pseudo) {
-      await userService.getUserProfile(pseudo).then(res => {
+
+    setUserProfile(context, pseudo) {
+      userService.getUserProfile(pseudo).then((res) => {
         context.commit("setUserProfile", res.data);
       });
     },
-    async fetchFlowRadio(context) {
-      await widgetService.getFlowRadio().then(res => {
+
+    fetchFlowRadio(context) {
+      widgetService.getFlowRadio().then((res) => {
         context.commit("setFlowRadio", res.data.flowRadio);
       });
-    }
+    },
   },
   getters: {
-    location: state => {
+    location: (state) => {
       return state.location;
     },
-    userProfile: state => {
+    userProfile: (state) => {
       return state.userProfile;
     },
-    orientation: state => {
+    orientation: (state) => {
       return state.orientation;
     },
-    flowRadio: state => {
+    flowRadio: (state) => {
       return state.flowRadio;
-    }
+    },
+    isPlaying: (state) => {
+      return state.isPlaying;
+    },
+    selectedRadio: (state) => {
+      return state.selectedRadio;
+    },
+    nextRadio: (state) => {
+      return state.nextRadio;
+    },
+    previousRadio: (state) => {
+      return state.previousRadio;
+    },
   },
-  modules: {}
+  modules: {},
 });

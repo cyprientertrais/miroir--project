@@ -13,7 +13,7 @@ export default class VocalRecognition {
     }
     const recognition = new window.SpeechRecognition();
     recognition.lang = "fr-FR";
-    recognition.onresult = event => {
+    recognition.onresult = (event) => {
       console.log("Treating info....");
       this.vocalTreatment(
         event.results[event.results.length - 1][0].transcript
@@ -95,19 +95,20 @@ export default class VocalRecognition {
     console.log(foundInfo);
     if (foundInfo.match(/en marche/g)) {
       console.log("PLAY RADIO");
-      // this.$store.dispatch("playRadio");
+      store.dispatch("playRadio");
     } else if (foundInfo.match(/en pause/g)) {
       console.log("STOP RADIO");
-      // this.$store.dispatch("stopRadio");
+      store.dispatch("stopRadio");
     } else if (foundInfo.match(/suivante/g)) {
       console.log("NEXT RADIO");
-      // this.$store.dispatch("nextRadio");
+      store.commit("nextRadio");
     } else if (foundInfo.match(/précédente/g)) {
       console.log("PREVIOUS RADIO");
-      // this.$store.dispatch("previousRadio");
+      store.commit("previousRadio");
     } else {
-      console.log("CHANGE RADIO VERS " + foundInfo);
-      // this.$store.dispatch("changeRadio", getInfo);
+      const radio = foundInfo.substring(6, foundInfo.length - 1);
+      console.log("CHANGE RADIO VERS " + radio);
+      store.dispatch("changeRadio", radio);
     }
   }
 }
