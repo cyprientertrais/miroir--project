@@ -16,11 +16,6 @@ export default new Vuex.Store({
     wifiList: undefined,
     flowRadio: undefined
   },
-  socket: {
-    isConnected: false,
-    message: "",
-    reconnectError: false
-  },
   mutations: {
     setLocation(state, location) {
       state.location = location;
@@ -36,32 +31,6 @@ export default new Vuex.Store({
     },
     setWifiList(state, wifiList) {
       state.wifiList = wifiList;
-    },
-    SOCKET_ONOPEN(state, event) {
-      console.log("onOpen");
-      Vue.prototype.$socket = event.currentTarget;
-    },
-    SOCKET_ONCLOSE(state) {
-      console.log("onClose");
-      state.socket.isConnected = false;
-    },
-    SOCKET_ONERROR(state, event) {
-      console.log("onError");
-      console.error(state, event);
-    },
-    // default handler called for all methods
-    SOCKET_ONMESSAGE(state, message) {
-      console.log("onMessage", message);
-      state.socket.message = message;
-    },
-    // mutations for reconnect methods
-    SOCKET_RECONNECT(state, count) {
-      console.log("onReconnect");
-      console.info(state, count);
-    },
-    SOCKET_RECONNECT_ERROR(state) {
-      console.log("onReconnectError");
-      state.socket.reconnectError = true;
     }
   },
   actions: {
@@ -105,6 +74,7 @@ export default new Vuex.Store({
       const jsonIntoString = JSON.stringify(message);
       console.log("changeNews detected :" + JSON.stringify(message));
       const jsonAnswer = JSON.parse(jsonIntoString);
+      console.log("changeNews:", jsonAnswer);
       //TODO CHECK RADIO EXIST
       if (isExist) {
         answerToVocal("newsAnswer", jsonAnswer.info);

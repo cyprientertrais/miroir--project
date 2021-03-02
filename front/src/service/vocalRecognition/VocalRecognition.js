@@ -22,7 +22,7 @@ export default class VocalRecognition {
     recognition.onstart = function() {
       console.log("Listening ...");
     };
-    recognition.onspeechend = function() {
+    recognition.onend = function() {
       //recognition.stop();
       recognition.start();
       // sets off a beep/noise each time it is accessed from a cell phone (Andoid).
