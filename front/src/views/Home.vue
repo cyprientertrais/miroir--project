@@ -10,7 +10,6 @@
       <strong v-if="userProfile">{{ userProfile.pseudo }}</strong>
     </v-card>
     <div class=" ma-2 widgetHolder" v-if="widgets">
-      <div v-if="orientation === 'landscape'">
         <v-row
           v-for="(xWidgets, index) in widgets"
           :key="index"
@@ -29,22 +28,6 @@
           </v-col>
         </v-row>
       </div>
-      <div v-if="orientation === 'portrait'" class="portrait">
-        <v-row v-for="(xWidgets, index) in widgets" :key="index">
-          <v-col
-            v-for="(yWidgets, index2) in xWidgets"
-            :key="index2"
-            cols="12"
-            sm="12"
-            md="2"
-            lg="2"
-            xl="3"
-          >
-            <component :is="yWidgets"></component>
-          </v-col>
-        </v-row>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -60,7 +43,6 @@ export default {
   created() {
     moment.locale("fr");
     this.setWidgets();
-    this.getOrientation();
   },
   data() {
     return {
@@ -76,12 +58,11 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["userProfile", "orientation"])
+    ...mapGetters(["userProfile"])
   },
   methods: {
     setWidgets() {
       if (this.userProfile) {
-        if (this.orientation === "landscape") {
           this.userProfile.dashboards
             .filter(element => element.name === "default")[0]
             .widgets.forEach(widget => {
@@ -94,20 +75,6 @@ export default {
               this.$options.components[widget.name] = () =>
                 import("../components/widgets/" + widget.name + ".vue");
             });
-        } else {
-          this.userProfile.dashboards
-            .filter(element => element.name === "default")[0]
-            .widgets.forEach(widget => {
-              let quotient = Math.floor(widget.position / 4);
-              let reste = widget.position % 4;
-              if (this.widgets && !this.widgets[quotient]) {
-                this.widgets[quotient] = [];
-              }
-              this.widgets[quotient][reste] = widget.name;
-              this.$options.components[widget.name] = () =>
-                import("../components/widgets/" + widget.name + ".vue");
-            });
-        }
       }
     },
     getOrientation() {
