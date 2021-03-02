@@ -7,9 +7,9 @@
     cycle
     transition="scroll-y-transition"
     reverse-transition="scroll-y-transition"
-    height="400"
+    height="40vh"
     hide-delimiters
-    interval="10000"
+    interval="2000"
   >
     <v-carousel-item
       leave-absolute="true"
