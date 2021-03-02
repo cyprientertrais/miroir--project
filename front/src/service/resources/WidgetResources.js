@@ -26,10 +26,8 @@ export default class WidgetResources {
 
   getBlague(){
     
-    const url = "https://www.blagues-api.fr/api/random";
-    let token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMjA3MTkwNzgyNjczODEzNTA0IiwibGltaXQiOjEwMCwia2V5IjoiUzVvbUNSWmFtb1lNdFpOemhKU3Y2WG9iTHlOcWZ0UVFRcE5lalB0OU0yUzZsbzN4MzUiLCJjcmVhdGVkX2F0IjoiMjAyMC0wNC0xNFQyMzozNTo0MiswMjowMCIsImlhdCI6MTU4NjkwMDE0Mn0.Bg-gaVq8saNeTeH3rntf8JPhN9rNBu-wGxT_pEfT3bE"
-    return axios.get(url, {  headers: {"Autorization":"Bearer "+token, 'Access-Control-Allow-Origin': '*',
-    'Content-Type': 'application/json'} });
+    const url = "https://blague.xyz/api/joke/random";
+    return axios.get(url, { headers: {"Authorization":"IdAFIzJKMHYjHqDvUvk.4AFf89LHusekRJ2L5cj-SXQ3KJniDJav3v.87p7iXZUc"} });
   }
 
   getOrientation() {
