@@ -21,7 +21,7 @@
         <v-card class="mx-auto">
           <v-img :src="el.enclosure.url"></v-img>
 
-          <v-card-title>
+          <v-card-title class="textNews">
             {{ el.title }}
           </v-card-title>
 
@@ -64,3 +64,11 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+
+  .textNews{
+    word-break: normal;
+  }
+
+</style>
