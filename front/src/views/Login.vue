@@ -80,8 +80,7 @@ export default {
 };
 </script>
 <style scoped>
-
-h1{
+h1 {
   font-size: 150px;
 }
 .password {

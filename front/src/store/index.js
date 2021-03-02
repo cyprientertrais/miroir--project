@@ -17,16 +17,12 @@ export default new Vuex.Store({
     wifiList: undefined,
     flowRadio: undefined
   },
-  socket: {
-    isConnected: false,
-    message: '',
-    reconnectError: false,
-  },
   mutations: {
     setLocation(state, location) {
       state.location = location;
     },
     setUserProfile(state, userProfile) {
+      console.log("setUser", userProfile);
       state.userProfile = userProfile;
     },
     setOrientation(state, orientation) {
@@ -35,103 +31,62 @@ export default new Vuex.Store({
     setFlowRadio(state, flowRadio) {
       state.flowRadio = flowRadio;
     },
-    setWifiList(state, wifiList){
+    setWifiList(state, wifiList) {
       state.wifiList = wifiList;
-    },
-    SOCKET_ONOPEN(state, event) {
-      console.log('onOpen')
-      Vue.prototype.$socket = event.currentTarget;
-    },
-    SOCKET_ONCLOSE(state) {
-      console.log('onClose')
-      state.socket.isConnected = false;
-    },
-    SOCKET_ONERROR(state, event) {
-      console.log('onError')
-      console.error(state, event);
-    },
-    // default handler called for all methods
-    SOCKET_ONMESSAGE(state, message) {
-      console.log('onMessage',message)
-      state.socket.message = message;
-    },
-    // mutations for reconnect methods
-    SOCKET_RECONNECT(state, count) {
-
-      console.log('onReconnect')
-      console.info(state, count);
-    },
-    SOCKET_RECONNECT_ERROR(state) {
-
-      console.log('onReconnectError')
-      state.socket.reconnectError = true;
     }
   },
   actions: {
     changeProfile: async function(context, message) {
-      let isExist = true
-      const jsonIntoString =  JSON.stringify(message)
-      console.log("changeProfile detected : " + jsonIntoString)
+      // let isExist = true
+      const jsonIntoString = JSON.stringify(message);
+      console.log("changeProfile detected : " + jsonIntoString);
       const jsonAnswer = JSON.parse(jsonIntoString);
       //TODO CHECK USER EXIST
-      await userService.getUserProfile(captitalizeFirstLetter(jsonAnswer.info)).then(res => {
-        context.commit("setUserProfile", res.data);
-        isExist = true;
-      }).catch(err => {
-        console.log(err);
-        isExist = false;
-      });
-
-      if (isExist) {
-        sendAnswer("profileAnswer", jsonAnswer.info)
-      } else {
-        sendAnswer("profileUnknown", jsonAnswer.info)
-      }
+      await userService
+        .getUserProfile(captitalizeFirstLetter(jsonAnswer.info))
+        .then(res => {
+          context.commit("setUserProfile", res.data);
+          // isExist = true;
+        })
+        .catch(err => {
+          console.log(err);
+          // isExist = false;
+        });
     },
     changeRadio: function(context, message) {
-      let isExist = false
-      const jsonIntoString =  JSON.stringify(message)
-      console.log("changeRadio detected :" + JSON.stringify(message))
+      // let isExist = false
+      const jsonIntoString = JSON.stringify(message);
+      console.log("changeRadio detected :" + JSON.stringify(message));
       const jsonAnswer = JSON.parse(jsonIntoString);
+      console.log("changeRadio:", jsonAnswer);
       //TODO CHECK RADIO EXIST
-      if (isExist) {
-        sendAnswer("radioAnswer", jsonAnswer.info)
-      } else {
-        sendAnswer("radioUnknown", jsonAnswer.info)
-      }
     },
-   // radioPlay: function(context, message) {
-      //TODO CHECK IS TRUE OR FALSE
+    // radioPlay: function(context, message) {
+    //TODO CHECK IS TRUE OR FALSE
 
+    // SEND THIS IF ERROR
+    //sendAnswer("commonError", jsonAnswer.info)
 
-      // SEND THIS IF ERROR
-      //sendAnswer("commonError", jsonAnswer.info)
-
-   // },
+    // },
     // nextRadio: function(context, message) {
-      //TODO CHECK IS TRUE OR FALSE
+    //TODO CHECK IS TRUE OR FALSE
 
-
-      // SEND THIS IF ERROR
-      //sendAnswer("commonError", jsonAnswer.info)
+    // SEND THIS IF ERROR
+    //sendAnswer("commonError", jsonAnswer.info)
     //},
     changeNews: function(context, message) {
-      let isExist = false
-      const jsonIntoString =  JSON.stringify(message)
-      console.log("changeNews detected :" + JSON.stringify(message))
+      // let isExist = false
+      const jsonIntoString = JSON.stringify(message);
+      console.log("changeNews detected :" + JSON.stringify(message));
       const jsonAnswer = JSON.parse(jsonIntoString);
+      console.log("changeNews:", jsonAnswer);
       //TODO CHECK RADIO EXIST
-      if (isExist) {
-        sendAnswer("newsAnswer", jsonAnswer.info)
-      } else {
-        sendAnswer("newsUnkown", jsonAnswer.info)
-      }
     },
-    setLocation(context,location) {
-      context.commit('setLocation', location);
+    setLocation(context, location) {
+      context.commit("setLocation", location);
     },
-    setOrientation(context, orientation){
-      context.commit('setOrientation',orientation);
+    setOrientation(context, orientation) {
+      context.commit("setOrientation", orientation);
     },
     async setUserProfile(context, pseudo) {
       await userService.getUserProfile(pseudo).then(res => {
@@ -157,11 +112,6 @@ export default new Vuex.Store({
     flowRadio: state => {
       return state.flowRadio;
     }
-
   },
   modules: {}
 });
-
-function sendAnswer(answerType,info) {
-  Vue.prototype.$socket.send('{"answerType": "' + answerType + '", "info": "' + info + '"}')
-}

@@ -39,14 +39,14 @@ export default class WidgetResources {
     return axios.post(url, { location: location });
   }
 
-  getFlowRadio(){
+  getFlowRadio() {
     const url = `${this.API()}/admin/flowRadio`;
     return axios.get(url);
   }
 
   getAllWidgets() {
-      const url = `${this.API()}/admin/widgets`;
-      return axios.get(url);
+    const url = `${this.API()}/admin/widgets`;
+    return axios.get(url);
   }
 
   getNews() {
