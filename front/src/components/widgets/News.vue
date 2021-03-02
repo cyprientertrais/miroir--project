@@ -5,13 +5,15 @@
     v-model="model"
     :show-arrows="false"
     cycle
+    transition="scroll-y-transition"
+    reverse-transition="scroll-y-transition"
+    height="40vh"
     hide-delimiters
-    height="auto"
     interval="9000"
   >
     <v-carousel-item
-      transition="scroll-y-transition"
-      reverse-transition="scroll-y-transition"
+      leave-absolute="true"
+      hide-on-leave="false"
       v-for="(el, i) in news"
       :key="i"
     >
