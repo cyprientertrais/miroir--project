@@ -39,6 +39,16 @@ export default class WidgetResources {
     return axios.post(url, { location: location });
   }
 
+  getFlowRadio(){
+    const url = `${this.API()}/admin/flowRadio`;
+    return axios.get(url);
+  }
+
+  getAllWidgets() {
+      const url = `${this.API()}/admin/widgets`;
+      return axios.get(url);
+  }
+
   getNews() {
     const url = `${this.API()}/parse/`;
     return axios

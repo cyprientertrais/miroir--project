@@ -18,7 +18,7 @@ export default class ConnectionResources {
   }
 
   async getWifiList() {
-    const wifiList = `${this.API()}/admin/wifiscan`;
+    const wifiList = `http://localhost:3000/admin/wifiscan`;
     return axios.get(wifiList);
   }
 }

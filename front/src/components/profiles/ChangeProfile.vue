@@ -103,7 +103,7 @@ export default {
           return JSON.stringify(res);
         });
 
-      if (msg.includes("Request failed with status code 404")) {
+      if (msg.includes("Request failed with status code 403")) {
         this.isProfileNameInvalid = true;
         this.errorMessage =
           "Ce nom de profil est déjà utilisé. Veuillez entrer un autre nom.";
@@ -124,11 +124,9 @@ export default {
 }
 
 h1 {
-  color: white;
-  font-size: 30px;
   padding-top: 20%;
-  font-weight: bold;
 }
+
 
 .v-text-field {
   margin-top: 30%;
