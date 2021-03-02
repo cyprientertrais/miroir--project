@@ -1,6 +1,8 @@
 import store from "../../store/index";
+import {speakText} from "../utils";
 
 export default class VocalRecognition {
+
   vocalProcess() {
     window.SpeechRecognition =
       window.webkitSpeechRecognition || window.SpeechRecognition;
@@ -13,17 +15,15 @@ export default class VocalRecognition {
     const recognition = new window.SpeechRecognition();
     // recognition.continuous = true;
     recognition.lang = "fr-FR";
-    console.log("Listening ...");
     recognition.onresult = event => {
-      console.log(
-        "transscript: ",
-        event.results[event.results.length - 1][0].transcript
-      );
       console.log("Treating info....");
       this.vocalTreatment(
         event.results[event.results.length - 1][0].transcript
       );
     };
+    recognition.onstart = function () {
+      console.log("Listening ...");
+    }
     recognition.onend = function() {
       //recognition.stop();
       recognition.start();
@@ -45,7 +45,6 @@ export default class VocalRecognition {
       if (vocalTextTreat.match(/profil de [a-zA-Zéèàê]*/g)) {
         let foundInfo = vocalTextTreat.match(/profil de [a-zA-Zéèàê]*/g) + " ";
         let tab = foundInfo.split(' ');
-        this.speakText("ok je change le profil")
         store.dispatch("changeProfile", tab[2]);
         return 0
       // PHRASES TYPES -> Miroir met la radio Fun Radio, Miroir met moi la radio RTL2
@@ -71,11 +70,10 @@ export default class VocalRecognition {
         return 0
         // this.$store.dispatch("awakeMode");
       } else {
-        console.log("MIROIR MAIS NTM");
+        speakText("Cette fonction du miroir n'a pas été reconnu")
         return 0
       }
     } else {
-      // speakText("Cette action n'a pas été reconnu, veuillez réessayer")
       console.log("Action non trouvée");
       return 0
     }
@@ -110,9 +108,4 @@ export default class VocalRecognition {
       // this.$store.dispatch("changeRadio", getInfo);
     }
   }
-
-  speakText(text){
-  document.getElementById('vocal-text').innerHTML = text;
-  document.getElementById("play").click();
-}
 }
