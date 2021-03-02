@@ -48,7 +48,7 @@ export default {
       audio: null,
       actualFlux: 0,
       isPlaying: false
-    }
+    };
   },
   created() {
     this.fetchFlowRadio();
@@ -61,7 +61,10 @@ export default {
     changeRadioByName(radioName) {
       let indexRadio = -1;
       this.flowRadio.forEach((element, index) => {
-        if(element.title.toLowerCase().replace(/ /g,'') === radioName.toLowerCase().replace(/ /g,'')){
+        if (
+          element.title.toLowerCase().replace(/ /g, "") ===
+          radioName.toLowerCase().replace(/ /g, "")
+        ) {
           indexRadio = index;
         }
       });
@@ -73,10 +76,12 @@ export default {
       if (this.isPlaying) this.playRadio();
     },
     nextRadio() {
-      this.navigationHandler((this.actualFlux + 1)%this.flowRadio.length);
+      this.navigationHandler((this.actualFlux + 1) % this.flowRadio.length);
     },
     previousRadio() {
-      this.navigationHandler((this.actualFlux === 0) ? this.flowRadio.length-1 : this.actualFlux-1);
+      this.navigationHandler(
+        this.actualFlux === 0 ? this.flowRadio.length - 1 : this.actualFlux - 1
+      );
     },
     playRadio() {
       this.stopRadio();

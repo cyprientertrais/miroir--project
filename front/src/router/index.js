@@ -26,7 +26,7 @@ const routes = [
   {
     path: "/editdashboard/:username",
     name: "EditDashboard",
-    component: () => import("../views/EditDashboard.vue"),
+    component: () => import("../views/EditDashboard.vue")
   },
   {
     path: "/login",
@@ -42,7 +42,7 @@ const routes = [
   {
     path: "/*",
     component: () => import("../views/Settings.vue")
-  },
+  }
 ];
 
 const router = new VueRouter({
@@ -57,7 +57,11 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   if (to.name == "Settings" && !sessionStorage.getItem("isAuthenticated")) {
     next({ name: "Login", query: { from: to.name } });
-  }if (to.name == "EditDashboard" && !sessionStorage.getItem("isAuthenticated")) {
+  }
+  if (
+    to.name == "EditDashboard" &&
+    !sessionStorage.getItem("isAuthenticated")
+  ) {
     next({ name: "Login", query: { from: to.name } });
   } else next();
 });
