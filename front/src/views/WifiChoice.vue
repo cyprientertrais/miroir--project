@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import Resources from "../service/resources/resources";
+import Resources from "../service/resources/ConnectionResources";
 const ResourcesService = new Resources();
 
 export default {
@@ -63,13 +63,11 @@ export default {
   methods: {
     async fetchWifi() {
       this.listWifi = await ResourcesService.getWifiList();
+      console.log(this.listWifi);
       this.item = this.listWifi.data.wifi;
     },
-    sendWifi2(id) {
-      console.log(this.item[id]);
-    },
-    sendWifi(name, pass) {
-      ResourcesService.connectToWifi(name, pass);
+    async sendWifi(name, pass) {
+      await ResourcesService.connectToWifi(name, pass);
     },
   },
    beforeMount(){
