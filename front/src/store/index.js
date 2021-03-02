@@ -22,7 +22,6 @@ export default new Vuex.Store({
       state.location = location;
     },
     setUserProfile(state, userProfile) {
-      console.log("setUser", userProfile);
       state.userProfile = userProfile;
     },
     setOrientation(state, orientation) {
