@@ -2,7 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import UserResources from "@/service/resources/UserResources";
 import WidgetResources from "@/service/resources/WidgetResources";
-import {captitalizeFirstLetter, answerToVocal} from "../service/utils";
+import { captitalizeFirstLetter, answerToVocal } from "../utils/utils";
 Vue.use(Vuex);
 
 const userService = new UserResources();
@@ -66,12 +66,9 @@ export default new Vuex.Store({
   },
   actions: {
     changeProfile: async function(context, profileName) {
-      console.log("INSIDE CHANGE PROFILE ACTION")
-      console.log(profileName)
       await userService
         .getUserProfile(captitalizeFirstLetter(profileName))
         .then(res => {
-          console.log(res)
           context.commit("setUserProfile", res.data);
           answerToVocal("profileAnswer", profileName);
         })
@@ -103,7 +100,7 @@ export default new Vuex.Store({
     // SEND THIS IF ERROR
     //sendAnswer("commonError", jsonAnswer.info)
     //},
-  /*  changeNews: function(context, message) {
+    /*  changeNews: function(context, message) {
       let isExist = false;
       const jsonIntoString = JSON.stringify(message);
       console.log("changeNews detected :" + JSON.stringify(message));

@@ -1,13 +1,13 @@
 <template>
   <v-app>
     <v-main>
-     <v-btn
-  elevation="2"
-  id="play"
-  style="display:none"
-  @click=" textToSpeak()"
-></v-btn>
-<p id="vocal-text" style="display:none"></p>
+      <v-btn
+        elevation="2"
+        id="play"
+        style="display:none"
+        @click="textToSpeak()"
+      ></v-btn>
+      <p id="vocal-text" style="display:none"></p>
       <router-view></router-view>
     </v-main>
   </v-app>
@@ -60,27 +60,28 @@ export default {
 
   methods: {
     ...mapActions(["setLocation", "setUserProfile"]),
-      textToSpeak(text){
-      text =   document.getElementById('vocal-text').innerHTML
-       if('speechSynthesis' in window) { // Chrome only !!
-           const synth = window.speechSynthesis;
-           let timer = setInterval(function() {
-        let voices = synth.getVoices();
-            if (voices.length !== 0) {
+    textToSpeak(text) {
+      text = document.getElementById("vocal-text").innerHTML;
+      if ("speechSynthesis" in window) {
+        // Chrome only !!
+        const synth = window.speechSynthesis;
+        let timer = setInterval(function() {
+          let voices = synth.getVoices();
+          if (voices.length !== 0) {
             let msg = new SpeechSynthesisUtterance(text);
             msg.voice = voices.find(_voice => /fr-FR/.test(_voice.lang));
-            msg.lang="en-US"
+            msg.lang = "en-US";
             synth.speak(msg);
             clearInterval(timer);
+          }
+        }, 200);
+      } else {
+        // Other browsers !!
+        console.log("VocalRecognition only in Chrome !");
+        // Use AJAX (with GET) to a .php to file_get_contents
+        // generate the <100 by <100 charaters audio files, and nest in callbacks
+      }
     }
-}, 200);
-  } else { // Other browsers !!
-        console.log("VocalRecognition only in Chrome !")
-     // Use AJAX (with GET) to a .php to file_get_contents
-     // generate the <100 by <100 charaters audio files, and nest in callbacks
-
-  }
-    },
   },
 
   mounted() {

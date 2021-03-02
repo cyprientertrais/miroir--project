@@ -5,21 +5,19 @@ export function captitalizeFirstLetter(name) {
 export function answerToVocal(vocalText, answerInfo) {
   switch (vocalText) {
     case "profileUnknown":
-      console.log(`Le profil ${answerInfo} n'existe pas.`)
+      console.log(`Le profil ${answerInfo} n'existe pas.`);
       speakText(`Le profil ${answerInfo} n'existe pas.`);
       break;
     case "radioUnknown":
-      console.log(`La radio ${answerInfo} n'existe pas.`)
+      console.log(`La radio ${answerInfo} n'existe pas.`);
       speakText(`La radio ${answerInfo} n'existe pas.`);
       break;
     case "newsUnknown":
-      console.log(`Le journal ${answerInfo} n'existe pas ou n'est pas traité.`)
-      speakText(
-          `Le journal ${answerInfo} n'existe pas ou n'est pas traité.`
-      );
+      console.log(`Le journal ${answerInfo} n'existe pas ou n'est pas traité.`);
+      speakText(`Le journal ${answerInfo} n'existe pas ou n'est pas traité.`);
       break;
     case "profileAnswer":
-      console.log(`Voici le profil de ${answerInfo}`)
+      console.log(`Voici le profil de ${answerInfo}`);
       speakText(`Voici le profil de ${answerInfo}`);
       break;
     case "radioAnswer":
@@ -34,7 +32,7 @@ export function answerToVocal(vocalText, answerInfo) {
   }
 }
 
-export function speakText(text){
-  document.getElementById('vocal-text').innerHTML = text;
+export function speakText(text) {
+  document.getElementById("vocal-text").innerHTML = text;
   document.getElementById("play").click();
 }

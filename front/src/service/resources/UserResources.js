@@ -6,7 +6,7 @@ export default class Resources {
   API() {
     return process.env.NODE_ENV === "production"
       ? "https://back-miroir.herokuapp.com"
-      : "https://back-miroir.herokuapp.com";
+      : "http://localhost:5000";
   }
 
   async getAllUserProfile() {
