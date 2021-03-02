@@ -6,7 +6,7 @@ export default class Resources {
   API() {
     return process.env.NODE_ENV === "production"
       ? "https://back-miroir.herokuapp.com"
-      : "http://localhost:5000";
+      : "https://back-miroir.herokuapp.com";
   }
 
   async getAllUserProfile() {
@@ -33,9 +33,9 @@ export default class Resources {
   async updateProfile(pseudo, user) {
     const url = `${this.API()}/profiles/${pseudo}`;
     return axios
-        .patch(url, user)
-        .then(response => response.data)
-        .catch(error => error);
+      .patch(url, user)
+      .then(response => response.data)
+      .catch(error => error);
   }
 
   async getUserProfile(profileName) {

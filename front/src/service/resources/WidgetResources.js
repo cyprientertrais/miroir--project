@@ -7,7 +7,7 @@ export default class WidgetResources {
   API() {
     return process.env.NODE_ENV === "production"
       ? "https://back-miroir.herokuapp.com"
-      : "http://localhost:5000";
+      : "https://back-miroir.herokuapp.com";
   }
   getPrintedWidgets(params) {
     const url = `${this.API()}`;
@@ -39,14 +39,14 @@ export default class WidgetResources {
     return axios.post(url, { location: location });
   }
 
-  getFlowRadio(){
+  getFlowRadio() {
     const url = `${this.API()}/admin/flowRadio`;
     return axios.get(url);
   }
 
   getAllWidgets() {
-      const url = `${this.API()}/admin/widgets`;
-      return axios.get(url);
+    const url = `${this.API()}/admin/widgets`;
+    return axios.get(url);
   }
 
   getNews() {

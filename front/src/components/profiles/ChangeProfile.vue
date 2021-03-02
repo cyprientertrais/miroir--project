@@ -127,7 +127,6 @@ h1 {
   padding-top: 20%;
 }
 
-
 .v-text-field {
   margin-top: 30%;
   width: 160px;

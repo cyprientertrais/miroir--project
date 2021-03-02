@@ -10,7 +10,7 @@
 import { mapActions } from "vuex";
 import moment from "moment";
 import WidgetResources from "./service/resources/WidgetResources";
-import VocalRecognition  from "./service/vocalRecognition/VocalRecognition"
+import VocalRecognition from "./service/vocalRecognition/VocalRecognition";
 
 const widgetResources = new WidgetResources();
 
@@ -32,18 +32,18 @@ export default {
     }
 
     navigator.geolocation.getCurrentPosition(
-      (pos) => {
+      pos => {
         const location = {
           lat: pos.coords.latitude,
-          long: pos.coords.longitude,
+          long: pos.coords.longitude
         };
 
         this.setLocation(location);
         widgetResources.postLocation(location);
       },
-      (err) => {
+      err => {
         console.error(err);
-        widgetResources.getLocation().then((res) => {
+        widgetResources.getLocation().then(res => {
           this.setLocation(res.data.location);
         });
       }
@@ -54,17 +54,17 @@ export default {
     ...mapActions(["setLocation", "setUserProfile"]),
     startTxtToSpeech() {
       let vocal = new VocalRecognition();
-      
+
       vocal.vocalProcess();
-      
-    },
+    }
   },
 
   mounted() {
     this.setUserProfile("Invité");
-
-    this.startTxtToSpeech();
-  },
+    let vocal = new VocalRecognition();
+    vocal.vocalProcess();
+    //this.startTxtToSpeech();
+  }
 };
 </script>
 

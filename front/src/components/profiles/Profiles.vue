@@ -23,7 +23,11 @@
           color="primary"
           class="profile elevation-5"
           size="20vh"
-          @click="(editing) ? editProfile(profile):redirectEditDashboard(profile.pseudo)"
+          @click="
+            editing
+              ? editProfile(profile)
+              : redirectEditDashboard(profile.pseudo)
+          "
         >
           <v-icon
             large
@@ -145,8 +149,8 @@ export default {
       this.editing = !this.editing;
     },
     redirectEditDashboard(profileName) {
-      if(profileName!="Invité"){
-        this.$router.push("/EditDashboard/"+profileName);
+      if (profileName != "Invité") {
+        this.$router.push("/EditDashboard/" + profileName);
       }
     }
   }
@@ -237,8 +241,11 @@ div {
 }
 
 @keyframes fadeIn {
-    from{opacity: 0.3;}
-    to {opacity: 1;}
+  from {
+    opacity: 0.3;
+  }
+  to {
+    opacity: 1;
+  }
 }
-
 </style>
