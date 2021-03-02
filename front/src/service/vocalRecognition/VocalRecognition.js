@@ -13,7 +13,7 @@ export default class VocalRecognition {
     }
     const recognition = new window.SpeechRecognition();
     recognition.lang = "fr-FR";
-    recognition.onresult = (event) => {
+    recognition.onresult = event => {
       console.log("Treating info....");
       this.vocalTreatment(
         event.results[event.results.length - 1][0].transcript

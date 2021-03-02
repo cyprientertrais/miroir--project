@@ -18,7 +18,7 @@ export default new Vuex.Store({
     isPlaying: false,
     selectedRadio: undefined,
     nextRadio: 0,
-    previousRadio: 0,
+    previousRadio: 0
   },
   mutations: {
     setLocation(state, location) {
@@ -47,17 +47,17 @@ export default new Vuex.Store({
     },
     previousRadio(state) {
       ++state.previousRadio;
-    },
+    }
   },
   actions: {
     changeProfile: async function(context, profileName) {
       await userService
         .getUserProfile(captitalizeFirstLetter(profileName))
-        .then((res) => {
+        .then(res => {
           context.commit("setUserProfile", res.data);
           answerToVocal("profileAnswer", profileName);
         })
-        .catch((err) => {
+        .catch(err => {
           answerToVocal("profileUnknown", profileName);
           console.log(err);
         });
@@ -69,7 +69,7 @@ export default new Vuex.Store({
       context.commit("setFlowRadio", radios.data.flowRadio);
 
       const filteredRadios = radios.data.flowRadio.filter(
-        (radio) => radio.title === radioName
+        radio => radio.title === radioName
       );
       if (filteredRadios.length === 1) {
         context.commit("selectedRadio", radioName);
@@ -95,42 +95,42 @@ export default new Vuex.Store({
     },
 
     setUserProfile(context, pseudo) {
-      userService.getUserProfile(pseudo).then((res) => {
+      userService.getUserProfile(pseudo).then(res => {
         context.commit("setUserProfile", res.data);
       });
     },
 
     fetchFlowRadio(context) {
-      widgetService.getFlowRadio().then((res) => {
+      widgetService.getFlowRadio().then(res => {
         context.commit("setFlowRadio", res.data.flowRadio);
       });
-    },
+    }
   },
   getters: {
-    location: (state) => {
+    location: state => {
       return state.location;
     },
-    userProfile: (state) => {
+    userProfile: state => {
       return state.userProfile;
     },
-    orientation: (state) => {
+    orientation: state => {
       return state.orientation;
     },
-    flowRadio: (state) => {
+    flowRadio: state => {
       return state.flowRadio;
     },
-    isPlaying: (state) => {
+    isPlaying: state => {
       return state.isPlaying;
     },
-    selectedRadio: (state) => {
+    selectedRadio: state => {
       return state.selectedRadio;
     },
-    nextRadio: (state) => {
+    nextRadio: state => {
       return state.nextRadio;
     },
-    previousRadio: (state) => {
+    previousRadio: state => {
       return state.previousRadio;
-    },
+    }
   },
-  modules: {},
+  modules: {}
 });

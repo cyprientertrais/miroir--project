@@ -46,7 +46,7 @@ export default {
     return {
       model: 0,
       audio: null,
-      actualFlux: 0,
+      actualFlux: 0
     };
   },
   created() {
@@ -60,8 +60,8 @@ export default {
       },
       set(value) {
         this.$store.commit("updateIsPlaying", value);
-      },
-    },
+      }
+    }
   },
   methods: {
     ...mapActions(["fetchFlowRadio"]),
@@ -101,7 +101,7 @@ export default {
         this.audio.pause();
       }
       this.isPlaying = false;
-    },
+    }
   },
   watch: {
     nextRadio: function() {
@@ -119,8 +119,8 @@ export default {
     },
     selectedRadio: function(val) {
       this.changeRadioByName(val);
-    },
-  },
+    }
+  }
 };
 </script>
 
