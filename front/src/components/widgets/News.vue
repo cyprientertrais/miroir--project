@@ -5,24 +5,23 @@
     v-model="model"
     :show-arrows="false"
     cycle
+    transition="scroll-y-transition"
+    reverse-transition="scroll-y-transition"
+    height="400"
     hide-delimiters
-    height = "auto"
-    interval="9000"
+    interval="10000"
   >
     <v-carousel-item
-      transition="scroll-y-transition"
-      reverse-transition="scroll-y-transition"
+      leave-absolute="true"
+      hide-on-leave="false"
       v-for="(el, i) in news"
       :key="i"
     >
-      <v-sheet
-        fill-height
-        fluid
-      >
+      <v-sheet fill-height fluid>
         <v-card class="mx-auto">
           <v-img :src="el.enclosure.url"></v-img>
 
-          <v-card-title >
+          <v-card-title>
             {{ el.title }}
           </v-card-title>
 
@@ -65,4 +64,3 @@ export default {
   },
 };
 </script>
-
