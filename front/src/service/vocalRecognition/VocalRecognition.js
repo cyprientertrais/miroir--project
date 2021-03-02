@@ -1,5 +1,6 @@
 import store from "../../store/index";
 import { speakText } from "../../utils/utils";
+import WidgetResources from "../resources/WidgetResources";
 
 export default class VocalRecognition {
   vocalProcess() {
@@ -13,6 +14,10 @@ export default class VocalRecognition {
     }
     const recognition = new window.SpeechRecognition();
     recognition.lang = "fr-FR";
+    recognition.continuous=true;
+    recognition.onend = ()=>{
+      recognition.start();
+    }
     recognition.onresult = event => {
       console.log("Treating info....");
       this.vocalTreatment(
@@ -22,20 +27,20 @@ export default class VocalRecognition {
     recognition.onstart = function() {
       console.log("Listening ...");
     };
-    recognition.onend = function() {
-      //recognition.stop();
-      recognition.start();
-      // sets off a beep/noise each time it is accessed from a cell phone (Andoid).
+    // recognition.onend = function() {
+    //   //recognition.stop();
+    //   recognition.start();
+    //   // sets off a beep/noise each time it is accessed from a cell phone (Andoid).
 
-      // does NOT if accessed from a desktop (Windows using Chrome).
-    };
+    //   // does NOT if accessed from a desktop (Windows using Chrome).
+    // };
     recognition.onerror = function(e) {
       console.log("ERROR", e);
     };
     recognition.start();
   }
 
-  vocalTreatment(vocalText) {
+  async vocalTreatment(vocalText) {
     const vocalTextTreat = vocalText.trim();
     console.log("VOCALTEXT: " + vocalText.trim());
     if (vocalTextTreat.match(/^miroir/g)) {
@@ -46,7 +51,15 @@ export default class VocalRecognition {
         store.dispatch("changeProfile", tab[2]);
         return 0;
         // PHRASES TYPES -> Miroir met la radio Fun Radio, Miroir met moi la radio RTL2
-      } else if (
+      } 
+      else if (vocalTextTreat.match(/fais-moi une blague/g)) {
+        let w  = new WidgetResources();
+        let b = await w.getBlague()
+        console.log(b);
+        return 0;
+        // PHRASES TYPES -> Miroir met la radio Fun Radio, Miroir met moi la radio RTL2
+      }
+      else if (
         vocalTextTreat.match(/radio [a-zA-Zéèàê0-9]*.[a-zA-Zéèàê0-9]*/g)
       ) {
         const foundInfo =
