@@ -54,10 +54,15 @@ export default class VocalRecognition {
       } 
       else if (vocalTextTreat.match(/fais-moi une blague/g)) {
         let w  = new WidgetResources();
-        let b = await w.getBlague()
-        console.log(b);
+        let blague = await w.getBlague()
+        speakText(blague.data.joke.question);
+        setTimeout(function(){ speakText(blague.data.joke.answer); }, 6000);
         return 0;
-        // PHRASES TYPES -> Miroir met la radio Fun Radio, Miroir met moi la radio RTL2
+      }
+      else if (vocalTextTreat.match(/heure*/g)) {
+        var date = new Date().toLocaleTimeString();
+        speakText("Il est "+date);
+        return 0;
       }
       else if (
         vocalTextTreat.match(/radio [a-zA-Zéèàê0-9]*.[a-zA-Zéèàê0-9]*/g)
