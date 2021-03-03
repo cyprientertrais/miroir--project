@@ -89,8 +89,12 @@ export default class VocalRecognition {
       else if (vocalTextTreat.match(/présente-toi/g) || vocalTextTreat.match(/es-tu/g)) {
         speakText(`Bonjour je m'apelle Oiina et je suis ton humble serviteur. 
         Je vénère mes dieux,  l'équipe Lapsuce,  qui m'ont donné la vie et jamais je ne pourrais les remercier. Je peux faire plein de chose
-      , donner les news , prévoir la météo , et lire de la radio pour mettre de l'ambiance. Je peux meme faire des blagues...
-        `);
+      , donner les news , prévoir la météo , et lire de la radio pour mettre de l'ambiance (Boom Boom Tchaaa) ...  Je peux meme faire des blagues...
+      Aller petit exemple pour la route :`)
+      let w  = new WidgetResources();
+        let blague = await w.getBlague()
+        speakText(blague.data.joke.question);
+        speakText("Assez drôle je dois l'avouer. Demandez moi ce que vous voulez !")
         return 0;
         // this.$store.dispatch("eveMode");
         // PHRASES TYPES -> Miroir met toi en marche, Miroir mise en marche
