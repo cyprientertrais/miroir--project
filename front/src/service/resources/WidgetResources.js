@@ -26,8 +26,8 @@ export default class WidgetResources {
 
   getBlague(){
     
-    const url = "https://blague.xyz/api/joke/random";
-    return axios.get(url, { headers: {"Authorization":"IdAFIzJKMHYjHqDvUvk.4AFf89LHusekRJ2L5cj-SXQ3KJniDJav3v.87p7iXZUc"} });
+    const url = `${this.API()}/joke`;
+    return axios.get(url);
   }
 
   getOrientation() {
