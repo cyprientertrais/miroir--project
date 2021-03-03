@@ -85,7 +85,17 @@ export default class VocalRecognition {
         return 0;
         // this.$store.dispatch("eveMode");
         // PHRASES TYPES -> Miroir met toi en marche, Miroir mise en marche
-      } else if (vocalTextTreat.match(/en marche/g)) {
+      }
+      else if (vocalTextTreat.match(/présente-toi/g) || vocalTextTreat.match(/es-tu/g)) {
+        speakText(`Bonjour je m'apelle Oiina et je suis ton humble serviteur. 
+        Je vénère mes dieux,  l'équipe Lapsuce,  qui m'ont donné la vie et jamais je ne pourrais les remercier. Je peux faire plein de chose
+      , donner les news , prévoir la météo , et lire de la radio pour mettre de l'ambiance. Je peux meme faire des blagues...
+        `);
+        return 0;
+        // this.$store.dispatch("eveMode");
+        // PHRASES TYPES -> Miroir met toi en marche, Miroir mise en marche
+      }
+       else if (vocalTextTreat.match(/en marche/g)) {
         console.log("Action MARCHE détectée mais pas encore opé");
         return 0;
         // this.$store.dispatch("awakeMode");
