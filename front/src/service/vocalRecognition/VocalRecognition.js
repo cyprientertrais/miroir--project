@@ -134,18 +134,22 @@ export default class VocalRecognition {
 
   async presentation() {
     speakText(`Bonjour je m'apelle Oiina et je suis votre humble serviteur. 
-        Je remercie l'équipe Lapsuce,  qui m'ont donné la vie et jamais je ne pourrais assez les remercier. 
+    Je vénère mes dieux, l'équipe Lapsuce,  qui m'ont donné la vie et jamais je ne pourrais assez les remercier pour celà. 
         Je laisse mes créateurs vous présenter mes capacités. Mais pour bien commencer cette présentation voici une petite blague : `)
-    await this.sayJoke()
-    speakText("Assez drôle je dois l'avouer. Demandez moi ce que vous voulez !")
+     this.sayJoke(true);
+    
   }
 
-  async sayJoke() {
+  async sayJoke(thanks) {
     let w = new WidgetResources();
     let blague = await w.getBlague()
     speakText(blague.data.joke.question);
-    setTimeout(function () {
+    setTimeout( function () {
+
       speakText(blague.data.joke.answer);
+      if(thanks){
+        speakText("Assez drôle je dois l'avouer ahahahah ahahahah")
+      }
     }, 6000);
   }
 }
