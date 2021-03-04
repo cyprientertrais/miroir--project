@@ -51,14 +51,12 @@ export default class VocalRecognition {
         store.dispatch("changeProfile", tab[2]);
         return 0;
         // PHRASES TYPES -> Miroir met la radio Fun Radio, Miroir met moi la radio RTL2
-      } 
-      else if (vocalTextTreat.match(/fais-moi une blague/g)) {
-        let w  = new WidgetResources();
-        let blague = await w.getBlague()
-        speakText(blague.data.joke.question);
-        setTimeout(function(){ speakText(blague.data.joke.answer); }, 6000);
+      }
+      else if (vocalTextTreat.match(/une blague/g)) {
+        await this.sayJoke()
         return 0;
       }
+      // PHRASES TYPES -> Miroir quel heure est-il ?
       else if (vocalTextTreat.match(/heure*/g)) {
         var date = new Date().toLocaleTimeString();
         speakText("Il est "+date);
@@ -84,22 +82,14 @@ export default class VocalRecognition {
         console.log("Action VEILLE détectée mais pas encore opé");
         return 0;
         // this.$store.dispatch("eveMode");
-        // PHRASES TYPES -> Miroir met toi en marche, Miroir mise en marche
       }
+      // PHRASES TYPES -> Miroir présente toi
       else if (vocalTextTreat.match(/présente-toi/g) || vocalTextTreat.match(/es-tu/g)) {
-        speakText(`Bonjour je m'apelle Oiina et je suis ton humble serviteur. 
-        Je vénère mes dieux,  l'équipe Lapsuce,  qui m'ont donné la vie et jamais je ne pourrais les remercier. Je peux faire plein de chose
-      , donner les news , prévoir la météo , et lire de la radio pour mettre de l'ambiance (Boom Boom Tchaaa) ...  Je peux meme faire des blagues...
-      Aller petit exemple pour la route :`)
-      let w  = new WidgetResources();
-        let blague = await w.getBlague()
-        speakText(blague.data.joke.question);
-        speakText("Assez drôle je dois l'avouer. Demandez moi ce que vous voulez !")
+        this.presentation()
         return 0;
-        // this.$store.dispatch("eveMode");
-        // PHRASES TYPES -> Miroir met toi en marche, Miroir mise en marche
       }
-       else if (vocalTextTreat.match(/en marche/g)) {
+      // PHRASES TYPES -> Miroir met toi en marche, Miroir mise en marche
+      else if (vocalTextTreat.match(/en marche/g)) {
         console.log("Action MARCHE détectée mais pas encore opé");
         return 0;
         // this.$store.dispatch("awakeMode");
@@ -114,7 +104,6 @@ export default class VocalRecognition {
   }
 
   getInfo(foundInfo) {
-    console.log(foundInfo);
     let tab = foundInfo.split(" ");
     if (tab.length == 2) {
       return tab[1];
@@ -124,7 +113,6 @@ export default class VocalRecognition {
   }
 
   radioTreatment(foundInfo) {
-    console.log(foundInfo);
     if (foundInfo.match(/en marche/g)) {
       console.log("PLAY RADIO");
       store.dispatch("playRadio");
@@ -143,4 +131,23 @@ export default class VocalRecognition {
       store.dispatch("changeRadio", radio);
     }
   }
+
+  async presentation() {
+    speakText(`Bonjour je m'apelle Oiina et je suis votre humble serviteur. 
+        Je remercie l'équipe Lapsuce,  qui m'ont donné la vie et jamais je ne pourrais assez les remercier. 
+        Je laisse mes créateurs vous présenter mes capacités. Mais pour bien commencer cette présentation voici une petite blague : `)
+    await this.sayJoke()
+    speakText("Assez drôle je dois l'avouer. Demandez moi ce que vous voulez !")
+  }
+
+  async sayJoke() {
+    let w = new WidgetResources();
+    let blague = await w.getBlague()
+    speakText(blague.data.joke.question);
+    setTimeout(function () {
+      speakText(blague.data.joke.answer);
+    }, 6000);
+  }
 }
+
+

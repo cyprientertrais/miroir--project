@@ -7,7 +7,7 @@
     cycle
     transition="scroll-y-transition"
     reverse-transition="scroll-y-transition"
-    height="40vh"
+    height="auto"
     hide-delimiters
     interval="9000"
   >
