@@ -7,7 +7,7 @@
           <v-sheet color="primary" class="listButtons font-text">
             <v-row justify="center">
               <v-btn
-                v-if="this.$router.history.current.path !== '/settings'"
+                v-if="this.$router.history.current.path.toLow !== '/settings' || this.$router.history.current.path.toLow !== '/Settings'"
                 v-on:click="onClickProfils"
                 elevation="2"
                 class="profils ma-2 white--text"

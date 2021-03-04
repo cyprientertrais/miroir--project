@@ -22,7 +22,7 @@ import { Admin } from './admin/admin.entity';
       /* url: process.env.HOST
         ? 'mongodb://db:27017'
         : 'mongodb://192.168.99.100:27017',*/
-      url: process.env.MONGO ? process.env.MONGO : 'mongodb://localhost:27017',
+        url: process.env.MONGO ? process.env.MONGO : 'mongodb://localhost:27017',
       database: process.env.MONGO ? 'project' : 'mirror',
       entities: [__dirname + '/*/*.entity{.ts,.js}'],
       synchronize: true,
