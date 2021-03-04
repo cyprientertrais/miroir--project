@@ -12,6 +12,9 @@ export function answerToVocal(vocalText, answerInfo) {
       console.log(`La radio ${answerInfo} n'existe pas.`);
       speakText(`La radio ${answerInfo} n'existe pas.`);
       break;
+    case "radioAnswer":
+      console.log("Pas de réponse pour la radio");
+      break;
     case "newsUnknown":
       console.log(`Le journal ${answerInfo} n'existe pas ou n'est pas traité.`);
       speakText(`Le journal ${answerInfo} n'existe pas ou n'est pas traité.`);
@@ -19,9 +22,6 @@ export function answerToVocal(vocalText, answerInfo) {
     case "profileAnswer":
       console.log(`Voici le profil de ${answerInfo}`);
       speakText(`Voici le profil de ${answerInfo}`);
-      break;
-    case "radioAnswer":
-      console.log("Pas de réponse pour la radio");
       break;
     case "commonError":
       console.log("Il y a eu une erreur lors de votre demande");
