@@ -56,6 +56,13 @@ export default class VocalRecognition {
         await this.sayJoke()
         return 0;
       }
+      else if (vocalTextTreat.match(/au revoir/g)) {
+        speakText("Au revoir , et merci , de vous être entretenu avec moi");
+        
+        
+        return 0;
+        // this.$store.dispatch("eveMode");
+      }
       // PHRASES TYPES -> Miroir quel heure est-il ?
       else if (vocalTextTreat.match(/heure*/g)) {
         var date = new Date().toLocaleTimeString();
