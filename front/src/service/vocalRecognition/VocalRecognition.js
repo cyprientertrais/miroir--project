@@ -1,5 +1,6 @@
 import store from "../../store/index";
 import { speakText } from "../../utils/utils";
+import WidgetResources from "../resources/WidgetResources";
 
 export default class VocalRecognition {
   vocalProcess() {
@@ -13,6 +14,10 @@ export default class VocalRecognition {
     }
     const recognition = new window.SpeechRecognition();
     recognition.lang = "fr-FR";
+    recognition.continuous=true;
+    recognition.onend = ()=>{
+      recognition.start();
+    }
     recognition.onresult = event => {
       console.log("Treating info....");
       this.vocalTreatment(
@@ -22,20 +27,20 @@ export default class VocalRecognition {
     recognition.onstart = function() {
       console.log("Listening ...");
     };
-    recognition.onend = function() {
-      //recognition.stop();
-      recognition.start();
-      // sets off a beep/noise each time it is accessed from a cell phone (Andoid).
+    // recognition.onend = function() {
+    //   //recognition.stop();
+    //   recognition.start();
+    //   // sets off a beep/noise each time it is accessed from a cell phone (Andoid).
 
-      // does NOT if accessed from a desktop (Windows using Chrome).
-    };
+    //   // does NOT if accessed from a desktop (Windows using Chrome).
+    // };
     recognition.onerror = function(e) {
       console.log("ERROR", e);
     };
     recognition.start();
   }
 
-  vocalTreatment(vocalText) {
+  async vocalTreatment(vocalText) {
     const vocalTextTreat = vocalText.trim();
     console.log("VOCALTEXT: " + vocalText.trim());
     if (vocalTextTreat.match(/^miroir/g)) {
@@ -46,7 +51,20 @@ export default class VocalRecognition {
         store.dispatch("changeProfile", tab[2]);
         return 0;
         // PHRASES TYPES -> Miroir met la radio Fun Radio, Miroir met moi la radio RTL2
-      } else if (
+      } 
+      else if (vocalTextTreat.match(/fais-moi une blague/g)) {
+        let w  = new WidgetResources();
+        let blague = await w.getBlague()
+        speakText(blague.data.joke.question);
+        setTimeout(function(){ speakText(blague.data.joke.answer); }, 6000);
+        return 0;
+      }
+      else if (vocalTextTreat.match(/heure*/g)) {
+        var date = new Date().toLocaleTimeString();
+        speakText("Il est "+date);
+        return 0;
+      }
+      else if (
         vocalTextTreat.match(/radio [a-zA-Zéèàê0-9]*.[a-zA-Zéèàê0-9]*/g)
       ) {
         const foundInfo =
@@ -67,7 +85,21 @@ export default class VocalRecognition {
         return 0;
         // this.$store.dispatch("eveMode");
         // PHRASES TYPES -> Miroir met toi en marche, Miroir mise en marche
-      } else if (vocalTextTreat.match(/en marche/g)) {
+      }
+      else if (vocalTextTreat.match(/présente-toi/g) || vocalTextTreat.match(/es-tu/g)) {
+        speakText(`Bonjour je m'apelle Oiina et je suis ton humble serviteur. 
+        Je vénère mes dieux,  l'équipe Lapsuce,  qui m'ont donné la vie et jamais je ne pourrais les remercier. Je peux faire plein de chose
+      , donner les news , prévoir la météo , et lire de la radio pour mettre de l'ambiance (Boom Boom Tchaaa) ...  Je peux meme faire des blagues...
+      Aller petit exemple pour la route :`)
+      let w  = new WidgetResources();
+        let blague = await w.getBlague()
+        speakText(blague.data.joke.question);
+        speakText("Assez drôle je dois l'avouer. Demandez moi ce que vous voulez !")
+        return 0;
+        // this.$store.dispatch("eveMode");
+        // PHRASES TYPES -> Miroir met toi en marche, Miroir mise en marche
+      }
+       else if (vocalTextTreat.match(/en marche/g)) {
         console.log("Action MARCHE détectée mais pas encore opé");
         return 0;
         // this.$store.dispatch("awakeMode");
@@ -95,19 +127,20 @@ export default class VocalRecognition {
     console.log(foundInfo);
     if (foundInfo.match(/en marche/g)) {
       console.log("PLAY RADIO");
-      // this.$store.dispatch("playRadio");
+      store.dispatch("playRadio");
     } else if (foundInfo.match(/en pause/g)) {
       console.log("STOP RADIO");
-      // this.$store.dispatch("stopRadio");
+      store.dispatch("stopRadio");
     } else if (foundInfo.match(/suivante/g)) {
       console.log("NEXT RADIO");
-      // this.$store.dispatch("nextRadio");
+      store.commit("nextRadio");
     } else if (foundInfo.match(/précédente/g)) {
       console.log("PREVIOUS RADIO");
-      // this.$store.dispatch("previousRadio");
+      store.commit("previousRadio");
     } else {
-      console.log("CHANGE RADIO VERS " + foundInfo);
-      // this.$store.dispatch("changeRadio", getInfo);
+      const radio = foundInfo.substring(6, foundInfo.length - 1);
+      console.log("CHANGE RADIO VERS " + radio);
+      store.dispatch("changeRadio", radio);
     }
   }
 }

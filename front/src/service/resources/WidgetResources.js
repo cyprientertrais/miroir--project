@@ -24,6 +24,12 @@ export default class WidgetResources {
     return axios.get(url, { params: params });
   }
 
+  getBlague(){
+    
+    const url = `${this.API()}/joke`;
+    return axios.get(url);
+  }
+
   getOrientation() {
     const url = `${this.API()}/admin/orientation`;
     return axios.get(url);

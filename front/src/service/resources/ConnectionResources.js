@@ -21,4 +21,9 @@ export default class ConnectionResources {
     const wifiList = `http://localhost:3000/admin/wifiscan`;
     return axios.get(wifiList);
   }
+
+  async connectToWifi(name, pass) {
+    const wifiList = `http://localhost:3000/admin/sendWifi`;
+    return axios.post(wifiList, {ssid: name, password: pass} )
+  }
 }

@@ -1,7 +1,7 @@
 var express = require('express'); 
 var SSH2Promise = require('ssh2-promise');
 const sshconfig2 = {
-    host: '10.3.141.1',
+    host: '192.168.50.1',
     username: 'ssh_miroir',
     password: 'ssh_miroir',
   }
@@ -33,9 +33,9 @@ app.post("/sendWifi",async  (req,res)=>{
 
     await ssh.exec(
       ' echo -e network={ ssid=\\"' +
-        body.ssid +
+        req.body.ssid +
         '\\" psk=\\"' +
-        body.password +
+        req.body.password +
         '\\"} >> /etc/wpa_supplicant/wpa_supplicant.conf ',
     )
     /** PBM : ET SI CA MARCHE PAS 200 QUAND MEME ?**/
