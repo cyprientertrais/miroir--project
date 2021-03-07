@@ -9,7 +9,7 @@ jobs:
   multi:
     runs-on: ubuntu-latest
     env:
-      VERSION: "1.2.5"
+      VERSION: "1.2.6"
     
     steps:
       - uses: actions/setup-node@v1
