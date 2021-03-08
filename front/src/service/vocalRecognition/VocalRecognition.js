@@ -14,10 +14,10 @@ export default class VocalRecognition {
     }
     const recognition = new window.SpeechRecognition();
     recognition.lang = "fr-FR";
-    recognition.continuous=true;
-    recognition.onend = ()=>{
+    recognition.continuous = true;
+    recognition.onend = () => {
       recognition.start();
-    }
+    };
     recognition.onresult = event => {
       console.log("Treating info....");
       this.vocalTreatment(
@@ -51,25 +51,21 @@ export default class VocalRecognition {
         store.dispatch("changeProfile", tab[2]);
         return 0;
         // PHRASES TYPES -> Miroir met la radio Fun Radio, Miroir met moi la radio RTL2
-      }
-      else if (vocalTextTreat.match(/une blague/g)) {
-        await this.sayJoke()
+      } else if (vocalTextTreat.match(/une blague/g)) {
+        await this.sayJoke();
         return 0;
-      }
-      else if (vocalTextTreat.match(/au revoir/g)) {
+      } else if (vocalTextTreat.match(/au revoir/g)) {
         speakText("Au revoir , et merci , de vous être entretenu avec moi");
-        
-        
+
         return 0;
         // this.$store.dispatch("eveMode");
       }
       // PHRASES TYPES -> Miroir quel heure est-il ?
       else if (vocalTextTreat.match(/heure*/g)) {
         var date = new Date().toLocaleTimeString();
-        speakText("Il est "+date);
+        speakText("Il est " + date);
         return 0;
-      }
-      else if (
+      } else if (
         vocalTextTreat.match(/radio [a-zA-Zéèàê0-9]*.[a-zA-Zéèàê0-9]*/g)
       ) {
         const foundInfo =
@@ -91,8 +87,11 @@ export default class VocalRecognition {
         // this.$store.dispatch("eveMode");
       }
       // PHRASES TYPES -> Miroir présente toi
-      else if (vocalTextTreat.match(/présente-toi/g) || vocalTextTreat.match(/es-tu/g)) {
-        this.presentation()
+      else if (
+        vocalTextTreat.match(/présente-toi/g) ||
+        vocalTextTreat.match(/es-tu/g)
+      ) {
+        this.presentation();
         return 0;
       }
       // PHRASES TYPES -> Miroir met toi en marche, Miroir mise en marche
@@ -141,24 +140,20 @@ export default class VocalRecognition {
 
   async presentation() {
     speakText(`Bonjour je m'apelle Oiina et je suis votre humble serviteur. 
-    Je vénère mes dieux, l'équipe Lapsuce,  qui m'ont donné la vie et jamais je ne pourrais assez les remercier pour celà. 
-        Je laisse mes créateurs vous présenter mes capacités. Mais pour bien commencer cette présentation voici une petite blague : `)
-     this.sayJoke(true);
-    
+    Je vénère mes dieux, l'équipe Lapsuce,  qui m'ont donné la vie et jamais je ne pourrais assez les remercier pour cela. 
+        Je laisse mes créateurs vous présenter mes capacités. Mais pour bien commencer cette présentation voici une petite blague : `);
+    this.sayJoke(true);
   }
 
   async sayJoke(thanks) {
     let w = new WidgetResources();
-    let blague = await w.getBlague()
+    let blague = await w.getBlague();
     speakText(blague.data.joke.question);
-    setTimeout( function () {
-
+    setTimeout(function() {
       speakText(blague.data.joke.answer);
-      if(thanks){
-        speakText("Assez drôle je dois l'avouer ahahahah ahahahah")
+      if (thanks) {
+        speakText("Assez drôle je dois l'avouer ahahahah ahahahah");
       }
     }, 6000);
   }
 }
-
-

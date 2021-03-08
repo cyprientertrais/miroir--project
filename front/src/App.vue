@@ -17,10 +17,8 @@
 import { mapActions } from "vuex";
 import moment from "moment";
 import WidgetResources from "./service/resources/WidgetResources";
-import VocalRecognition from "./service/vocalRecognition/VocalRecognition";
 
 const widgetResources = new WidgetResources();
-const vocalRecognition = new VocalRecognition();
 
 export default {
   name: "App",
@@ -69,7 +67,11 @@ export default {
           let voices = synth.getVoices();
           if (voices.length !== 0) {
             let msg = new SpeechSynthesisUtterance(text);
-            msg.voice = voices.find(_voice => /fr-FR/.test(_voice.lang) && _voice.voiceURI.indexOf("Siri")==-1);
+            msg.voice = voices.find(
+              _voice =>
+                /fr-FR/.test(_voice.lang) &&
+                _voice.voiceURI.indexOf("Siri") == -1
+            );
             msg.lang = "en-US";
             synth.speak(msg);
             clearInterval(timer);
@@ -86,7 +88,6 @@ export default {
 
   mounted() {
     this.setUserProfile("Invité");
-    vocalRecognition.vocalProcess();
   }
 };
 </script>

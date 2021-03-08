@@ -24,8 +24,7 @@ export default class WidgetResources {
     return axios.get(url, { params: params });
   }
 
-  getBlague(){
-    
+  getBlague() {
     const url = `${this.API()}/joke`;
     return axios.get(url);
   }

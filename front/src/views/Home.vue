@@ -36,6 +36,9 @@ import { mapGetters } from "vuex";
 import moment from "moment";
 import WidgetResources from "@/service/resources/WidgetResources";
 
+import VocalRecognition from "../service/vocalRecognition/VocalRecognition";
+const vocalRecognition = new VocalRecognition();
+
 const widgetService = new WidgetResources();
 export default {
   name: "Home",
@@ -43,6 +46,8 @@ export default {
   created() {
     moment.locale("fr");
     this.setWidgets();
+
+    vocalRecognition.vocalProcess();
   },
   data() {
     return {

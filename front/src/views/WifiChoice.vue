@@ -6,22 +6,18 @@
           Liste Wifi
         </div>
       </v-row>
-        <v-list rounded class="liste" height="70vh">
-            <v-list-item-group
-              v-model="selectItem"
-              justify="center"
-              color="white"
-            >
-              <v-list-item v-for="(item, i) in this.item" :key="i" id="titre">
-                <v-list-item-content v-on:click="popUp = true">
-                  <v-list-item-title
-                    v-text="item"
-                    class="titre"
-                  ></v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-            </v-list-item-group>
-        </v-list>
+      <v-list rounded class="liste" height="70vh">
+        <v-list-item-group v-model="selectItem" justify="center" color="white">
+          <v-list-item v-for="(item, i) in this.item" :key="i" id="titre">
+            <v-list-item-content v-on:click="popUp = true">
+              <v-list-item-title
+                v-text="item"
+                class="titre"
+              ></v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
     </v-sheet>
 
     <v-dialog v-model="popUp" dark width="500px">
@@ -38,7 +34,7 @@
           <v-btn text @click="popUp = false" class="butt">
             Close
           </v-btn>
-          <v-btn text @click='sendWifi(item[id],Password)' class="butt">
+          <v-btn text @click="sendWifi(item[id], Password)" class="butt">
             Send
           </v-btn>
         </v-card-actions>
@@ -57,7 +53,7 @@ export default {
       listWifi: null,
       selectItem: null,
       item: [],
-      popUp: false,
+      popUp: false
     };
   },
   methods: {
@@ -68,22 +64,22 @@ export default {
     },
     async sendWifi(name, pass) {
       await ResourcesService.connectToWifi(name, pass);
-    },
+    }
   },
-   beforeMount(){
-    this.fetchWifi()
- },
+  beforeMount() {
+    this.fetchWifi();
+  }
 };
 </script>
 
 <style scoped>
 .v-list-item:hover {
-  background-color:#155b73!important
+  background-color: #155b73 !important;
 }
 .wifi {
   height: 100%;
   padding: 0% 7% 5% 7%;
-  background-color: #3C3E41;
+  background-color: #3c3e41;
 }
 .butt {
   margin-top: 8%;
@@ -95,9 +91,8 @@ export default {
 }
 .liste {
   background-color: #2e2e2e;
-  height: 58%; 
-  overflow-y:auto; 
-  overflow-x:hidden;
-  
+  height: 58%;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 </style>
